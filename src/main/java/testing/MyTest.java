@@ -7,7 +7,6 @@
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
- *
  * The above copyright notice and this permission notice shall be included
  * in all copies or substantial portions of the Software.
  *
@@ -24,6 +23,7 @@ package testing;
 
 /**
  * This file exists to test the coverage tools.
+ *
  * @since 1.1.0
  */
 public final class MyTest {
@@ -41,6 +41,7 @@ public final class MyTest {
 
     /**
      * Returns a value.
+     *
      * @return A 42, always.
      */
     @SuppressWarnings("PMD.ProhibitPublicStaticMethods")

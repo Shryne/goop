@@ -20,7 +20,7 @@
                 <artifactId>qulice-maven-plugin</artifactId>
                 <version>0.18.1</version>
                 <configuration>
-                    <license>file:${basedir}/LICENSE.txt</license>
+                    <license>file:${basedir}/LICENSE.md</license>
                 </configuration>
                 <executions>
                     <execution>
