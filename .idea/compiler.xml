@@ -20,7 +20,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="goop" target="1.8" />
+      <module name="goop" target="1.10" />
     </bytecodeTargetLevel>
   </component>
 </project>
