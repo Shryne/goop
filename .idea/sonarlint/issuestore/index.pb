@@ -27,5 +27,6 @@ h
 8.idea/libraries/Maven__org_hamcrest_hamcrest_all_1_3.xml,9\e\9e238935e30a5b95472d9ab13def61d28792b511
 i
 9.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml,b\8\b8d96649614bd84192f3496ef7d33bab1d1e5ec1
-;
-LICENSE.txt,7\9\79b82ce9b64a924266619555502f890dd80c83b9
+:
+
+LICENSE.md,4\a\4a8486805915245bbbe2e3c8c1a9d680c6843a82
