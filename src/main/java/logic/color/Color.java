@@ -21,11 +21,17 @@
 
 package logic.color;
 
+import logic.functional.QuadConsumer;
+
 /**
- * Defines a rgba based logic.color.
+ * Defines a rgba based color.
  *
  * @since 2.1.0
  */
 public interface Color {
-
+    /**
+     * Gives the given consumer the red, green, blue and alpha values.
+     * @param target Target that gets the rgba values.
+     */
+    void applyOn(QuadConsumer<Integer, Integer, Integer, Integer> target);
 }

@@ -19,49 +19,30 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package graphic.j2d;
+package logic.functional;
 
-import java.awt.Graphics;
-import logic.color.Color;
-import logic.metric.Area;
-
+/*
+Personally I wouldn't call this class "Consumer", but in this case I thought
+it may be better to follow the standard libraries way. Otherwise users might
+be confused
+*/
 /**
- * A rectangle using java2d.
- * <p>This class doesn't change its own state. Whether it is immutable or not,
- * depends on the given constructor arguments. Additionally whether this
- * class is thread-safe or not, depends on the given graphics instance for
- * {@link this#draw(Graphics)}.</p>
+ * This interface defines a consumer like {@link java.util.function.Consumer}.
+ * The difference is that this consumer takes three arguments.
  *
- * @since 2.1.0
+ * @param <A> The type of the first argument.
+ * @param <B> The type of the second argument.
+ * @param <C> The type of the third argument.
+ * @since 3.1.0
  */
-public class J2DRect implements J2DShape {
+@FunctionalInterface
+public interface TriConsumer<A, B, C> {
     /**
-     * The area of this rect.
+     * Accepts the given arguments.
+     * @param a The first argument.
+     * @param b The second argument.
+     * @param c The third argument.
+     * @checkstyle ParameterNameCheck (2 lines)
      */
-    private final Area area;
-
-    /**
-     * The color of this rect.
-     */
-    private final Color color;
-
-    /**
-     * Primary constructor.
-     * @param area The area of this rect.
-     * @param color The color of this rect.
-     */
-    public J2DRect(final Area area, final Color color) {
-        this.area = area;
-        this.color = color;
-    }
-
-    @Override
-    public final void draw(final Graphics graphics) {
-        this.color.applyOn(
-            (red, green, blue, alpha) -> graphics.setColor(
-                new java.awt.Color(red, green, blue, alpha)
-            )
-        );
-        this.area.applyOn(graphics::fillRect);
-    }
+    void accept(A a, B b, C c);
 }

@@ -37,7 +37,6 @@ public interface Area {
     /**
      * Gives the given consumer the position and the size which define this
      * area.
-     *
      * @param target Target that gets the position and the size.
      */
     void applyOn(BiConsumer<Position, Size> target);
@@ -56,7 +55,6 @@ public interface Area {
      * classes compared to {@link this#applyOn(BiConsumer)}.
      * <p>This method uses {@link this#applyOn(BiConsumer)} to gets it's values
      * and it doesn't mutate the state by itself.</p>
-     *
      * @param target Target that gets the position and the size as four integer
      *  values.
      */
