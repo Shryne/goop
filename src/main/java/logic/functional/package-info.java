@@ -20,6 +20,9 @@
  */
 
 /**
- * This is a package info file to test the configs.
+ * This package contains all components that are used for functional
+ * programming. These components could've there own project, but currently there
+ * are too few of them to make this separation.
+ * @since 2.1.0
  */
-package testing;
+package logic.functional;

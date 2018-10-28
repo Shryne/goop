@@ -20,10 +20,9 @@
  */
 
 /**
- * This is a package to test the coverage tools and to help on the
- * configuration.
+ * Contains the visual components that are using java 2d to visualize
+ * themselves.
  *
- *
- * Here.
+ * @since 2.1.0
  */
-package testing;
+package graphic.j2d;

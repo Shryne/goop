@@ -19,33 +19,14 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package testing;
-
 /**
- * This file exists to test the coverage tools.
+ * Components of this package offer access to the graphical components without
+ * depending on the actual platform. This means the user will probably use the
+ * classes of this package to draw the shapes desired and these shapes will
+ * decide whether to use OpenGL or a different concrete graphic library.
+ * <p>Additionally all classes that are needed for this library without any
+ * dependence on the concrete graphic library are here.</p>
  *
- * @since 1.1.0
+ * @since 2.1.0
  */
-public final class MyTest {
-    /**
-     * This is indeed magic.
-     */
-    private static final int SOME_NUMBER = 42;
-
-    /**
-     * Ctor.
-     */
-    private MyTest() {
-        super();
-    }
-
-    /**
-     * Returns a value.
-     *
-     * @return A 42, always.
-     */
-    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
-    public static int value() {
-        return MyTest.SOME_NUMBER;
-    }
-}
+package logic;

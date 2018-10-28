@@ -19,31 +19,13 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package testing;
-
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+package logic.color;
 
 /**
- * A class test for {@link MyTest}.
- * @since 1.1.0
+ * Defines a rgba based logic.color.
+ *
+ * @since 2.1.0
  */
-public class MyTestTest {
-    /**
-     * This is some magic number.
-     */
-    private static final int SOME_NUMBER = 42;
+public interface Color {
 
-    /**
-     * This is a test for the value method.
-     */
-    @Test
-    public final void valueReturns() {
-        MatcherAssert.assertThat(
-            "Hello",
-            MyTest.value(),
-            Matchers.is(MyTestTest.SOME_NUMBER)
-        );
-    }
 }
