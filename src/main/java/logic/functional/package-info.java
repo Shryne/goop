@@ -19,33 +19,10 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package testing;
-
 /**
- * This file exists to test the coverage tools.
- *
- * @since 1.1.0
+ * This package contains all components that are used for functional
+ * programming. These components could've there own project, but currently there
+ * are too few of them to make this separation.
+ * @since 2.1.0
  */
-public final class MyTest {
-    /**
-     * This is indeed magic.
-     */
-    private static final int SOME_NUMBER = 42;
-
-    /**
-     * Ctor.
-     */
-    private MyTest() {
-        super();
-    }
-
-    /**
-     * Returns a value.
-     *
-     * @return A 42, always.
-     */
-    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
-    public static int value() {
-        return MyTest.SOME_NUMBER;
-    }
-}
+package logic.functional;

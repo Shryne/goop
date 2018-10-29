@@ -20,10 +20,7 @@
  */
 
 /**
- * This is a package to test the coverage tools and to help on the
- * configuration.
- *
- *
- * Here.
+ * Tests for the functional package.
+ * @since 3.2.0
  */
-package testing;
+package logic.functional;

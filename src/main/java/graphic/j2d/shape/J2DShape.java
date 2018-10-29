@@ -19,7 +19,19 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+package graphic.j2d.shape;
+
+import java.awt.Graphics;
+
 /**
- * This is a package info file to test the configs.
+ * A shape that is using java2d to draw itself.
+ *
+ * @since 2.1.0
  */
-package testing;
+public interface J2DShape {
+    /**
+     * Draws the shape.
+     * @param graphics The Graphics object to draw the shape.
+     */
+    void draw(Graphics graphics);
+}

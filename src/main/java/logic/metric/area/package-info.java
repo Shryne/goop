@@ -19,31 +19,9 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package testing;
-
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
-
 /**
- * A class test for {@link MyTest}.
- * @since 1.1.0
+ * Provides the {@link logic.metric.area.Area} interface and the classes and
+ * decorators around it.
+ * @since 3.3.0
  */
-public class MyTestTest {
-    /**
-     * This is some magic number.
-     */
-    private static final int SOME_NUMBER = 42;
-
-    /**
-     * This is a test for the value method.
-     */
-    @Test
-    public final void valueReturns() {
-        MatcherAssert.assertThat(
-            "Hello",
-            MyTest.value(),
-            Matchers.is(MyTestTest.SOME_NUMBER)
-        );
-    }
-}
+package logic.metric.area;
