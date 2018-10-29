@@ -20,12 +20,7 @@
  */
 
 /**
- * Components of this package offer access to the graphical components without
- * depending on the actual platform. This means the user will probably use the
- * classes of this package to draw the shape desired and these shape will
- * decide whether to use OpenGL or a different concrete graphic library.
- * <p>Additionally all classes that are needed for this library without any
- * dependence on the concrete graphic library are here.</p>
- * @since 2.1.0
+ * Contains the windows that are using java 2d to show themselves.
+ * @since 3.2.0
  */
-package logic;
+package graphic.j2d.window;

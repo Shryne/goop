@@ -19,49 +19,19 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package graphic.j2d;
+package graphic.j2d.shape;
 
 import java.awt.Graphics;
-import logic.color.Color;
-import logic.metric.Area;
 
 /**
- * A rectangle using java2d.
- * <p>This class doesn't change its own state. Whether it is immutable or not,
- * depends on the given constructor arguments. Additionally whether this
- * class is thread-safe or not, depends on the given graphics instance for
- * {@link this#draw(Graphics)}.</p>
+ * A shape that is using java2d to draw itself.
  *
  * @since 2.1.0
  */
-public class J2DRect implements J2DShape {
+public interface J2DShape {
     /**
-     * The area of this rect.
+     * Draws the shape.
+     * @param graphics The Graphics object to draw the shape.
      */
-    private final Area area;
-
-    /**
-     * The color of this rect.
-     */
-    private final Color color;
-
-    /**
-     * Primary constructor.
-     * @param area The area of this rect.
-     * @param color The color of this rect.
-     */
-    public J2DRect(final Area area, final Color color) {
-        this.area = area;
-        this.color = color;
-    }
-
-    @Override
-    public final void draw(final Graphics graphics) {
-        this.color.applyOn(
-            (red, green, blue, alpha) -> graphics.setColor(
-                new java.awt.Color(red, green, blue, alpha)
-            )
-        );
-        this.area.applyOn(graphics::fillRect);
-    }
+    void draw(Graphics graphics);
 }

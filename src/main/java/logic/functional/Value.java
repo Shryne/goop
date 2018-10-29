@@ -19,13 +19,18 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+package logic.functional;
+
 /**
- * Components of this package offer access to the graphical components without
- * depending on the actual platform. This means the user will probably use the
- * classes of this package to draw the shape desired and these shape will
- * decide whether to use OpenGL or a different concrete graphic library.
- * <p>Additionally all classes that are needed for this library without any
- * dependence on the concrete graphic library are here.</p>
- * @since 2.1.0
+ * An interface for all classes that represent a value, but are needed to
+ * calculate it later, different or to cache it. Example: {@link Lazy}.
+ * @param <T> The type of the value.
+ * @since 3.2.0
  */
-package logic;
+public interface Value<T> {
+    /**
+     * Returns the content.
+     * @return The content.
+     */
+    T content();
+}

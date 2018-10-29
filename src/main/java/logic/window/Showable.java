@@ -19,13 +19,16 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+package logic.window;
+
 /**
- * Components of this package offer access to the graphical components without
- * depending on the actual platform. This means the user will probably use the
- * classes of this package to draw the shape desired and these shape will
- * decide whether to use OpenGL or a different concrete graphic library.
- * <p>Additionally all classes that are needed for this library without any
- * dependence on the concrete graphic library are here.</p>
- * @since 2.1.0
+ * A component that can show itself - mainly windows.
+ * @since 3.2.0
  */
-package logic;
+public interface Showable {
+    /**
+     * Shows the component, if it's not visible. This method is a no-op, if
+     * the component is already visible.
+     */
+    void show();
+}

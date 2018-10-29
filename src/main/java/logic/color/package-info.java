@@ -21,7 +21,6 @@
 
 /**
  * A package for all color variants.
- *
  * @since 2.1.0
  */
 package logic.color;
