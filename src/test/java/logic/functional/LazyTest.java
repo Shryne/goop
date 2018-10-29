@@ -28,7 +28,6 @@ import org.junit.Test;
 
 /**
  * Tests for {@link Lazy}.
- *
  * @since 3.2.0
  */
 public class LazyTest {

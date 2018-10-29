@@ -23,7 +23,7 @@ package graphic.j2d.shape;
 
 import java.awt.Graphics;
 import logic.color.Color;
-import logic.metric.Area;
+import logic.metric.area.Area;
 
 /**
  * A rectangle using java2d.

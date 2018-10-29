@@ -19,10 +19,12 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.metric;
+package logic.metric.area;
 
 import java.util.function.BiConsumer;
 import logic.functional.QuadConsumer;
+import logic.metric.Position;
+import logic.metric.Size;
 
 /*
 This interface is needed (compared to using the position and the size classes

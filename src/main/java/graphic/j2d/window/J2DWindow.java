@@ -27,7 +27,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import logic.functional.Lazy;
 import logic.functional.Value;
-import logic.metric.Area;
+import logic.metric.area.Area;
 import logic.window.Showable;
 
 /**
