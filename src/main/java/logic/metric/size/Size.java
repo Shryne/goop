@@ -19,12 +19,24 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+package logic.metric.size;
+
+import java.util.function.BiConsumer;
+
+/*
+This interface is necessary (compared to using width and height each time)
+because this library depends on the possibility to implement own
+implementations like a scaling size
+*/
 /**
- * Contains all metric components that are using the cartesian coordinate
- * system. Since this is the system that will most probably be used, it's the
- * default. Additionally the default dimension is 2, so all components that
- * don't have a dimension in their name are two dimensional. Example:
- * Position instead of Position2D.
+ * The two dimensional cartesian based size of a rectangular area.
+ *
  * @since 2.1.0
  */
-package logic.metric;
+public interface Size {
+    /**
+     * Gives the given consumer the width and height that define this size.
+     * @param target Target that gets the width and height.
+     */
+    void applyOn(BiConsumer<Integer, Integer> target);
+}

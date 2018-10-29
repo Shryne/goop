@@ -23,8 +23,10 @@ package logic.metric.area;
 
 import java.util.function.BiConsumer;
 import logic.functional.QuadConsumer;
-import logic.metric.Position;
-import logic.metric.Size;
+import logic.metric.position.Pos;
+import logic.metric.position.Pos2D;
+import logic.metric.size.Size;
+import logic.metric.size.Size2D;
 
 /*
 I am not happy about this naming, but my other idea's regarding the interface
@@ -35,7 +37,7 @@ chance that a user might use the class name as a parameter type
 /**
  * Basic concrete implementation of {@link Area}.
  * <p>Whether this class is immutable or thread-safe, depends on the given
- * {@link logic.metric.Position} and {@link logic.metric.Size}. This class
+ * {@link Pos} and {@link Size}. This class
  * doesn't mutate state by itself. Additionally note that the
  * {@link #applyOn(BiConsumer)} provides the actual objects without any
  * safe-copies for performance reasons.</p>
@@ -45,7 +47,7 @@ public class Area2D implements Area {
     /**
      * The position of this area.
      */
-    private final Position position;
+    private final Pos pos;
 
     /**
      * The size of this area.
@@ -53,18 +55,35 @@ public class Area2D implements Area {
     private final Size size;
 
     /**
+     * Secondary constructor. Uses an immutable implementation of {@link Pos}
+     * and {@link Size}.
+     * @param x The x coordinate for the position.
+     * @param y The y coordinate for the position.
+     * @param width The width for the size.
+     * @param height The height for the size.
+     * @checkstyle ParameterNumber (3 lines)
+     * @checkstyle ParameterName (2 lines)
+     */
+    public Area2D(final int x, final int y, final int width, final int height) {
+        this(
+            new Pos2D(x, y),
+            new Size2D(width, height)
+        );
+    }
+
+    /**
      * Primary constructor.
-     * @param position The position of the area.
+     * @param pos The position of the area.
      * @param size The size of the area.
      */
-    public Area2D(final Position position, final Size size) {
-        this.position = position;
+    public Area2D(final Pos pos, final Size size) {
+        this.pos = pos;
         this.size = size;
     }
 
     @Override
-    public final void applyOn(final BiConsumer<Position, Size> target) {
-        target.accept(this.position, this.size);
+    public final void applyOn(final BiConsumer<Pos, Size> target) {
+        target.accept(this.pos, this.size);
     }
 
     @Override

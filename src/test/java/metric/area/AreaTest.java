@@ -19,24 +19,37 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.metric;
+package metric.area;
 
-import java.util.function.BiConsumer;
+import logic.metric.area.Area2D;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
-/*
-This interface is necessary (compared to using width and height each time)
-because this library depends on the possibility to implement own
-implementations like a scaling size
-*/
 /**
- * The two dimensional cartesian based size of a rectangular area.
- *
- * @since 2.1.0
+ * Tests for {@link logic.metric.area.Area}.
+ * @since 3.4.0
  */
-public interface Size {
+public class AreaTest {
     /**
-     * Gives the given consumer the width and height that define this size.
-     * @param target Target that gets the width and height.
+     * A test whether the applyOn method does correctly divide the position
+     * and size for the QuadConsumer.
      */
-    void applyOn(BiConsumer<Integer, Integer> target);
+    @Test
+    public void correctDistribution() {
+        // @checkstyle LocalFinalVariableName (4 lines)
+        final var resX = 203;
+        final var resY = 132;
+        final var resW = 3231;
+        final var resH = 32;
+        new Area2D(resX, resY, resW, resH).applyOn(
+            // @checkstyle ParameterName (1 line)
+            (x, y, width, height) -> {
+                MatcherAssert.assertThat(x, Matchers.is(resX));
+                MatcherAssert.assertThat(y, Matchers.is(resY));
+                MatcherAssert.assertThat(width, Matchers.is(resW));
+                MatcherAssert.assertThat(height, Matchers.is(resH));
+            }
+        );
+    }
 }

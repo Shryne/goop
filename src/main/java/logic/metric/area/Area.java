@@ -23,8 +23,8 @@ package logic.metric.area;
 
 import java.util.function.BiConsumer;
 import logic.functional.QuadConsumer;
-import logic.metric.Position;
-import logic.metric.Size;
+import logic.metric.position.Pos;
+import logic.metric.size.Size;
 
 /*
 This interface is needed (compared to using the position and the size classes
@@ -41,7 +41,7 @@ public interface Area {
      * area.
      * @param target Target that gets the position and the size.
      */
-    void applyOn(BiConsumer<Position, Size> target);
+    void applyOn(BiConsumer<Pos, Size> target);
 
     /*
     The apply(BiConsumer<Position, Size>) method is not enough, because the

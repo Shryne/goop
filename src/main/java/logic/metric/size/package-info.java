@@ -19,24 +19,9 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.metric;
-
-import java.util.function.BiConsumer;
-
-/*
-This interface is necessary (compared to using x and y each time) because this
-library depends on the possibility to implement own implementations like a
-moving position
-*/
 /**
- * A cartesian two dimensional position.
- *
- * @since 2.1.0
+ * Provides the {@link logic.metric.size.Size} interface and the classes and
+ * decorators around it.
+ * @since 3.4.0
  */
-public interface Position {
-    /**
-     * Gives the given consumer the x and y coordinates of this position.
-     * @param target Target that gets the Coordinates.
-     */
-    void applyOn(BiConsumer<Integer, Integer> target);
-}
+package logic.metric.size;

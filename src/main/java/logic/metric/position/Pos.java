@@ -19,12 +19,27 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+package logic.metric.position;
+
+import java.util.function.BiConsumer;
+
+/*
+This interface is necessary (compared to using x and y each time) because this
+library depends on the possibility to implement own implementations like a
+moving position
+
+I changed the name from Position to Pos, because that's a class that will be
+used in many places and I think this cut will safe some characters without
+sacrificing readability
+*/
 /**
- * Contains all metric components that are using the cartesian coordinate
- * system. Since this is the system that will most probably be used, it's the
- * default. Additionally the default dimension is 2, so all components that
- * don't have a dimension in their name are two dimensional. Example:
- * Position instead of Position2D.
+ * A cartesian two dimensional position.
  * @since 2.1.0
  */
-package logic.metric;
+public interface Pos {
+    /**
+     * Gives the given consumer the x and y coordinates of this position.
+     * @param target Target that gets the Coordinates.
+     */
+    void applyOn(BiConsumer<Integer, Integer> target);
+}

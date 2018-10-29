@@ -20,11 +20,7 @@
  */
 
 /**
- * Contains all metric components that are using the cartesian coordinate
- * system. Since this is the system that will most probably be used, it's the
- * default. Additionally the default dimension is 2, so all components that
- * don't have a dimension in their name are two dimensional. Example:
- * Position instead of Position2D.
- * @since 2.1.0
+ * Tests regarding the area components.
+ * @since 3.4.0
  */
-package logic.metric;
+package metric.area;

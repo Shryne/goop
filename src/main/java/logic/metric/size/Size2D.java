@@ -19,12 +19,44 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+package logic.metric.size;
+
+import java.util.function.BiConsumer;
+
+/*
+I am not happy about this naming, but my other idea's regarding the interface
+name and the basic implementation weren't good either (impl or simple for
+example). So I took the more annoying name for the implementation to lower the
+chance that a user might use the class name as a parameter type
+*/
 /**
- * Contains all metric components that are using the cartesian coordinate
- * system. Since this is the system that will most probably be used, it's the
- * default. Additionally the default dimension is 2, so all components that
- * don't have a dimension in their name are two dimensional. Example:
- * Position instead of Position2D.
- * @since 2.1.0
+ * Basic concrete implementation of {@link Size}.
+ * <p>This class is immutable and thread-safe.</p>
+ * @since 3.4.0
  */
-package logic.metric;
+public class Size2D implements Size {
+    /**
+     * The width of the size.
+     */
+    private final int width;
+
+    /**
+     * The height of the size.
+     */
+    private final int height;
+
+    /**
+     * Primary constructor.
+     * @param width The width for the size.
+     * @param height The height for the size.
+     */
+    public Size2D(final int width, final int height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    @Override
+    public final void applyOn(final BiConsumer<Integer, Integer> target) {
+        target.accept(this.width, this.height);
+    }
+}
