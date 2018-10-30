@@ -27,8 +27,11 @@ package logic.window;
  */
 public interface Showable {
     /**
-     * Shows the component, if it's not visible. This method is a no-op, if
-     * the component is already visible.
+     * Shows the component, if it's not visible. This method is a no-op if
+     * the component is already visible. Note that this operation will probably
+     * have some more operations behind it, because a window needs more steps
+     * than a simple "make me visible". So because of this, this method applies
+     * all operations necessary to make a window visible.
      */
     void show();
 }

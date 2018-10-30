@@ -31,33 +31,31 @@ import logic.metric.area.Area;
 import logic.window.Showable;
 
 /**
- * The standard implementation of a java 2d window. It uses a
- * {@link javax.swing.JFrame} for this.
- * <p>This class mutates its state when {@link this#show()} is called. Since
- * show isn't synchronized, this class isn't thread-safe.</p>
- * @since 3.2.0
+ * Represents the simplest java 2d window implementation. Offers a window on
+ * a certain position with a certain size and some shapes on it. The window is
+ * not resizable.
+ * <p>This class is not thread-safe, because it mutates its state when
+ * {@link #show} is called.</p>
+ * @since 3.5.0
  */
-public class J2DWindow implements Showable {
+public class J2DBaseWindow implements Showable {
     /**
-     * The Window. Because the constructor(s) only set fields, this lazy is used
-     * to postpone the actual creation, setting and actions regarding the
-     * JFrame.
+     * A value containing the actual frame. This is necessary, because the
+     * JFrame will probably be lazily constructed.
      */
     private final Value<JFrame> window;
 
     /**
-     * Secondary constructor. The primary constructor is private.
-     * @param title The title that is shown at the top of the window.
-     * @param area The area of the window.
-     * @param shapes The shapes that are drawn on the window.
+     * Secondary constructor. Uses the arguments to define how a JFrame will be
+     * constructed using them. The primary constructor is private.
+     * @param area The area of this window.
+     * @param shapes The shapes that are on this window.
      */
-    public J2DWindow(
-        final String title, final Area area, final Iterable<J2DShape> shapes
-    ) {
+    public J2DBaseWindow(final Area area, final Iterable<J2DShape> shapes) {
         this(
             new Lazy<>(
                 () -> {
-                    final var frame = new JFrame(title);
+                    final var frame = new JFrame();
                     area.applyOn(frame::setBounds);
                     final var panel = new JPanel() {
                         @Override
@@ -76,9 +74,9 @@ public class J2DWindow implements Showable {
 
     /**
      * Primary constructor.
-     * @param window The construction of the frame.
+     * @param window The construction of the window
      */
-    private J2DWindow(final Value<JFrame> window) {
+    private J2DBaseWindow(final Value<JFrame> window) {
         this.window = window;
     }
 
