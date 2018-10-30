@@ -22,31 +22,25 @@
 package graphic.j2d.window;
 
 import graphic.j2d.shape.J2DShape;
-import java.awt.Graphics;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import logic.functional.Lazy;
-import logic.functional.Value;
-import logic.graphic.window.Showable;
+import java.util.List;
+import javax.swing.WindowConstants;
 import logic.metric.area.Area;
 
 /**
- * The standard implementation of a java 2d window. It uses a
- * {@link javax.swing.JFrame} for this.
- * <p>This class mutates its state when {@link this#show()} is called. Since
- * show isn't synchronized, this class isn't thread-safe.</p>
+ * The default implementation of a java 2d window. It uses a
+ * {@link J2DBaseWindow} and adds the following settings to it:
+ * <ul>
+ *     <li>sets the title</li>
+ *     <li>sets the default close operation (end application on close)</li>
+ * </ul>
+ * <p>This class mutates its state when {@link J2DBaseWindow#show()} is called.
+ * Since show isn't synchronized, this class isn't thread-safe. Additionally,
+ * the setting can change its state.</p>
  * @since 3.2.0
  */
-public class J2DWindow implements Showable {
+public class J2DWindow extends J2DBaseWindow {
     /**
-     * The Window. Because the constructor(s) only set fields, this lazy is used
-     * to postpone the actual creation, setting and actions regarding the
-     * JFrame.
-     */
-    private final Value<JFrame> window;
-
-    /**
-     * Secondary constructor. The primary constructor is private.
+     * Primary constructor.
      * @param title The title that is shown at the top of the window.
      * @param area The area of the window.
      * @param shapes The shapes that are drawn on the window.
@@ -54,36 +48,15 @@ public class J2DWindow implements Showable {
     public J2DWindow(
         final String title, final Area area, final Iterable<J2DShape> shapes
     ) {
-        this(
-            new Lazy<>(
-                () -> {
-                    final var frame = new JFrame(title);
-                    area.applyOn(frame::setBounds);
-                    final var panel = new JPanel() {
-                        @Override
-                        protected void paintComponent(final Graphics graphics) {
-                            super.paintComponent(graphics);
-                            shapes.forEach(shape -> shape.draw(graphics));
-                        }
-                    };
-                    frame.add(panel);
-                    frame.setVisible(true);
-                    return frame;
-                }
-            )
+        super(
+            area,
+            List.of(
+                frame -> frame.setTitle(title),
+                frame -> frame.setDefaultCloseOperation(
+                    WindowConstants.EXIT_ON_CLOSE
+                )
+            ),
+            shapes
         );
-    }
-
-    /**
-     * Primary constructor.
-     * @param window The construction of the frame.
-     */
-    private J2DWindow(final Value<JFrame> window) {
-        this.window = window;
-    }
-
-    @Override
-    public final void show() {
-        this.window.content();
     }
 }
