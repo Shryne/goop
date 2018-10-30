@@ -20,7 +20,7 @@
  */
 
 /**
- * A package for all color variants.
- * @since 2.1.0
+ * Tests regarding the area components.
+ * @since 3.4.0
  */
-package logic.color;
+package logic.metric.area;

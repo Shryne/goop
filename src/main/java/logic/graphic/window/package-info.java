@@ -23,4 +23,4 @@
  * Contains the window components that choose the concrete window components.
  * @since 3.2.0
  */
-package logic.window;
+package logic.graphic.window;

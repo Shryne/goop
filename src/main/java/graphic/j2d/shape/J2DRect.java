@@ -22,7 +22,7 @@
 package graphic.j2d.shape;
 
 import java.awt.Graphics;
-import logic.color.Color;
+import logic.graphic.color.Color;
 import logic.metric.area.Area;
 
 /**
