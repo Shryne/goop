@@ -19,8 +19,19 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+package logic.graphic.window;
+
 /**
- * Tests regarding the area components.
- * @since 3.4.0
+ * A component that can show itself - mainly windows.
+ * @since 3.2.0
  */
-package metric.area;
+public interface Showable {
+    /**
+     * Shows the component, if it's not visible. This method is a no-op if
+     * the component is already visible. Note that this operation will probably
+     * have some more operations behind it, because a window needs more steps
+     * than a simple "make me visible". So because of this, this method applies
+     * all operations necessary to make a window visible.
+     */
+    void show();
+}

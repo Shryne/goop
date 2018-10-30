@@ -19,19 +19,10 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.window;
-
 /**
- * A component that can show itself - mainly windows.
- * @since 3.2.0
+ * Contains all graphic components that are used as a layer to chose the actual
+ * graphic components. This is necessary because the actual components (like
+ * the ones using OpenGL) aren't supported on every platform.
+ * @since 4.5.0
  */
-public interface Showable {
-    /**
-     * Shows the component, if it's not visible. This method is a no-op if
-     * the component is already visible. Note that this operation will probably
-     * have some more operations behind it, because a window needs more steps
-     * than a simple "make me visible". So because of this, this method applies
-     * all operations necessary to make a window visible.
-     */
-    void show();
-}
+package logic.graphic;

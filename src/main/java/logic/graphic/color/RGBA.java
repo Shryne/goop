@@ -19,7 +19,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.color;
+package logic.graphic.color;
 
 import logic.functional.QuadConsumer;
 

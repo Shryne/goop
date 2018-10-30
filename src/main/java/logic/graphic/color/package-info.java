@@ -20,11 +20,7 @@
  */
 
 /**
- * Contains all logic.metric components that are using the cartesian coordinate
- * system. Since this is the system that will most probably be used, it's the
- * default. Additionally the default dimension is 2, so all components that
- * don't have a dimension in their name are two dimensional. Example:
- * Position instead of Position2D.
+ * A package for all color variants.
  * @since 2.1.0
  */
-package logic.metric;
+package logic.graphic.color;

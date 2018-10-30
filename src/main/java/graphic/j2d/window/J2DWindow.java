@@ -27,8 +27,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import logic.functional.Lazy;
 import logic.functional.Value;
+import logic.graphic.window.Showable;
 import logic.metric.area.Area;
-import logic.window.Showable;
 
 /**
  * The standard implementation of a java 2d window. It uses a
