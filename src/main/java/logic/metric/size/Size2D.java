@@ -22,6 +22,7 @@
 package logic.metric.size;
 
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 
 /*
 I am not happy about this naming, but my other idea's regarding the interface
@@ -56,7 +57,12 @@ public class Size2D implements Size {
     }
 
     @Override
+    public final <R> R result(final BiFunction<Integer, Integer, R> target) {
+        return target.apply(this.width, this.height);
+    }
+
+    @Override
     public final void applyOn(final BiConsumer<Integer, Integer> target) {
-        target.accept(this.width, this.height);
+        Size.super.applyOn(target);
     }
 }

@@ -19,32 +19,45 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.functional;
+package graphic.lwjgl.window;
 
-/*
-Personally I wouldn't call this class "Consumer", but in this case I thought
-it may be better to follow the standard libraries way. Otherwise users might
-be confused
-*/
+import logic.functional.Action;
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.opengl.GL11;
+
 /**
- * This interface defines a consumer like {@link java.util.function.Consumer}.
- * The difference is that this consumer takes four arguments.
- * @param <A> The type of the first argument.
- * @param <B> The type of the second argument.
- * @param <C> The type of the third argument.
- * @param <D> The type of the fourth argument.
- * @since 2.1.0
+ * This buffer takes care of the correct swap interval, the color cleaning
+ * and the swapping of the buffer.
+ * <p>This class is not thread-safe, because it mutates the global OpenGL
+ * state.</p>
+ * @since 3.9.0
  */
-@FunctionalInterface
-public interface QuadConsumer<A, B, C, D> {
+public class BaseViewBuffer implements ViewBuffer {
     /**
-     * Accepts the given arguments.
-     * @param a The first argument.
-     * @param b The second argument.
-     * @param c The third argument.
-     * @param d The fourth argument.
-     * @checkstyle ParameterNumber (3 lines)
-     * @checkstyle ParameterNameCheck (2 lines)
+     * The amount of buffer swapping per second.
      */
-    void accept(A a, B b, C c, D d);
+    private final int interval;
+
+    /**
+     * Primary constructor.
+     * @param interval The interval of the swapping. A 60 would mean that the
+     *  buffer would be swapped 60 times per second.
+     */
+    public BaseViewBuffer(final int interval) {
+        this.interval = interval;
+    }
+
+    @Override
+    public final void drawBuffered(final long window, final Action action) {
+        GLFW.glfwSwapInterval(this.interval);
+        GL11.glClearColor(
+            1.0f, 1.0f, 1.0f, 1.0f
+        );
+        GL11.glClear(
+            GL11.GL_COLOR_BUFFER_BIT
+                | GL11.GL_DEPTH_BUFFER_BIT
+        );
+        action.run();
+        GLFW.glfwSwapBuffers(window);
+    }
 }

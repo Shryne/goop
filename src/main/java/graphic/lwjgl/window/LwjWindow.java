@@ -19,32 +19,17 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.functional;
+package graphic.lwjgl.window;
 
-/*
-Personally I wouldn't call this class "Consumer", but in this case I thought
-it may be better to follow the standard libraries way. Otherwise users might
-be confused
-*/
+import logic.graphic.window.Showable;
+
 /**
- * This interface defines a consumer like {@link java.util.function.Consumer}.
- * The difference is that this consumer takes four arguments.
- * @param <A> The type of the first argument.
- * @param <B> The type of the second argument.
- * @param <C> The type of the third argument.
- * @param <D> The type of the fourth argument.
- * @since 2.1.0
+ * The interface for the lwjgl windows.
+ * @since 3.9.0
  */
-@FunctionalInterface
-public interface QuadConsumer<A, B, C, D> {
+public interface LwjWindow extends Showable {
     /**
-     * Accepts the given arguments.
-     * @param a The first argument.
-     * @param b The second argument.
-     * @param c The third argument.
-     * @param d The fourth argument.
-     * @checkstyle ParameterNumber (3 lines)
-     * @checkstyle ParameterNameCheck (2 lines)
+     * Updates the window. This can involve redrawing and similar stuff.
      */
-    void accept(A a, B b, C c, D d);
+    void update();
 }

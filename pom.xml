@@ -6,7 +6,7 @@
 
     <groupId>com.goop</groupId>
     <artifactId>goop</artifactId>
-    <version>3.8.0</version>
+    <version>3.9.0</version>
 
     <properties>
         <sonar.sources>src/main/java</sonar.sources>
@@ -16,6 +16,8 @@
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
         <sonar.language>java</sonar.language>
+
+        <lwjgl.version>3.0.0</lwjgl.version>
     </properties>
 
     <build>
@@ -25,6 +27,11 @@
                 <artifactId>qulice-maven-plugin</artifactId>
                 <version>0.18.2</version>
                 <configuration>
+                    <excludes combine.children="append">
+                        <exclude>findbugs:.*</exclude>
+                        <exclude>duplicatefinder:.*</exclude>
+                        <exclude>dependencies:.*</exclude>
+                    </excludes>
                     <license>file:${basedir}/LICENSE.md</license>
                 </configuration>
                 <executions>
@@ -120,7 +127,25 @@
         <dependency>
             <groupId>org.lwjgl</groupId>
             <artifactId>lwjgl</artifactId>
-            <version>3.1.0</version>
+            <version>${lwjgl.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.lwjgl</groupId>
+            <artifactId>lwjgl-platform</artifactId>
+            <version>${lwjgl.version}</version>
+            <classifier>natives-windows</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.lwjgl</groupId>
+            <artifactId>lwjgl-platform</artifactId>
+            <version>${lwjgl.version}</version>
+            <classifier>natives-osx</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.lwjgl</groupId>
+            <artifactId>lwjgl-platform</artifactId>
+            <version>${lwjgl.version}</version>
+            <classifier>natives-linux</classifier>
         </dependency>
     </dependencies>
 </project>

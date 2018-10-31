@@ -22,7 +22,6 @@
 /**
  * Contains the visual components that are using java 2d to visualize
  * themselves.
- *
  * @since 2.1.0
  */
 package graphic.j2d;

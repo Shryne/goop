@@ -21,7 +21,7 @@
 
 package logic.metric.area;
 
-import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import logic.functional.QuadConsumer;
 import logic.metric.position.Pos;
 import logic.metric.position.Pos2D;
@@ -38,8 +38,8 @@ chance that a user might use the class name as a parameter type
  * Basic concrete implementation of {@link Area}.
  * <p>Whether this class is immutable or thread-safe, depends on the given
  * {@link Pos} and {@link Size}. This class
- * doesn't mutate state by itself. Additionally note that the
- * {@link #applyOn(BiConsumer)} provides the actual objects without any
+ * doesn't mutate state by itself. Additionally note that the methods provide
+ * the actual objects without any
  * safe-copies for performance reasons.</p>
  * @since 3.3.0
  */
@@ -72,6 +72,18 @@ public class Area2D implements Area {
     }
 
     /**
+     * Secondary constructor. Uses (0|0) as its position. The chosen position is
+     * will be immutable.
+     * @param size The size of the area.
+     */
+    public Area2D(final Size size) {
+        this(
+            new Pos2D(0, 0),
+            size
+        );
+    }
+
+    /**
      * Primary constructor.
      * @param pos The position of the area.
      * @param size The size of the area.
@@ -82,8 +94,8 @@ public class Area2D implements Area {
     }
 
     @Override
-    public final void applyOn(final BiConsumer<Pos, Size> target) {
-        target.accept(this.pos, this.size);
+    public final <R> R result(final BiFunction<Pos, Size, R> target) {
+        return target.apply(this.pos, this.size);
     }
 
     @Override

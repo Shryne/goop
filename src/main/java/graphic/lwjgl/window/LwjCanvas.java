@@ -19,32 +19,25 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.functional;
+package graphic.lwjgl.window;
 
-/*
-Personally I wouldn't call this class "Consumer", but in this case I thought
-it may be better to follow the standard libraries way. Otherwise users might
-be confused
-*/
+import logic.functional.Action;
+
 /**
- * This interface defines a consumer like {@link java.util.function.Consumer}.
- * The difference is that this consumer takes four arguments.
- * @param <A> The type of the first argument.
- * @param <B> The type of the second argument.
- * @param <C> The type of the third argument.
- * @param <D> The type of the fourth argument.
- * @since 2.1.0
+ * Prepares everything so that the user can draw something on the lwjgl window.
+ * <p>Note that even though this is a canvas, nothing will be really drawn on
+ * it, because lwjgl draws everything on the current global context. This
+ * interface and the implementations of it offer a way to make everything around
+ * the drawing, like buffer flipping, clearing the window, setting the viewport
+ * and so on.</p>
+ * @since 3.9.0
  */
-@FunctionalInterface
-public interface QuadConsumer<A, B, C, D> {
+public interface LwjCanvas {
     /**
-     * Accepts the given arguments.
-     * @param a The first argument.
-     * @param b The second argument.
-     * @param c The third argument.
-     * @param d The fourth argument.
-     * @checkstyle ParameterNumber (3 lines)
-     * @checkstyle ParameterNameCheck (2 lines)
+     * Prepares everything before and after the drawing and runs the action to
+     * draw something.
+     * @param window The handle to the lwjgl window.
+     * @param action The drawing to be ran.
      */
-    void accept(A a, B b, C c, D d);
+    void preparedDraw(long window, Action action);
 }

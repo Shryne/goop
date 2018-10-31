@@ -22,29 +22,31 @@
 package logic.functional;
 
 /*
-Personally I wouldn't call this class "Consumer", but in this case I thought
+Personally, I may've called this class differently, but in this case I thought
 it may be better to follow the standard libraries way. Otherwise users might
 be confused
 */
 /**
- * This interface defines a consumer like {@link java.util.function.Consumer}.
- * The difference is that this consumer takes four arguments.
+ * This interface defines a function like {@link java.util.function.Function}.
+ * The difference is that this function takes four arguments.
  * @param <A> The type of the first argument.
  * @param <B> The type of the second argument.
  * @param <C> The type of the third argument.
  * @param <D> The type of the fourth argument.
- * @since 2.1.0
+ * @param <R> The type of the result of that function.
+ * @since 3.9.0
  */
 @FunctionalInterface
-public interface QuadConsumer<A, B, C, D> {
+public interface QuadFunction<A, B, C, D, R> {
     /**
-     * Accepts the given arguments.
+     * Accepts the given arguments and returns its result.
      * @param a The first argument.
      * @param b The second argument.
      * @param c The third argument.
      * @param d The fourth argument.
+     * @return The result of the call.
      * @checkstyle ParameterNumber (3 lines)
      * @checkstyle ParameterNameCheck (2 lines)
      */
-    void accept(A a, B b, C c, D d);
+    R apply(A a, B b, C c, D d);
 }

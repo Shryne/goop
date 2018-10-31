@@ -22,6 +22,7 @@
 package logic.metric.position;
 
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 
 /*
 This interface is necessary (compared to using x and y each time) because this
@@ -38,8 +39,26 @@ sacrificing readability
  */
 public interface Pos {
     /**
+     * Gives the given function the x and y coordinates of this position and
+     * returns the result of the function. This can be handy if you want to
+     * calculate something with the position and want to have the result.
+     * @param target The target who gets the coordinates.
+     * @param <R> The type of the result of the applied function.
+     * @return The result of the applied function.
+     */
+    <R> R result(BiFunction<Integer, Integer, R> target);
+
+    /**
      * Gives the given consumer the x and y coordinates of this position.
      * @param target Target that gets the Coordinates.
      */
-    void applyOn(BiConsumer<Integer, Integer> target);
+    default void applyOn(final BiConsumer<Integer, Integer> target) {
+        this.result(
+            // @checkstyle ParameterName (1 line)
+            (x, y) -> {
+                target.accept(x, y);
+                return Void.TYPE;
+            }
+        );
+    }
 }

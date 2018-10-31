@@ -22,6 +22,7 @@
 package logic.metric.size;
 
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 
 /*
 This interface is necessary (compared to using width and height each time)
@@ -35,8 +36,26 @@ implementations like a scaling size
  */
 public interface Size {
     /**
+     * Gives the given function the width and height that define this size and
+     * returns the result of this function. This can be handy if for example one
+     * wants to calculate something with these values and wants the result of
+     * this.
+     * @param target The target who gets the width and the height.
+     * @param <R> The type of the result.
+     * @return The result of the applied function.
+     */
+    <R> R result(BiFunction<Integer, Integer, R> target);
+
+    /**
      * Gives the given consumer the width and height that define this size.
      * @param target Target that gets the width and height.
      */
-    void applyOn(BiConsumer<Integer, Integer> target);
+    default void applyOn(final BiConsumer<Integer, Integer> target) {
+        this.result(
+            (width, height) -> {
+                target.accept(width, height);
+                return Void.TYPE;
+            }
+        );
+    }
 }
