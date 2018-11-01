@@ -19,9 +19,31 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+package logic.metric.size;
+
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
 /**
- * Provides the {@link logic.metric.position.Pos} interface and the classes and
- * decorators around it.
- * @since 3.4.0
+ * Tests for {@link Size}.
+ * @since 4.9.0
  */
-package logic.metric.position;
+public class SizeTest {
+    /**
+     * Aims to test, whether the correct result is returned.
+     */
+    @Test
+    public void correctResult() {
+        final var width = 3445;
+        final var height = 432;
+        MatcherAssert.assertThat(
+            width + height,
+            Matchers.is(
+                new Size2D(width, height).result(
+                    Integer::sum
+                )
+            )
+        );
+    }
+}

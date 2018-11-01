@@ -19,7 +19,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.metric.position;
+package logic.metric.pos;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;

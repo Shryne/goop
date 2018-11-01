@@ -40,7 +40,7 @@ public class LwjBaseCamera implements LwjCamera {
     private final Area area;
 
     /**
-     * Secondary constructor. The camera will have its view on position (0|0).
+     * Secondary constructor. The camera will have its view on pos (0|0).
      * @param size The size of the camera/the part you can see through it.
      */
     public LwjBaseCamera(final Size size) {

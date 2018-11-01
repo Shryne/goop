@@ -19,7 +19,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.metric.position;
+package logic.metric.pos;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -27,21 +27,21 @@ import java.util.function.BiFunction;
 /*
 This interface is necessary (compared to using x and y each time) because this
 library depends on the possibility to implement own implementations like a
-moving position
+moving pos
 
 I changed the name from Position to Pos, because that's a class that will be
 used in many places and I think this cut will safe some characters without
 sacrificing readability
 */
 /**
- * A cartesian two dimensional position.
+ * A cartesian two dimensional pos.
  * @since 2.1.0
  */
 public interface Pos {
     /**
-     * Gives the given function the x and y coordinates of this position and
+     * Gives the given function the x and y coordinates of this pos and
      * returns the result of the function. This can be handy if you want to
-     * calculate something with the position and want to have the result.
+     * calculate something with the pos and want to have the result.
      * @param target The target who gets the coordinates.
      * @param <R> The type of the result of the applied function.
      * @return The result of the applied function.
@@ -49,7 +49,7 @@ public interface Pos {
     <R> R result(BiFunction<Integer, Integer, R> target);
 
     /**
-     * Gives the given consumer the x and y coordinates of this position.
+     * Gives the given consumer the x and y coordinates of this pos.
      * @param target Target that gets the Coordinates.
      */
     default void applyOn(final BiConsumer<Integer, Integer> target) {

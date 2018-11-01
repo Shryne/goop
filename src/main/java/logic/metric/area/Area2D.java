@@ -21,10 +21,12 @@
 
 package logic.metric.area;
 
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import logic.functional.QuadConsumer;
-import logic.metric.position.Pos;
-import logic.metric.position.Pos2D;
+import logic.functional.QuadFunction;
+import logic.metric.pos.Pos;
+import logic.metric.pos.Pos2D;
 import logic.metric.size.Size;
 import logic.metric.size.Size2D;
 
@@ -45,7 +47,7 @@ chance that a user might use the class name as a parameter type
  */
 public class Area2D implements Area {
     /**
-     * The position of this area.
+     * The pos of this area.
      */
     private final Pos pos;
 
@@ -57,8 +59,8 @@ public class Area2D implements Area {
     /**
      * Secondary constructor. Uses an immutable implementation of {@link Pos}
      * and {@link Size}.
-     * @param x The x coordinate for the position.
-     * @param y The y coordinate for the position.
+     * @param x The x coordinate for the pos.
+     * @param y The y coordinate for the pos.
      * @param width The width for the size.
      * @param height The height for the size.
      * @checkstyle ParameterNumber (3 lines)
@@ -72,7 +74,7 @@ public class Area2D implements Area {
     }
 
     /**
-     * Secondary constructor. Uses (0|0) as its position. The chosen position is
+     * Secondary constructor. Uses (0|0) as its pos. The chosen pos is
      * will be immutable.
      * @param size The size of the area.
      */
@@ -85,7 +87,7 @@ public class Area2D implements Area {
 
     /**
      * Primary constructor.
-     * @param pos The position of the area.
+     * @param pos The pos of the area.
      * @param size The size of the area.
      */
     public Area2D(final Pos pos, final Size size) {
@@ -96,6 +98,18 @@ public class Area2D implements Area {
     @Override
     public final <R> R result(final BiFunction<Pos, Size, R> target) {
         return target.apply(this.pos, this.size);
+    }
+
+    @Override
+    public final <R> R result(
+        final QuadFunction<Integer, Integer, Integer, Integer, R> target
+    ) {
+        return Area.super.result(target);
+    }
+
+    @Override
+    public final void applyOn(final BiConsumer<Pos, Size> target) {
+        Area.super.applyOn(target);
     }
 
     @Override

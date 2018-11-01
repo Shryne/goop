@@ -25,11 +25,11 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import logic.functional.QuadConsumer;
 import logic.functional.QuadFunction;
-import logic.metric.position.Pos;
+import logic.metric.pos.Pos;
 import logic.metric.size.Size;
 
 /*
-This interface is needed (compared to using the position and the size classes
+This interface is needed (compared to using the pos and the size classes
 alone) because some implementations need both like an overlappable area
 */
 /**
@@ -39,11 +39,11 @@ alone) because some implementations need both like an overlappable area
  */
 public interface Area {
     /**
-     * Gives the given function the position and the size which define this
+     * Gives the given function the pos and the size which define this
      * area and returns the result of that. This can be handy if for example
      * one wants to calculate something based on these values and needs the
      * result of it.
-     * @param target The target that gets the position and the size.
+     * @param target The target that gets the pos and the size.
      * @param <R> The type of the result.
      * @return The result.
      */
@@ -58,12 +58,12 @@ public interface Area {
     would've to convert them back and forth there
     */
     /**
-     * Gives the given function the position and the size which define this
+     * Gives the given function the pos and the size which define this
      * area. This method shall offer a more convenient way to use the area
      * classes compared to {@link this#result(BiFunction)}.
      * <p>This method uses {@link this#result(BiFunction)} to gets it's values
      * and it doesn't mutate the state by itself.</p>
-     * @param target Target that gets the position and the size as four integer
+     * @param target Target that gets the pos and the size as four integer
      *  values.
      * @param <R> The type of the result.
      * @return The result.
@@ -82,9 +82,9 @@ public interface Area {
     }
 
     /**
-     * Gives the given consumer the position and the size which define this
+     * Gives the given consumer the pos and the size which define this
      * area.
-     * @param target Target that gets the position and the size.
+     * @param target Target that gets the pos and the size.
      */
     default void applyOn(final BiConsumer<Pos, Size> target) {
         this.result(
@@ -104,12 +104,12 @@ public interface Area {
     would've to convert them back and forth there
     */
     /**
-     * Gives the given consumer the position and the size which define this
+     * Gives the given consumer the pos and the size which define this
      * area. This method shall offer a more convenient way to use the area
      * classes compared to {@link this#applyOn(BiConsumer)}.
      * <p>This method uses {@link this#applyOn(BiConsumer)} to gets it's values
      * and it doesn't mutate the state by itself.</p>
-     * @param target Target that gets the position and the size as four integer
+     * @param target Target that gets the pos and the size as four integer
      *  values.
      */
     default void applyOn(
