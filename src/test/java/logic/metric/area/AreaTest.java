@@ -38,14 +38,29 @@ public class AreaTest {
      */
     @Test
     public void correctApply() {
-        // @checkstyle LocalFinalVariableName (2 lines)
-        final var resPos = new Pos2D(42, 4328);
-        final var resSize = new Size2D(348, 42852);
-        new Area2D(resPos, resSize).applyOn(
-            // @checkstyle ParameterName (1 line)
+        // @checkstyle LocalFinalVariableName (4 lines)
+        final var resX = 42;
+        final var resY = 563;
+        final var resW = 34324;
+        final var resH = 233;
+        new Area2D(
+            new Pos2D(resX, resY),
+            new Size2D(resW, resH)
+        ).applyOn(
             (pos, size) -> {
-                MatcherAssert.assertThat(pos, Matchers.equalTo(resPos));
-                MatcherAssert.assertThat(size, Matchers.equalTo(resSize));
+                pos.applyOn(
+                    // @checkstyle ParameterName (1 line)
+                    (x, y) -> {
+                        MatcherAssert.assertThat(x, Matchers.is(resX));
+                        MatcherAssert.assertThat(y, Matchers.is(resY));
+                    }
+                );
+                size.applyOn(
+                    (width, height) -> {
+                        MatcherAssert.assertThat(width, Matchers.is(resW));
+                        MatcherAssert.assertThat(height, Matchers.is(resH));
+                    }
+                );
             }
         );
     }
