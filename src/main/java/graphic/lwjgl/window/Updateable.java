@@ -21,13 +21,11 @@
 
 package graphic.lwjgl.window;
 
-import logic.graphic.window.Showable;
-
 /**
- * The interface for the lwjgl windows.
- * @since 3.9.0
+ * An interface for windows that are update based.
+ * @since 5.9.1
  */
-public interface LwjWindow extends Showable {
+public interface Updateable {
     /**
      * Updates the window. This can involve redrawing and similar stuff.
      */

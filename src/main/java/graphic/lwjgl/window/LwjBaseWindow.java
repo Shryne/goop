@@ -24,6 +24,7 @@ package graphic.lwjgl.window;
 import java.nio.IntBuffer;
 import logic.functional.Lazy;
 import logic.functional.Value;
+import logic.graphic.window.Showable;
 import logic.metric.area.Area;
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFW;
@@ -37,7 +38,7 @@ import org.lwjgl.system.MemoryUtil;
  * {@link #show()} is called.</p>
  * @since 3.9.0
  */
-public class LwjBaseWindow implements LwjWindow, AutoCloseable {
+public class LwjBaseWindow implements Updateable, Showable, AutoCloseable {
     /**
      * The creation of the window that results in the lwjgl long handle to it.
      */
