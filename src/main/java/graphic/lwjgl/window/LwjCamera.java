@@ -19,27 +19,17 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.metric.position;
+package graphic.lwjgl.window;
 
-import java.util.function.BiConsumer;
-
-/*
-This interface is necessary (compared to using x and y each time) because this
-library depends on the possibility to implement own implementations like a
-moving position
-
-I changed the name from Position to Pos, because that's a class that will be
-used in many places and I think this cut will safe some characters without
-sacrificing readability
-*/
 /**
- * A cartesian two dimensional position.
- * @since 2.1.0
+ * Shows a certain field on the related window. Note that a window has its own
+ * camera, not the other way around.
+ * @since 3.9.0
  */
-public interface Pos {
+public interface LwjCamera {
     /**
-     * Gives the given consumer the x and y coordinates of this position.
-     * @param target Target that gets the Coordinates.
+     * Applies the setting of the camera. Since lwjgl sets many things global,
+     * the camera won't need the window or anything else as an argument.
      */
-    void applyOn(BiConsumer<Integer, Integer> target);
+    void apply();
 }

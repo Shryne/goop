@@ -19,47 +19,34 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.metric.position;
-
-import java.util.function.BiConsumer;
+package logic.functional;
 
 /*
-I am not happy about this naming, but my other idea's regarding the interface
-name and the basic implementation weren't good either (impl or simple for
-example). So I took the more annoying name for the implementation to lower the
-chance that a user might use the class name as a parameter type
+Personally, I may've called this class differently, but in this case I thought
+it may be better to follow the standard libraries way. Otherwise users might
+be confused
 */
 /**
- * Basic concrete implementation of {@link Pos}.
- * <p>This class is immutable and thread-safe.</p>
- * @since 3.4.0
+ * This interface defines a function like {@link java.util.function.Function}.
+ * The difference is that this function takes four arguments.
+ * @param <A> The type of the first argument.
+ * @param <B> The type of the second argument.
+ * @param <C> The type of the third argument.
+ * @param <D> The type of the fourth argument.
+ * @param <R> The type of the result of that function.
+ * @since 3.9.0
  */
-public class Pos2D implements Pos {
+@FunctionalInterface
+public interface QuadFunction<A, B, C, D, R> {
     /**
-     * The x coordinate.
-     * @checkstyle MemberName (2 lines)
+     * Accepts the given arguments and returns its result.
+     * @param a The first argument.
+     * @param b The second argument.
+     * @param c The third argument.
+     * @param d The fourth argument.
+     * @return The result of the call.
+     * @checkstyle ParameterNumber (3 lines)
+     * @checkstyle ParameterNameCheck (2 lines)
      */
-    private final int x;
-
-    /**
-     * The y coordinate.
-     * @checkstyle MemberName (2 lines)
-     */
-    private final int y;
-
-    /**
-     * Primary constructor.
-     * @param x The x coordinate.
-     * @param y The y coordinate.
-     * @checkstyle ParameterName (2 lines)
-     */
-    public Pos2D(final int x, final int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    @Override
-    public final void applyOn(final BiConsumer<Integer, Integer> target) {
-        target.accept(this.x, this.y);
-    }
+    R apply(A a, B b, C c, D d);
 }

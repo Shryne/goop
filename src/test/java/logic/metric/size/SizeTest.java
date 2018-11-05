@@ -19,32 +19,31 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.functional;
+package logic.metric.size;
 
-/*
-Personally I wouldn't call this class "Consumer", but in this case I thought
-it may be better to follow the standard libraries way. Otherwise users might
-be confused
-*/
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
 /**
- * This interface defines a consumer like {@link java.util.function.Consumer}.
- * The difference is that this consumer takes four arguments.
- * @param <A> The type of the first argument.
- * @param <B> The type of the second argument.
- * @param <C> The type of the third argument.
- * @param <D> The type of the fourth argument.
- * @since 2.1.0
+ * Tests for {@link Size}.
+ * @since 4.9.0
  */
-@FunctionalInterface
-public interface QuadConsumer<A, B, C, D> {
+public class SizeTest {
     /**
-     * Accepts the given arguments.
-     * @param a The first argument.
-     * @param b The second argument.
-     * @param c The third argument.
-     * @param d The fourth argument.
-     * @checkstyle ParameterNumber (3 lines)
-     * @checkstyle ParameterNameCheck (2 lines)
+     * Aims to test, whether the correct result is returned.
      */
-    void accept(A a, B b, C c, D d);
+    @Test
+    public void correctResult() {
+        final var width = 3445;
+        final var height = 432;
+        MatcherAssert.assertThat(
+            width + height,
+            Matchers.is(
+                new Size2D(width, height).result(
+                    Integer::sum
+                )
+            )
+        );
+    }
 }

@@ -20,8 +20,7 @@
  */
 
 /**
- * Provides the {@link logic.metric.position.Pos} interface and the classes and
- * decorators around it.
- * @since 3.4.0
+ * Contains the windows that are using lwjgl to show themselves.
+ * @since 3.9.0
  */
-package logic.metric.position;
+package graphic.lwjgl.window;

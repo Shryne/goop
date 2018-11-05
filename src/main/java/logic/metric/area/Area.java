@@ -22,12 +22,14 @@
 package logic.metric.area;
 
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import logic.functional.QuadConsumer;
-import logic.metric.position.Pos;
+import logic.functional.QuadFunction;
+import logic.metric.pos.Pos;
 import logic.metric.size.Size;
 
 /*
-This interface is needed (compared to using the position and the size classes
+This interface is needed (compared to using the pos and the size classes
 alone) because some implementations need both like an overlappable area
 */
 /**
@@ -37,11 +39,15 @@ alone) because some implementations need both like an overlappable area
  */
 public interface Area {
     /**
-     * Gives the given consumer the position and the size which define this
-     * area.
-     * @param target Target that gets the position and the size.
+     * Gives the given function the pos and the size which define this
+     * area and returns the result of that. This can be handy if for example
+     * one wants to calculate something based on these values and needs the
+     * result of it.
+     * @param target The target that gets the pos and the size.
+     * @param <R> The type of the result.
+     * @return The result.
      */
-    void applyOn(BiConsumer<Pos, Size> target);
+    <R> R result(BiFunction<Pos, Size, R> target);
 
     /*
     The apply(BiConsumer<Position, Size>) method is not enough, because the
@@ -52,23 +58,68 @@ public interface Area {
     would've to convert them back and forth there
     */
     /**
-     * Gives the given consumer the position and the size which define this
+     * Gives the given function the pos and the size which define this
+     * area. This method shall offer a more convenient way to use the area
+     * classes compared to {@link this#result(BiFunction)}.
+     * <p>This method uses {@link this#result(BiFunction)} to gets it's values
+     * and it doesn't mutate the state by itself.</p>
+     * @param target Target that gets the pos and the size as four integer
+     *  values.
+     * @param <R> The type of the result.
+     * @return The result.
+     */
+    default <R> R result(
+        final QuadFunction<Integer, Integer, Integer, Integer, R> target
+    ) {
+        return this.result(
+            (pos, size) -> pos.result(
+                // @checkstyle ParameterName (1 line)
+                (x, y) -> size.result(
+                    (width, height) -> target.apply(x, y, width, height)
+                )
+            )
+        );
+    }
+
+    /**
+     * Gives the given consumer the pos and the size which define this
+     * area.
+     * @param target Target that gets the pos and the size.
+     */
+    default void applyOn(final BiConsumer<Pos, Size> target) {
+        this.result(
+            (pos, size) -> {
+                target.accept(pos, size);
+                return Void.TYPE;
+            }
+        );
+    }
+
+    /*
+    The apply(BiConsumer<Position, Size>) method is not enough, because the
+    concrete graphic libraries are based on single values (x, y), instead of
+    the classes of this library. Without this method, one would've to use
+    two lambdas in multiple places. Additionally I don't want to use this method
+    alone, because my classes depend on Position, Size and the others and I
+    would've to convert them back and forth there
+    */
+    /**
+     * Gives the given consumer the pos and the size which define this
      * area. This method shall offer a more convenient way to use the area
      * classes compared to {@link this#applyOn(BiConsumer)}.
      * <p>This method uses {@link this#applyOn(BiConsumer)} to gets it's values
      * and it doesn't mutate the state by itself.</p>
-     * @param target Target that gets the position and the size as four integer
+     * @param target Target that gets the pos and the size as four integer
      *  values.
      */
     default void applyOn(
         final QuadConsumer<Integer, Integer, Integer, Integer> target) {
-        // @checkstyle ParameterName (4 lines)
-        this.applyOn(
-            (pos, size) -> pos.applyOn(
-                (x, y) -> size.applyOn(
-                    (w, h) -> target.accept(x, y, w, h)
-                )
-            )
+        // @checkstyle ParameterName (2 lines)
+        this.result(
+            (x, y, width, height) -> {
+                target.accept(x, y, width, height);
+                return Void.TYPE;
+            }
         );
     }
 }

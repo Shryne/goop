@@ -19,7 +19,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.metric.size;
+package logic.metric.pos;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -31,38 +31,41 @@ example). So I took the more annoying name for the implementation to lower the
 chance that a user might use the class name as a parameter type
 */
 /**
- * Basic concrete implementation of {@link Size}.
+ * Basic concrete implementation of {@link Pos}.
  * <p>This class is immutable and thread-safe.</p>
  * @since 3.4.0
  */
-public class Size2D implements Size {
+public class Pos2D implements Pos {
     /**
-     * The width of the size.
+     * The x coordinate.
+     * @checkstyle MemberName (2 lines)
      */
-    private final int width;
+    private final int x;
 
     /**
-     * The height of the size.
+     * The y coordinate.
+     * @checkstyle MemberName (2 lines)
      */
-    private final int height;
+    private final int y;
 
     /**
      * Primary constructor.
-     * @param width The width for the size.
-     * @param height The height for the size.
+     * @param x The x coordinate.
+     * @param y The y coordinate.
+     * @checkstyle ParameterName (2 lines)
      */
-    public Size2D(final int width, final int height) {
-        this.width = width;
-        this.height = height;
+    public Pos2D(final int x, final int y) {
+        this.x = x;
+        this.y = y;
     }
 
     @Override
     public final <R> R result(final BiFunction<Integer, Integer, R> target) {
-        return target.apply(this.width, this.height);
+        return target.apply(this.x, this.y);
     }
 
     @Override
     public final void applyOn(final BiConsumer<Integer, Integer> target) {
-        Size.super.applyOn(target);
+        Pos.super.applyOn(target);
     }
 }

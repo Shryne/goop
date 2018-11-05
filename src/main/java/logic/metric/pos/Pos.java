@@ -19,41 +19,44 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.metric.size;
+package logic.metric.pos;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
 /*
-This interface is necessary (compared to using width and height each time)
-because this library depends on the possibility to implement own
-implementations like a scaling size
+This interface is necessary (compared to using x and y each time) because this
+library depends on the possibility to implement own implementations like a
+moving pos
+
+I changed the name from Position to Pos, because that's a class that will be
+used in many places and I think this cut will safe some characters without
+sacrificing readability
 */
 /**
- * The two dimensional cartesian based size of a rectangular area.
- *
+ * A cartesian two dimensional pos.
  * @since 2.1.0
  */
-public interface Size {
+public interface Pos {
     /**
-     * Gives the given function the width and height that define this size and
-     * returns the result of this function. This can be handy if for example one
-     * wants to calculate something with these values and wants the result of
-     * this.
-     * @param target The target who gets the width and the height.
-     * @param <R> The type of the result.
+     * Gives the given function the x and y coordinates of this pos and
+     * returns the result of the function. This can be handy if you want to
+     * calculate something with the pos and want to have the result.
+     * @param target The target who gets the coordinates.
+     * @param <R> The type of the result of the applied function.
      * @return The result of the applied function.
      */
     <R> R result(BiFunction<Integer, Integer, R> target);
 
     /**
-     * Gives the given consumer the width and height that define this size.
-     * @param target Target that gets the width and height.
+     * Gives the given consumer the x and y coordinates of this pos.
+     * @param target Target that gets the Coordinates.
      */
     default void applyOn(final BiConsumer<Integer, Integer> target) {
         this.result(
-            (width, height) -> {
-                target.accept(width, height);
+            // @checkstyle ParameterName (1 line)
+            (x, y) -> {
+                target.accept(x, y);
                 return Void.TYPE;
             }
         );

@@ -19,32 +19,19 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.functional;
+package graphic.lwjgl.window;
 
-/*
-Personally I wouldn't call this class "Consumer", but in this case I thought
-it may be better to follow the standard libraries way. Otherwise users might
-be confused
-*/
 /**
- * This interface defines a consumer like {@link java.util.function.Consumer}.
- * The difference is that this consumer takes four arguments.
- * @param <A> The type of the first argument.
- * @param <B> The type of the second argument.
- * @param <C> The type of the third argument.
- * @param <D> The type of the fourth argument.
- * @since 2.1.0
+ * Counts the acquisitions of the initialization and the releases. If it's
+ * even, meaning that nobody needs glfw anymore, then it releases glfw.
+ * <p><b>Important: Even though this interface exists, it doesn't mean that
+ * multiple GlfwInit implementations can be used simultaneously.</b>
+ * This is not possible, because they access the same global method.</p>
+ * @since 3.9.0
  */
-@FunctionalInterface
-public interface QuadConsumer<A, B, C, D> {
+public interface GlfwInit extends AutoCloseable {
     /**
-     * Accepts the given arguments.
-     * @param a The first argument.
-     * @param b The second argument.
-     * @param c The third argument.
-     * @param d The fourth argument.
-     * @checkstyle ParameterNumber (3 lines)
-     * @checkstyle ParameterNameCheck (2 lines)
+     * Initializes glfw.
      */
-    void accept(A a, B b, C c, D d);
+    void acquire();
 }
