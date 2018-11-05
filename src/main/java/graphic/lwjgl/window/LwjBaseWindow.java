@@ -33,9 +33,10 @@ import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 
 /**
- * A window using lwjgl to show itself.
- * <p>This class is not thread-safe, because it mutates its state when
- * {@link #show()} is called.</p>
+ * A window using lwjgl to show itself. Note that this class only represents the
+ * window without any threads. It's enough to start the window, but one has to
+ * consecutively call {@link #update()} to sustain it.
+ * <p>This class is not thread-safe.</p>
  * @since 3.9.0
  */
 public class LwjBaseWindow implements Updateable, Showable, AutoCloseable {
