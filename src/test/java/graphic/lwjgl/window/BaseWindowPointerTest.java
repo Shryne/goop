@@ -31,18 +31,18 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.system.MemoryStack;
 
 /**
- * Contains tests for the {@link WindowPointer} class.
+ * Contains tests for the {@link BaseWindowPointer} class.
  * @since 5.12.1
  */
-public class WindowPointerTest {
+public class BaseWindowPointerTest {
     /**
-     * Creates a lwjgl window by using {@link WindowPointer} and checks if the
-     * position of that window meets the expectations.
+     * Creates a lwjgl window by using {@link BaseWindowPointer} and checks if
+     * the position of that window meets the expectations.
      */
     @Test
     public void hasCorrectPosition() {
         final var pos = new Pos2D(123, 432);
-        final var window = new WindowPointer(
+        final var window = new BaseWindowPointer(
             pos,
             new Size2D(32, 234)
         );

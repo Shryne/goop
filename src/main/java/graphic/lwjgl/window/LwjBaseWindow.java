@@ -21,7 +21,6 @@
 
 package graphic.lwjgl.window;
 
-import logic.functional.Value;
 import logic.graphic.window.Showable;
 import logic.metric.area.Area;
 import org.lwjgl.glfw.Callbacks;
@@ -39,12 +38,7 @@ public class LwjBaseWindow implements Updateable, Showable, AutoCloseable {
     /**
      * The creation of the window that results in the lwjgl long handle to it.
      */
-    private final Value<Long> handle;
-
-    /**
-     * The initialization for glfw. This is necessary to create a window.
-     */
-    private final GlfwInit glfw;
+    private final WindowPointer pointer;
 
     /**
      * Needed for buffer swapping, camera, viewport and everything else around
@@ -58,59 +52,51 @@ public class LwjBaseWindow implements Updateable, Showable, AutoCloseable {
      * {@link #show()} is called the first time. The primary constructor is
      * private.
      * @param area The area of this window.
-     * @param glfw The glfw initialization. This is needed to create windows and
-     *  most of the functions on them.
      * @param canvas The canvas that contains the background information for the
      *  drawing and applies it accordingly.
      */
     public LwjBaseWindow(
         final Area area,
-        final GlfwInit glfw,
         final LwjCanvas canvas
     ) {
         this(
-            new WindowPointer(area),
-            glfw,
+            new BaseWindowPointer(area),
             canvas
         );
     }
 
     /**
      * Primary constructor.
-     * @param handle The value containing the long lwjgl handle to the window.
-     * @param glfw The glfw initialization. This is needed to create windows and
-     *  most of the functions on them.
+     * @param pointer The value containing the long lwjgl handle to the window.
      * @param canvas The canvas that contains the background information for the
      *  drawing and applies it accordingly.
      */
     private LwjBaseWindow(
-        final Value<Long> handle,
-        final GlfwInit glfw,
+        final WindowPointer pointer,
         final LwjCanvas canvas
     ) {
-        this.handle = handle;
-        this.glfw = glfw;
+        this.pointer = pointer;
         this.canvas = canvas;
     }
 
     @Override
     public final void show() {
-        GLFW.glfwShowWindow(this.handle.content());
+        GLFW.glfwShowWindow(this.pointer.content());
     }
 
     @Override
     public final void update() {
-        if (!GLFW.glfwWindowShouldClose(this.handle.content())) {
-            GLFW.glfwMakeContextCurrent(this.handle.content());
-            this.canvas.preparedDraw(this.handle.content(), () -> { });
+        if (!GLFW.glfwWindowShouldClose(this.pointer.content())) {
+            GLFW.glfwMakeContextCurrent(this.pointer.content());
+            this.canvas.preparedDraw(this.pointer.content(), () -> { });
         }
     }
 
     @Override
     public final void close() throws Exception {
-        Callbacks.glfwFreeCallbacks(this.handle.content());
-        GLFW.glfwDestroyWindow(this.handle.content());
+        Callbacks.glfwFreeCallbacks(this.pointer.content());
+        GLFW.glfwDestroyWindow(this.pointer.content());
         GL.setCapabilities(null);
-        this.glfw.close();
+        this.pointer.close();
     }
 }
