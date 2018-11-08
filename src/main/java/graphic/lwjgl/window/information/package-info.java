@@ -19,42 +19,9 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package graphic.lwjgl.window;
-
-import graphic.lwjgl.window.information.PosOfWindow;
-import logic.metric.pos.Pos2D;
-import logic.metric.size.Size2D;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
-
 /**
- * Contains tests for the {@link BaseWindowPointer} class.
- * @since 5.12.1
+ * Contains all components needed to get information of the window. Example:
+ * position, size, area
+ * @since 6.0.0
  */
-public class BaseWindowPointerTest {
-    /**
-     * Creates a lwjgl window by using {@link BaseWindowPointer} and checks if
-     * the position of that window meets the expectations.
-     * @throws Exception Because closing the window pointer object can fail.
-     */
-    @Test
-    public void hasCorrectPosition() throws Exception {
-        final var pos = new Pos2D(123, 432);
-        final var width = 120;
-        final var height = 232;
-        try (
-            var window = new BaseWindowPointer(
-                pos,
-                new Size2D(width, height)
-            )
-        ) {
-            MatcherAssert.assertThat(
-                new PosOfWindow(window),
-                Matchers.equalTo(
-                    pos
-                )
-            );
-        }
-    }
-}
+package graphic.lwjgl.window.information;

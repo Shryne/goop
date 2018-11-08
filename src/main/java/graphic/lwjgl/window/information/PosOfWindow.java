@@ -19,8 +19,9 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package graphic.lwjgl.window;
+package graphic.lwjgl.window.information;
 
+import graphic.lwjgl.window.WindowPointer;
 import java.nio.IntBuffer;
 import logic.functional.Lazy;
 import logic.metric.pos.Pos2D;
