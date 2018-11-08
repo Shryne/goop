@@ -19,18 +19,52 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package graphic.lwjgl.window;
+package logic.metric.pos;
 
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import logic.functional.Value;
 
-/*
-It's very unfortunate that I can't extend/implement Long directly. The
-Value<Long> is just a workaround
- */
 /**
- * Represents the long value that holds the reference to the lwjgl window.
- * It needs to be closable, because lwjgl uses glfw inside to create windows and
- * glfw needs some initialization and releasing of resources beforehand.
- * @since 5.12.1
+ * An envelope that delegates everything to the given pos instance.
+ * @since 5.13.3
  */
-public interface WindowPointer extends Value<Long>, AutoCloseable { }
+public abstract class PosEnvelope implements Pos {
+    /**
+     * The pos to delegate the calls to.
+     */
+    private final Value<Pos> pos;
+
+    /**
+     * Primary constructor.
+     * @param pos The pos to delegate the calls to.
+     */
+    public PosEnvelope(final Value<Pos> pos) {
+        this.pos = pos;
+    }
+
+    @Override
+    public final <R> R result(final BiFunction<Integer, Integer, R> target) {
+        return this.pos.content().result(target);
+    }
+
+    @Override
+    public final void applyOn(final BiConsumer<Integer, Integer> target) {
+        this.pos.content().applyOn(target);
+    }
+
+    @Override
+    public final int hashCode() {
+        return this.pos.content().hashCode();
+    }
+
+    @Override
+    public final boolean equals(final Object obj) {
+        return this.pos.content().equals(obj);
+    }
+
+    @Override
+    public final String toString() {
+        return this.pos.content().toString();
+    }
+}

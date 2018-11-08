@@ -21,14 +21,11 @@
 
 package graphic.lwjgl.window;
 
-import java.nio.IntBuffer;
 import logic.metric.pos.Pos2D;
 import logic.metric.size.Size2D;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.lwjgl.glfw.GLFW;
-import org.lwjgl.system.MemoryStack;
 
 /**
  * Contains tests for the {@link BaseWindowPointer} class.
@@ -49,25 +46,10 @@ public class BaseWindowPointerTest {
             var window = new BaseWindowPointer(
                 pos,
                 new Size2D(width, height)
-            );
-            MemoryStack stack = MemoryStack.stackPush()
+            )
         ) {
-            // @checkstyle LocalFinalVariableName (2 lines)
-            final IntBuffer x = stack.mallocInt(1);
-            final IntBuffer y = stack.mallocInt(1);
-            GLFW.glfwGetWindowPos(window.content(), x, y);
-            final IntBuffer top = stack.mallocInt(1);
-            GLFW.glfwGetWindowFrameSize(
-                window.content(),
-                null,
-                top,
-                null,
-                null
-            );
             MatcherAssert.assertThat(
-                new Pos2D(
-                    x.get(0), y.get(0) - top.get(0)
-                ),
+                new PosOfWindow(window),
                 Matchers.equalTo(
                     pos
                 )
