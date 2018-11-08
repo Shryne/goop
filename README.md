@@ -1,6 +1,7 @@
 # goop
 [![EO principles respected here](http://www.elegantobjects.org/badge.svg)](http://www.elegantobjects.org)  
 ![Sonar coverage](https://sonarcloud.io/api/project_badges/measure?project=Shryne_goo&metric=coverage)  
+[![CodeFactor](https://www.codefactor.io/repository/github/shryne/goop/badge)](https://www.codefactor.io/repository/github/shryne/goop)  
 
 Goop is an object oriented graphics library. It uses [LWJGL](https://www.lwjgl.org/) to create the windows and draw the shapes. The advantages over plain Java2D/Swing/JavaFX are:  
 - It is based on decorators  
