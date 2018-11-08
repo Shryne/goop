@@ -6,7 +6,7 @@
 
     <groupId>com.goop</groupId>
     <artifactId>goop</artifactId>
-    <version>5.12.2</version>
+    <version>5.12.3</version>
 
     <properties>
         <sonar.sources>src/main/java</sonar.sources>

@@ -38,23 +38,38 @@ public class BaseWindowPointerTest {
     /**
      * Creates a lwjgl window by using {@link BaseWindowPointer} and checks if
      * the position of that window meets the expectations.
+     * @throws Exception Because closing the window pointer object can fail.
      */
     @Test
-    public void hasCorrectPosition() {
+    public void hasCorrectPosition() throws Exception {
         final var pos = new Pos2D(123, 432);
-        final var window = new BaseWindowPointer(
-            pos,
-            new Size2D(32, 234)
-        );
-        try (MemoryStack stack = MemoryStack.stackPush()) {
-            final IntBuffer top = stack.mallocInt(1);
-            GLFW.glfwGetWindowPos(window.content(), top, top);
-            MatcherAssert.assertThat(
+        final var width = 120;
+        final var height = 232;
+        try (
+            var window = new BaseWindowPointer(
                 pos,
+                new Size2D(width, height)
+            );
+            MemoryStack stack = MemoryStack.stackPush()
+        ) {
+            // @checkstyle LocalFinalVariableName (2 lines)
+            final IntBuffer x = stack.mallocInt(1);
+            final IntBuffer y = stack.mallocInt(1);
+            GLFW.glfwGetWindowPos(window.content(), x, y);
+            final IntBuffer top = stack.mallocInt(1);
+            GLFW.glfwGetWindowFrameSize(
+                window.content(),
+                null,
+                top,
+                null,
+                null
+            );
+            MatcherAssert.assertThat(
+                new Pos2D(
+                    x.get(0), y.get(0) - top.get(0)
+                ),
                 Matchers.equalTo(
-                    new Pos2D(
-                        top.get(0), top.get(1)
-                    )
+                    pos
                 )
             );
         }
