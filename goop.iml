@@ -20,5 +20,6 @@
     <orderEntry type="library" name="Maven: org.lwjgl:lwjgl-platform:natives-windows:3.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.lwjgl:lwjgl-platform:natives-osx:3.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.lwjgl:lwjgl-platform:natives-linux:3.0.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.18.4" level="project" />
   </component>
 </module>

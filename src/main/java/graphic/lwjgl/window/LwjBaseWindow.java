@@ -21,16 +21,12 @@
 
 package graphic.lwjgl.window;
 
-import java.nio.IntBuffer;
-import logic.functional.Lazy;
 import logic.functional.Value;
 import logic.graphic.window.Showable;
 import logic.metric.area.Area;
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
-import org.lwjgl.system.MemoryStack;
-import org.lwjgl.system.MemoryUtil;
 
 /**
  * A window using lwjgl to show itself. Note that this class only represents the
@@ -73,37 +69,7 @@ public class LwjBaseWindow implements Updateable, Showable, AutoCloseable {
         final LwjCanvas canvas
     ) {
         this(
-            new Lazy<>(
-                () -> {
-                    glfw.acquire();
-                    GLFW.glfwDefaultWindowHints();
-                    final long result = area.result(
-                        (pos, size) -> size.result(
-                            (width, height) -> GLFW.glfwCreateWindow(
-                                width,
-                                height,
-                                "",
-                                MemoryUtil.NULL,
-                                MemoryUtil.NULL
-                            )
-                        )
-                    );
-                    GLFW.glfwMakeContextCurrent(result);
-                    try (MemoryStack stack = MemoryStack.stackPush()) {
-                        final IntBuffer top = stack.mallocInt(1);
-                        GLFW.glfwGetWindowFrameSize(
-                            result, null, top, null, null
-                        );
-                        area.applyOn(
-                            // @checkstyle ParameterName (1 line)
-                            (x, y, width, height) -> GLFW.glfwSetWindowPos(
-                                result, x, y + top.get(0)
-                            )
-                        );
-                    }
-                    return result;
-                }
-            ),
+            new WindowPointer(area),
             glfw,
             canvas
         );

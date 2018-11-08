@@ -23,6 +23,8 @@ package logic.metric.size;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /*
 I am not happy about this naming, but my other idea's regarding the interface
@@ -35,6 +37,8 @@ chance that a user might use the class name as a parameter type
  * <p>This class is immutable and thread-safe.</p>
  * @since 3.4.0
  */
+@EqualsAndHashCode
+@ToString
 public class Size2D implements Size {
     /**
      * The width of the size.
