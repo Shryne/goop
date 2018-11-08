@@ -1,5 +1,7 @@
 # goop
-[![EO principles respected here](http://www.elegantobjects.org/badge.svg)](http://www.elegantobjects.org)  
+[![EO principles respected here](http://www.elegantobjects.org/badge.svg)](http://www.elegantobjects.org)
+[![DevOps By Rultor.com](http://www.rultor.com/b/Shryne/goop)](http://www.rultor.com/p/Shryne/goop)  
+
 ![Sonar coverage](https://sonarcloud.io/api/project_badges/measure?project=Shryne_goo&metric=coverage)
 [![PDD status](http://www.0pdd.com/svg?name=Shryne/goop)](http://www.0pdd.com/p?name=Shryne/0pdd)
 [![Known Vulnerabilities](https://snyk.io/test/github/Shryne/goop/badge.svg)](https://snyk.io/test/github/Shryne/goop)
