@@ -30,12 +30,14 @@ import org.junit.Test;
 
 /**
  * Contains tests for the {@link BaseWindowPointer} class.
- * @since 5.12.1
+ * @since 6.0.1
  */
-public class BaseWindowPointerTest {
+public class BaseWindowPointerIT {
     /**
      * Creates a lwjgl window by using {@link BaseWindowPointer} and checks if
      * the position of that window meets the expectations.
+     * <p>This test needs {@link BaseWindowPointer} and {@link PosOfWindow} to
+     * run correctly.</p>
      * @throws Exception Because closing the window pointer object can fail.
      */
     @Test
