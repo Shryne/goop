@@ -22,6 +22,7 @@
 package graphic.lwjgl.window;
 
 import graphic.lwjgl.window.information.PosOfWindow;
+import graphic.lwjgl.window.information.SizeOfWindow;
 import logic.metric.pos.Pos2D;
 import logic.metric.size.Size2D;
 import org.hamcrest.MatcherAssert;
@@ -32,7 +33,7 @@ import org.junit.Test;
  * Contains tests for the {@link BaseWindowPointer} class.
  * @since 6.0.1
  */
-public class BaseWindowPointerIT {
+public class BaseWindowPointerTest {
     /**
      * Creates a lwjgl window by using {@link BaseWindowPointer} and checks if
      * the position of that window meets the expectations.
@@ -56,6 +57,24 @@ public class BaseWindowPointerIT {
                 Matchers.equalTo(
                     pos
                 )
+            );
+        }
+    }
+
+    /**
+     * Creates a lwjgl window by using {@link BaseWindowPointer} and checks if
+     * the size of that window meets the expectations.
+     * <p>This test needs {@link BaseWindowPointer} and {@link SizeOfWindow} to
+     * run correctly.</p>
+     * @throws Exception Because closing the window pointer object can fail.
+     */
+    @Test
+    public void hasCorrectSize() throws Exception {
+        final var size = new Size2D(439, 543);
+        try (var window = new BaseWindowPointer(size)) {
+            MatcherAssert.assertThat(
+                new SizeOfWindow(window),
+                Matchers.equalTo(size)
             );
         }
     }

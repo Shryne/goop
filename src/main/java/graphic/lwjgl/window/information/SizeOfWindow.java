@@ -24,43 +24,36 @@ package graphic.lwjgl.window.information;
 import graphic.lwjgl.window.WindowPointer;
 import java.nio.IntBuffer;
 import logic.functional.Lazy;
-import logic.metric.pos.Pos2D;
-import logic.metric.pos.PosEnvelope;
+import logic.metric.size.Size2D;
+import logic.metric.size.SizeEnvelope;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.system.MemoryStack;
 
 /**
- * A position that can construct itself by retrieving the position of a window.
- * This position includes the frame of the window. Example: If the frame has a
- * height of 10 and a y value of 0 the y coordinate will still be 0.
+ * A size that can construct itself by retrieving the size of a window.
+ * This size doesn't includes the frame of the window. Example: If the frame has
+ * a height of 10 and the client area has a height of 100 then the height value
+ * of this object will be 100.
  * <p>This class is mutable and not thread-safe, because it uses a lazy object
  * that changes its state when a method is called.</p>
- * @since 5.13.3
+ * @since 6.1.1
  */
-public class PosOfWindow extends PosEnvelope {
+public class SizeOfWindow extends SizeEnvelope {
     /**
      * Primary constructor.
-     * @param window The window to get the position from.
+     * @param window The window to get the size from.
      */
-    public PosOfWindow(final WindowPointer window) {
+    public SizeOfWindow(final WindowPointer window) {
         super(
             new Lazy<>(
                 () -> {
                     try (MemoryStack stack = MemoryStack.stackPush()) {
-                        // @checkstyle LocalFinalVariableName (2 lines)
-                        final IntBuffer x = stack.mallocInt(1);
-                        final IntBuffer y = stack.mallocInt(1);
-                        GLFW.glfwGetWindowPos(window.content(), x, y);
-                        final IntBuffer top = stack.mallocInt(1);
-                        GLFW.glfwGetWindowFrameSize(
-                            window.content(),
-                            null,
-                            top,
-                            null,
-                            null
-                        );
-                        return new Pos2D(
-                            x.get(0), y.get(0) - top.get(0)
+                        final IntBuffer width = stack.mallocInt(1);
+                        final IntBuffer height = stack.mallocInt(1);
+                        GLFW.glfwGetWindowSize(window.content(), width, height);
+                        return new Size2D(
+                            width.get(0),
+                            height.get(0)
                         );
                     }
                 }
