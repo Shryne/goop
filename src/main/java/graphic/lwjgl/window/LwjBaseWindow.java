@@ -21,6 +21,10 @@
 
 package graphic.lwjgl.window;
 
+import graphic.lwjgl.shape.LwjShape;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import logic.graphic.window.Showable;
 import logic.metric.area.Area;
 import org.lwjgl.glfw.Callbacks;
@@ -52,14 +56,26 @@ public class LwjBaseWindow implements Updateable, Showable, AutoCloseable,
     private final LwjCanvas canvas;
 
     /**
+     * The shapes to be drawn on this window.
+     */
+    private final Collection<LwjShape> shapes;
+
+    /**
      * Secondary constructor.
      * @param area The area of the window.
+     * @param shapes The shapes to be drawn on this window.
      */
-    public LwjBaseWindow(final Area area) {
-        this(
-            new BaseWindowPointer(area),
-            new LwjBaseCanvas(area)
-        );
+    public LwjBaseWindow(final Area area, final LwjShape... shapes) {
+        this(area, List.of(shapes));
+    }
+
+    /**
+     * Ctor.
+     * @param area The area of this window.
+     * @param shapes The shapes to be drawn on this window.
+     */
+    public LwjBaseWindow(final Area area, final Collection<LwjShape> shapes) {
+        this(area, new LwjBaseCanvas(area), shapes);
     }
 
     /**
@@ -71,13 +87,29 @@ public class LwjBaseWindow implements Updateable, Showable, AutoCloseable,
      * @param canvas The canvas that contains the background information for the
      *  drawing and applies it accordingly.
      */
+    public LwjBaseWindow(final Area area, final LwjCanvas canvas) {
+        this(area, canvas, Collections.emptyList());
+    }
+
+    /**
+     * Secondary constructor. Uses the parameters to define the initialization
+     * of the actual window. The initialization will be executed when
+     * {@link #show()} is called the first time. The primary constructor is
+     * private.
+     * @param area The area of this window.
+     * @param canvas The canvas that contains the background information for the
+     *  drawing and applies it accordingly.
+     * @param shapes The shapes to be drawn on the window.
+     */
     public LwjBaseWindow(
         final Area area,
-        final LwjCanvas canvas
+        final LwjCanvas canvas,
+        final Collection<LwjShape> shapes
     ) {
         this(
             new BaseWindowPointer(area),
-            canvas
+            canvas,
+            shapes
         );
     }
 
@@ -86,13 +118,16 @@ public class LwjBaseWindow implements Updateable, Showable, AutoCloseable,
      * @param pointer The value containing the long lwjgl handle to the window.
      * @param canvas The canvas that contains the background information for the
      *  drawing and applies it accordingly.
+     * @param shapes The shapes to be drawn on the window.
      */
     private LwjBaseWindow(
         final WindowPointer pointer,
-        final LwjCanvas canvas
+        final LwjCanvas canvas,
+        final Collection<LwjShape> shapes
     ) {
         this.pointer = pointer;
         this.canvas = canvas;
+        this.shapes = shapes;
     }
 
     @Override
@@ -104,7 +139,11 @@ public class LwjBaseWindow implements Updateable, Showable, AutoCloseable,
     public final void update() {
         if (!GLFW.glfwWindowShouldClose(this.pointer.content())) {
             GLFW.glfwMakeContextCurrent(this.pointer.content());
-            this.canvas.preparedDraw(this.pointer.content(), () -> { });
+            this.shapes.forEach(
+                shape -> this.canvas.preparedDraw(
+                    this.pointer.content(), shape::draw
+                )
+            );
         }
     }
 
