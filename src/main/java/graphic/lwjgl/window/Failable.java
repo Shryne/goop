@@ -21,16 +21,14 @@
 
 package graphic.lwjgl.window;
 
-import logic.functional.Value;
-
-/*
-It's very unfortunate that I can't extend/implement Long directly. The
-Value<Long> is just a workaround
- */
 /**
- * Represents the long value that holds the reference to the lwjgl window.
- * It needs to be closable, because lwjgl uses glfw inside to create windows and
- * glfw needs some initialization and releasing of resources beforehand.
- * @since 5.12.1
+ * An interface for lwj windows to tell whether they their creation have failed.
+ * @since 7.0.0
  */
-public interface WindowPointer extends Value<Long>, AutoCloseable, Failable { }
+public interface Failable {
+    /**
+     * Tells whether the creation failed or not.
+     * @return True if the creation failed, false otherwise.
+     */
+    boolean hasFailed();
+}

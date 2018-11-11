@@ -38,7 +38,8 @@ able to retrieve that size
  * <p>This class is not thread-safe.</p>
  * @since 3.9.0
  */
-public class LwjBaseWindow implements Updateable, Showable, AutoCloseable {
+public class LwjBaseWindow implements Updateable, Showable, AutoCloseable,
+    Failable {
     /**
      * The creation of the window that results in the lwjgl long handle to it.
      */
@@ -102,5 +103,10 @@ public class LwjBaseWindow implements Updateable, Showable, AutoCloseable {
         GLFW.glfwDestroyWindow(this.pointer.content());
         GL.setCapabilities(null);
         this.pointer.close();
+    }
+
+    @Override
+    public final boolean hasFailed() {
+        return this.pointer.hasFailed();
     }
 }

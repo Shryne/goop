@@ -21,14 +21,12 @@
 
 package graphic.lwjgl.window;
 
-import java.nio.IntBuffer;
 import logic.functional.Lazy;
 import logic.metric.area.Area;
 import logic.metric.area.Area2D;
 import logic.metric.pos.Pos;
 import logic.metric.size.Size;
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 
 /**
@@ -80,9 +78,6 @@ public class BaseWindowPointer extends Lazy<Long> implements WindowPointer {
         );
     }
 
-    /*
-    @todo #5 Check for null when creating the window
-     */
     /**
      * Primary constructor.
      * @param glfw This is needed to use the glfw methods to create the window.
@@ -92,7 +87,7 @@ public class BaseWindowPointer extends Lazy<Long> implements WindowPointer {
         super(
             () -> {
                 glfw.acquire();
-                final long result = area.result(
+                return area.result(
                     (pos, size) -> size.result(
                         (width, height) -> GLFW.glfwCreateWindow(
                             width,
@@ -103,20 +98,6 @@ public class BaseWindowPointer extends Lazy<Long> implements WindowPointer {
                         )
                     )
                 );
-                GLFW.glfwMakeContextCurrent(result);
-                try (MemoryStack stack = MemoryStack.stackPush()) {
-                    final IntBuffer top = stack.mallocInt(1);
-                    GLFW.glfwGetWindowFrameSize(
-                        result, null, top, null, null
-                    );
-                    area.applyOn(
-                        // @checkstyle ParameterName (1 line)
-                        (x, y, width, height) -> GLFW.glfwSetWindowPos(
-                            result, x, y + top.get(0)
-                        )
-                    );
-                }
-                return result;
             }
         );
         this.glfw = glfw;
@@ -124,11 +105,14 @@ public class BaseWindowPointer extends Lazy<Long> implements WindowPointer {
 
     @Override
     public final void close() throws Exception {
-        // @checkstyle MethodBodyCommentsCheck (1 line)
-        /*
-        @todo #5 It should be checked whether it's really fine to add methods to
-        an extended class
-        */
+        // @checkstyle MethodBodyCommentsCheck (2 lines)
+        // @todo #5 It should be checked whether it's really fine to add methods
+        // to an extended class
         this.glfw.close();
+    }
+
+    @Override
+    public final boolean hasFailed() {
+        return this.content().equals(0L);
     }
 }
