@@ -22,6 +22,7 @@
 package graphic.lwjgl.window;
 
 import logic.functional.Action;
+import logic.metric.area.Area;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GLCapabilities;
 
@@ -45,6 +46,18 @@ public class LwjBaseCanvas implements LwjCanvas {
      * The OpenGL related capabilities.
      */
     private final GLCapabilities capabilities;
+
+    /**
+     * Secondary constructor.
+     * @param area The area of the camera used by the canvas.
+     */
+    public LwjBaseCanvas(final Area area) {
+        this(
+            new BaseViewBuffer(),
+            new LwjBaseCamera(area),
+            GL.createCapabilities()
+        );
+    }
 
     /**
      * Primary constructor.

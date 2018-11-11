@@ -52,6 +52,17 @@ public class LwjBaseWindow implements Updateable, Showable, AutoCloseable,
     private final LwjCanvas canvas;
 
     /**
+     * Secondary constructor.
+     * @param area The area of the window.
+     */
+    public LwjBaseWindow(final Area area) {
+        this(
+            new BaseWindowPointer(area),
+            new LwjBaseCanvas(area)
+        );
+    }
+
+    /**
      * Secondary constructor. Uses the parameters to define the initialization
      * of the actual window. The initialization will be executed when
      * {@link #show()} is called the first time. The primary constructor is

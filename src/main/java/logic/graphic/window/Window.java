@@ -22,6 +22,7 @@
 package logic.graphic.window;
 
 import graphic.j2d.window.J2DWindow;
+import graphic.lwjgl.window.LwjBaseWindow;
 import java.util.Collections;
 import logic.functional.Lazy;
 import logic.functional.Value;
@@ -42,9 +43,6 @@ public class Window implements Showable {
      */
     private final Value<Showable> concrete;
 
-    /* @todo #2 Here should be some logic to check for the supported
-    graphics library and choose the concrete window according to that
-    */
     /**
      * Secondary constructor. Uses the arguments to lazily create the concrete
      * window. The primary constructor is private.
@@ -54,7 +52,18 @@ public class Window implements Showable {
     public Window(final String title, final Area area) {
         this(
             new Lazy<>(
-                () -> new J2DWindow(title, area, Collections.emptyList())
+                () -> {
+                    final var lwjgl = new LwjBaseWindow(area);
+                    Showable result = lwjgl;
+                    if (lwjgl.hasFailed()) {
+                        result = new J2DWindow(
+                            title,
+                            area,
+                            Collections.emptyList()
+                        );
+                    }
+                    return result;
+                }
             )
         );
     }
