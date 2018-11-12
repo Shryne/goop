@@ -22,7 +22,6 @@
 package graphic.lwjgl.window;
 
 import graphic.lwjgl.shape.LwjShape;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import logic.graphic.window.Showable;
@@ -58,7 +57,7 @@ public class LwjBaseWindow implements Updateable, Showable, AutoCloseable,
     /**
      * The shapes to be drawn on this window.
      */
-    private final Collection<LwjShape> shapes;
+    private final Iterable<LwjShape> shapes;
 
     /**
      * Secondary constructor.
@@ -74,7 +73,7 @@ public class LwjBaseWindow implements Updateable, Showable, AutoCloseable,
      * @param area The area of this window.
      * @param shapes The shapes to be drawn on this window.
      */
-    public LwjBaseWindow(final Area area, final Collection<LwjShape> shapes) {
+    public LwjBaseWindow(final Area area, final Iterable<LwjShape> shapes) {
         this(area, new LwjBaseCanvas(area), shapes);
     }
 
@@ -104,7 +103,7 @@ public class LwjBaseWindow implements Updateable, Showable, AutoCloseable,
     public LwjBaseWindow(
         final Area area,
         final LwjCanvas canvas,
-        final Collection<LwjShape> shapes
+        final Iterable<LwjShape> shapes
     ) {
         this(
             new BaseWindowPointer(area),
@@ -123,7 +122,7 @@ public class LwjBaseWindow implements Updateable, Showable, AutoCloseable,
     private LwjBaseWindow(
         final WindowPointer pointer,
         final LwjCanvas canvas,
-        final Collection<LwjShape> shapes
+        final Iterable<LwjShape> shapes
     ) {
         this.pointer = pointer;
         this.canvas = canvas;
