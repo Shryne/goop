@@ -8,6 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/sample" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/it/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/src/sample" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
@@ -20,5 +21,6 @@
     <orderEntry type="library" name="Maven: org.lwjgl:lwjgl-platform:natives-windows:3.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.lwjgl:lwjgl-platform:natives-osx:3.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.lwjgl:lwjgl-platform:natives-linux:3.0.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.18.4" level="project" />
   </component>
 </module>

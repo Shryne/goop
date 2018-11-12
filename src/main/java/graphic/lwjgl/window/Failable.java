@@ -19,18 +19,16 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package graphic.j2d.shape;
-
-import java.awt.Graphics;
+package graphic.lwjgl.window;
 
 /**
- * A shape that is using java2d to draw itself.
- * @since 2.1.0
+ * An interface for lwj windows to tell whether they their creation have failed.
+ * @since 7.0.0
  */
-public interface J2DShape {
+public interface Failable {
     /**
-     * Draws the shape.
-     * @param graphics The Graphics object to draw the shape.
+     * Tells whether the creation failed or not.
+     * @return True if the creation failed, false otherwise.
      */
-    void draw(Graphics graphics);
+    boolean hasFailed();
 }

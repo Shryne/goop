@@ -19,18 +19,9 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package graphic.j2d.shape;
-
-import java.awt.Graphics;
-
 /**
- * A shape that is using java2d to draw itself.
- * @since 2.1.0
+ * Shapes used to choose the concrete version of themselves. "Concrete" in terms
+ * of the graphics library.
+ * @since 7.2.0
  */
-public interface J2DShape {
-    /**
-     * Draws the shape.
-     * @param graphics The Graphics object to draw the shape.
-     */
-    void draw(Graphics graphics);
-}
+package logic.graphic.shape;

@@ -23,50 +23,48 @@ package logic.metric.size;
 
 import java.util.function.BiFunction;
 import java.util.function.ObjIntConsumer;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import logic.functional.Value;
 
-/*
-I am not happy about this naming, but my other idea's regarding the interface
-name and the basic implementation weren't good either (impl or simple for
-example). So I took the more annoying name for the implementation to lower the
-chance that a user might use the class name as a parameter type
-*/
 /**
- * Basic concrete implementation of {@link Size}.
- * <p>This class is immutable and thread-safe.</p>
- * @since 3.4.0
+ * An envelope that delegates everything to the given size instance.
+ * @since 6.1.1
  */
-@EqualsAndHashCode
-@ToString
-public class Size2D implements Size {
+public abstract class SizeEnvelope implements Size {
     /**
-     * The width of the size.
+     * The size to delegate the calls to.
      */
-    private final int width;
-
-    /**
-     * The height of the size.
-     */
-    private final int height;
+    private final Value<Size> size;
 
     /**
      * Primary constructor.
-     * @param width The width for the size.
-     * @param height The height for the size.
+     * @param size The size to delegate the calls to.
      */
-    public Size2D(final int width, final int height) {
-        this.width = width;
-        this.height = height;
+    public SizeEnvelope(final Value<Size> size) {
+        this.size = size;
     }
 
     @Override
     public final <R> R result(final BiFunction<Integer, Integer, R> target) {
-        return target.apply(this.width, this.height);
+        return this.size.content().result(target);
     }
 
     @Override
     public final void applyOn(final ObjIntConsumer<Integer> target) {
-        Size.super.applyOn(target);
+        this.size.content().applyOn(target);
+    }
+
+    @Override
+    public final int hashCode() {
+        return this.size.content().hashCode();
+    }
+
+    @Override
+    public final boolean equals(final Object obj) {
+        return this.size.content().equals(obj);
+    }
+
+    @Override
+    public final String toString() {
+        return this.size.content().toString();
     }
 }

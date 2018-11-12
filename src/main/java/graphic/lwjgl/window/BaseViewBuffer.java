@@ -39,6 +39,13 @@ public class BaseViewBuffer implements ViewBuffer {
     private final int interval;
 
     /**
+     * Secondary constructor.
+     */
+    public BaseViewBuffer() {
+        this(0);
+    }
+
+    /**
      * Primary constructor.
      * @param interval The interval of the swapping. A 60 would mean that the
      *  buffer would be swapped 60 times per second.

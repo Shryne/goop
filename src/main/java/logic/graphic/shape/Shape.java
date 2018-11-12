@@ -19,18 +19,24 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package graphic.j2d.shape;
+package logic.graphic.shape;
 
-import java.awt.Graphics;
+import logic.graphic.GraphicsChoice;
 
 /**
- * A shape that is using java2d to draw itself.
- * @since 2.1.0
+ * A shape used to choose a shape that is using a concrete graphics library.
+ * Note that choosing the graphics library happens in two phases: First,
+ * actually choosing it and second: Choosing all shapes according to the chosen
+ * library.
+ * @since 7.2.0
  */
-public interface J2DShape {
+public interface Shape {
     /**
-     * Draws the shape.
-     * @param graphics The Graphics object to draw the shape.
+     * Chooses the concrete shape.
+     * @param choice The choice of the graphics platform.
+     * @param <T> The type of the shape (for example
+     *  {@link graphic.lwjgl.shape.LwjShape}).
+     * @return The chosen concrete shape.
      */
-    void draw(Graphics graphics);
+    <T> T concrete(GraphicsChoice<T> choice);
 }

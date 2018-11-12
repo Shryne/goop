@@ -22,15 +22,46 @@
 package graphic.j2d.shape;
 
 import java.awt.Graphics;
+import logic.functional.Lazy;
+import logic.functional.Value;
+import logic.graphic.GraphicsChoice;
+import logic.graphic.shape.Shape;
 
 /**
- * A shape that is using java2d to draw itself.
- * @since 2.1.0
+ * Represents a java 2d shape that will be constructed lazily from a
+ * {@link Shape}.
+ * <p>This class is mutable and not thread-safe, because it uses a
+ * {@link Lazy} to initialize itself.</p>
+ * @since 7.2.0
  */
-public interface J2DShape {
+public class J2DLazyShape implements J2DShape {
     /**
-     * Draws the shape.
-     * @param graphics The Graphics object to draw the shape.
+     * The construction of the j2d shape.
      */
-    void draw(Graphics graphics);
+    private final Value<J2DShape> shape;
+
+    /**
+     * Ctor.
+     * @param choice The choice of the j2d shape.
+     * @param shape The shape that offers the creation of the j2d shape version
+     *  of itself.
+     */
+    public J2DLazyShape(
+        final GraphicsChoice<J2DShape> choice, final Shape shape
+    ) {
+        this(new Lazy<>(() -> shape.concrete(choice)));
+    }
+
+    /**
+     * Ctor.
+     * @param shape The construction of the j2d based shape.
+     */
+    public J2DLazyShape(final Value<J2DShape> shape) {
+        this.shape = shape;
+    }
+
+    @Override
+    public final void draw(final Graphics graphics) {
+        this.shape.content().draw(graphics);
+    }
 }

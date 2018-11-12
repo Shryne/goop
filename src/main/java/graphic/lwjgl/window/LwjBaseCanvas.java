@@ -22,6 +22,9 @@
 package graphic.lwjgl.window;
 
 import logic.functional.Action;
+import logic.functional.Lazy;
+import logic.functional.Value;
+import logic.metric.area.Area;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GLCapabilities;
 
@@ -42,9 +45,23 @@ public class LwjBaseCanvas implements LwjCanvas {
     private final LwjCamera camera;
 
     /**
-     * The OpenGL related capabilities.
+     * The OpenGL related capabilities contained by a value. This is necessary,
+     * because the capabilities can only be created after a {@link GlfwInit}
+     * implementation has been used.
      */
-    private final GLCapabilities capabilities;
+    private final Value<GLCapabilities> capabilities;
+
+    /**
+     * Secondary constructor.
+     * @param area The area of the camera used by the canvas.
+     */
+    public LwjBaseCanvas(final Area area) {
+        this(
+            new BaseViewBuffer(),
+            new LwjBaseCamera(area),
+            new Lazy<>(GL::createCapabilities)
+        );
+    }
 
     /**
      * Primary constructor.
@@ -55,7 +72,7 @@ public class LwjBaseCanvas implements LwjCanvas {
     public LwjBaseCanvas(
         final ViewBuffer buffer,
         final LwjCamera camera,
-        final GLCapabilities capabilities
+        final Value<GLCapabilities> capabilities
     ) {
         this.buffer = buffer;
         this.camera = camera;
@@ -66,7 +83,7 @@ public class LwjBaseCanvas implements LwjCanvas {
     public final void preparedDraw(final long window, final Action action) {
         this.buffer.drawBuffered(
             window, () -> {
-                GL.setCapabilities(this.capabilities);
+                GL.setCapabilities(this.capabilities.content());
                 this.camera.apply();
                 action.run();
             }

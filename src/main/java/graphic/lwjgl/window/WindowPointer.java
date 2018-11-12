@@ -19,18 +19,18 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package graphic.j2d.shape;
+package graphic.lwjgl.window;
 
-import java.awt.Graphics;
+import logic.functional.Value;
 
-/**
- * A shape that is using java2d to draw itself.
- * @since 2.1.0
+/*
+It's very unfortunate that I can't extend/implement Long directly. The
+Value<Long> is just a workaround
  */
-public interface J2DShape {
-    /**
-     * Draws the shape.
-     * @param graphics The Graphics object to draw the shape.
-     */
-    void draw(Graphics graphics);
-}
+/**
+ * Represents the long value that holds the reference to the lwjgl window.
+ * It needs to be closable, because lwjgl uses glfw inside to create windows and
+ * glfw needs some initialization and releasing of resources beforehand.
+ * @since 5.12.1
+ */
+public interface WindowPointer extends Value<Long>, AutoCloseable, Failable { }

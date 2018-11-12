@@ -21,17 +21,19 @@
 
 package graphic.lwjgl.window;
 
-import java.nio.IntBuffer;
-import logic.functional.Lazy;
-import logic.functional.Value;
+import graphic.lwjgl.shape.LwjShape;
+import java.util.Collections;
+import java.util.List;
 import logic.graphic.window.Showable;
 import logic.metric.area.Area;
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
-import org.lwjgl.system.MemoryStack;
-import org.lwjgl.system.MemoryUtil;
 
+/*
+@todo #6 A window seems to have a minimum width of 120. I should be at least be
+able to retrieve that size
+ */
 /**
  * A window using lwjgl to show itself. Note that this class only represents the
  * window without any threads. It's enough to start the window, but one has to
@@ -39,16 +41,12 @@ import org.lwjgl.system.MemoryUtil;
  * <p>This class is not thread-safe.</p>
  * @since 3.9.0
  */
-public class LwjBaseWindow implements Updateable, Showable, AutoCloseable {
+public class LwjBaseWindow implements Updateable, Showable, AutoCloseable,
+    Failable {
     /**
      * The creation of the window that results in the lwjgl long handle to it.
      */
-    private final Value<Long> handle;
-
-    /**
-     * The initialization for glfw. This is necessary to create a window.
-     */
-    private final GlfwInit glfw;
+    private final WindowPointer pointer;
 
     /**
      * Needed for buffer swapping, camera, viewport and everything else around
@@ -57,94 +55,107 @@ public class LwjBaseWindow implements Updateable, Showable, AutoCloseable {
     private final LwjCanvas canvas;
 
     /**
+     * The shapes to be drawn on this window.
+     */
+    private final Iterable<LwjShape> shapes;
+
+    /**
+     * Secondary constructor.
+     * @param area The area of the window.
+     * @param shapes The shapes to be drawn on this window.
+     */
+    public LwjBaseWindow(final Area area, final LwjShape... shapes) {
+        this(area, List.of(shapes));
+    }
+
+    /**
+     * Ctor.
+     * @param area The area of this window.
+     * @param shapes The shapes to be drawn on this window.
+     */
+    public LwjBaseWindow(final Area area, final Iterable<LwjShape> shapes) {
+        this(area, new LwjBaseCanvas(area), shapes);
+    }
+
+    /**
      * Secondary constructor. Uses the parameters to define the initialization
      * of the actual window. The initialization will be executed when
      * {@link #show()} is called the first time. The primary constructor is
      * private.
      * @param area The area of this window.
-     * @param glfw The glfw initialization. This is needed to create windows and
-     *  most of the functions on them.
      * @param canvas The canvas that contains the background information for the
      *  drawing and applies it accordingly.
      */
+    public LwjBaseWindow(final Area area, final LwjCanvas canvas) {
+        this(area, canvas, Collections.emptyList());
+    }
+
+    /**
+     * Secondary constructor. Uses the parameters to define the initialization
+     * of the actual window. The initialization will be executed when
+     * {@link #show()} is called the first time. The primary constructor is
+     * private.
+     * @param area The area of this window.
+     * @param canvas The canvas that contains the background information for the
+     *  drawing and applies it accordingly.
+     * @param shapes The shapes to be drawn on the window.
+     */
     public LwjBaseWindow(
         final Area area,
-        final GlfwInit glfw,
-        final LwjCanvas canvas
+        final LwjCanvas canvas,
+        final Iterable<LwjShape> shapes
     ) {
         this(
-            new Lazy<>(
-                () -> {
-                    glfw.acquire();
-                    GLFW.glfwDefaultWindowHints();
-                    final long result = area.result(
-                        (pos, size) -> size.result(
-                            (width, height) -> GLFW.glfwCreateWindow(
-                                width,
-                                height,
-                                "",
-                                MemoryUtil.NULL,
-                                MemoryUtil.NULL
-                            )
-                        )
-                    );
-                    GLFW.glfwMakeContextCurrent(result);
-                    try (MemoryStack stack = MemoryStack.stackPush()) {
-                        final IntBuffer top = stack.mallocInt(1);
-                        GLFW.glfwGetWindowFrameSize(
-                            result, null, top, null, null
-                        );
-                        area.applyOn(
-                            // @checkstyle ParameterName (1 line)
-                            (x, y, width, height) -> GLFW.glfwSetWindowPos(
-                                result, x, y + top.get(0)
-                            )
-                        );
-                    }
-                    return result;
-                }
-            ),
-            glfw,
-            canvas
+            new BaseWindowPointer(area),
+            canvas,
+            shapes
         );
     }
 
     /**
      * Primary constructor.
-     * @param handle The value containing the long lwjgl handle to the window.
-     * @param glfw The glfw initialization. This is needed to create windows and
-     *  most of the functions on them.
+     * @param pointer The value containing the long lwjgl handle to the window.
      * @param canvas The canvas that contains the background information for the
      *  drawing and applies it accordingly.
+     * @param shapes The shapes to be drawn on the window.
      */
     private LwjBaseWindow(
-        final Value<Long> handle,
-        final GlfwInit glfw,
-        final LwjCanvas canvas
+        final WindowPointer pointer,
+        final LwjCanvas canvas,
+        final Iterable<LwjShape> shapes
     ) {
-        this.handle = handle;
-        this.glfw = glfw;
+        this.pointer = pointer;
         this.canvas = canvas;
+        this.shapes = shapes;
     }
 
     @Override
     public final void show() {
-        GLFW.glfwShowWindow(this.handle.content());
+        GLFW.glfwShowWindow(this.pointer.content());
     }
 
     @Override
     public final void update() {
-        if (!GLFW.glfwWindowShouldClose(this.handle.content())) {
-            GLFW.glfwMakeContextCurrent(this.handle.content());
-            this.canvas.preparedDraw(this.handle.content(), () -> { });
+        if (!GLFW.glfwWindowShouldClose(this.pointer.content())) {
+            GLFW.glfwMakeContextCurrent(this.pointer.content());
+            this.shapes.forEach(
+                shape -> this.canvas.preparedDraw(
+                    this.pointer.content(), shape::draw
+                )
+            );
         }
     }
 
     @Override
     public final void close() throws Exception {
-        Callbacks.glfwFreeCallbacks(this.handle.content());
-        GLFW.glfwDestroyWindow(this.handle.content());
+        Callbacks.glfwFreeCallbacks(this.pointer.content());
+        GLFW.glfwDestroyWindow(this.pointer.content());
         GL.setCapabilities(null);
-        this.glfw.close();
+        this.pointer.close();
+    }
+
+    @Override
+    public final boolean hasFailed() {
+        return this.pointer.hasFailed();
     }
 }

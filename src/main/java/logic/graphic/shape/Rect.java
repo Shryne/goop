@@ -19,54 +19,46 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.metric.size;
+package logic.graphic.shape;
 
-import java.util.function.BiFunction;
-import java.util.function.ObjIntConsumer;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import graphic.j2d.shape.J2DRect;
+import graphic.lwjgl.shape.LwjRect;
+import logic.graphic.GraphicsChoice;
+import logic.graphic.color.Color;
+import logic.metric.area.Area;
 
-/*
-I am not happy about this naming, but my other idea's regarding the interface
-name and the basic implementation weren't good either (impl or simple for
-example). So I took the more annoying name for the implementation to lower the
-chance that a user might use the class name as a parameter type
-*/
 /**
- * Basic concrete implementation of {@link Size}.
+ * This rect chooses the concrete rect version depending on the previously
+ * chosen graphics library (by window).
  * <p>This class is immutable and thread-safe.</p>
- * @since 3.4.0
+ * @since 7.2.0
  */
-@EqualsAndHashCode
-@ToString
-public class Size2D implements Size {
+public class Rect implements Shape {
     /**
-     * The width of the size.
+     * The area of the rectangle.
      */
-    private final int width;
+    private final Area area;
 
     /**
-     * The height of the size.
+     * The color of the rectangle.
      */
-    private final int height;
+    private final Color color;
 
     /**
-     * Primary constructor.
-     * @param width The width for the size.
-     * @param height The height for the size.
+     * Ctor.
+     * @param area The area of the rectangle.
+     * @param color The color of the rectangle.
      */
-    public Size2D(final int width, final int height) {
-        this.width = width;
-        this.height = height;
+    public Rect(final Area area, final Color color) {
+        this.area = area;
+        this.color = color;
     }
 
     @Override
-    public final <R> R result(final BiFunction<Integer, Integer, R> target) {
-        return target.apply(this.width, this.height);
-    }
-
-    @Override
-    public final void applyOn(final ObjIntConsumer<Integer> target) {
-        Size.super.applyOn(target);
+    public final <T> T concrete(final GraphicsChoice<T> library) {
+        return library.chosen(
+            () -> new LwjRect(this.area),
+            () -> new J2DRect(this.area, this.color)
+        );
     }
 }

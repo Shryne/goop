@@ -19,18 +19,48 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package graphic.j2d.shape;
+package graphic.lwjgl.shape;
 
-import java.awt.Graphics;
+import logic.functional.Lazy;
+import logic.functional.Value;
+import logic.graphic.GraphicsChoice;
+import logic.graphic.shape.Shape;
 
 /**
- * A shape that is using java2d to draw itself.
- * @since 2.1.0
+ * Represents a lwjgl shape that will be constructed lazily from a
+ * {@link Shape}.
+ * <p>This class is mutable and not thread-safe, because it uses a
+ * {@link Lazy} to initialize itself.</p>
+ * @since 7.2.0
  */
-public interface J2DShape {
+public class LwjLazyShape implements LwjShape {
     /**
-     * Draws the shape.
-     * @param graphics The Graphics object to draw the shape.
+     * The construction of the lwjgl shape.
      */
-    void draw(Graphics graphics);
+    private final Value<LwjShape> shape;
+
+    /**
+     * Ctor.
+     * @param choice The choice of the lwjgl shape.
+     * @param shape The shape that offers the creation of the lwjgl shape
+     *  version of itself.
+     */
+    public LwjLazyShape(
+        final GraphicsChoice<LwjShape> choice, final Shape shape
+    ) {
+        this(new Lazy<>(() -> shape.concrete(choice)));
+    }
+
+    /**
+     * Ctor.
+     * @param shape The construction of the lwjgl based shape.
+     */
+    public LwjLazyShape(final Value<LwjShape> shape) {
+        this.shape = shape;
+    }
+
+    @Override
+    public final void draw() {
+        this.shape.content().draw();
+    }
 }

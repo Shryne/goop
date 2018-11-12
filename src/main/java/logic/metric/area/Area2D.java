@@ -29,6 +29,8 @@ import logic.metric.pos.Pos;
 import logic.metric.pos.Pos2D;
 import logic.metric.size.Size;
 import logic.metric.size.Size2D;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /*
 I am not happy about this naming, but my other idea's regarding the interface
@@ -45,6 +47,8 @@ chance that a user might use the class name as a parameter type
  * safe-copies for performance reasons.</p>
  * @since 3.3.0
  */
+@ToString
+@EqualsAndHashCode
 public class Area2D implements Area {
     /**
      * The pos of this area.

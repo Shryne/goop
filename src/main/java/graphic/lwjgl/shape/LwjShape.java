@@ -19,18 +19,19 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package graphic.j2d.shape;
-
-import java.awt.Graphics;
+package graphic.lwjgl.shape;
 
 /**
- * A shape that is using java2d to draw itself.
- * @since 2.1.0
+ * A shape that is using lwjgl to draw itself.
+ * @since 7.1.0
  */
-public interface J2DShape {
+public interface LwjShape {
     /**
-     * Draws the shape.
-     * @param graphics The Graphics object to draw the shape.
+     * Draws the shape. Since Lwjgl uses globally accessible static methods,
+     * this method doesn't need any context or parameters as an argument. It's
+     * just important that the window objects sets the right context (which is
+     * global) and all shapes who draw themselves will be using this context
+     * behind the scenes.
      */
-    void draw(Graphics graphics);
+    void draw();
 }

@@ -19,18 +19,24 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package graphic.j2d.shape;
+package logic.graphic.shape;
 
-import java.awt.Graphics;
+import graphic.j2d.shape.J2DShape;
+import graphic.lwjgl.shape.LwjShape;
+import java.util.function.Supplier;
+import logic.graphic.GraphicsChoice;
 
 /**
- * A shape that is using java2d to draw itself.
- * @since 2.1.0
+ * Represents java 2d shape casting.
+ * <p>This class is immutable and thread-safe.</p>
+ * @since 7.2.0
  */
-public interface J2DShape {
-    /**
-     * Draws the shape.
-     * @param graphics The Graphics object to draw the shape.
-     */
-    void draw(Graphics graphics);
+public final class LwjShapeChoice implements GraphicsChoice<LwjShape> {
+    // @checkstyle ParameterNameCheck (3 lines)
+    @Override
+    public LwjShape chosen(
+        final Supplier<LwjShape> lwj, final Supplier<J2DShape> j2d
+    ) {
+        return lwj.get();
+    }
 }

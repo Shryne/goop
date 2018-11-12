@@ -19,54 +19,52 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.metric.size;
+package logic.metric.pos;
 
 import java.util.function.BiFunction;
 import java.util.function.ObjIntConsumer;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import logic.functional.Value;
 
-/*
-I am not happy about this naming, but my other idea's regarding the interface
-name and the basic implementation weren't good either (impl or simple for
-example). So I took the more annoying name for the implementation to lower the
-chance that a user might use the class name as a parameter type
-*/
 /**
- * Basic concrete implementation of {@link Size}.
- * <p>This class is immutable and thread-safe.</p>
- * @since 3.4.0
+ * An envelope that delegates everything to the given pos instance.
+ * @since 5.13.3
  */
-@EqualsAndHashCode
-@ToString
-public class Size2D implements Size {
+public abstract class PosEnvelope implements Pos {
     /**
-     * The width of the size.
+     * The pos to delegate the calls to.
      */
-    private final int width;
-
-    /**
-     * The height of the size.
-     */
-    private final int height;
+    private final Value<Pos> pos;
 
     /**
      * Primary constructor.
-     * @param width The width for the size.
-     * @param height The height for the size.
+     * @param pos The pos to delegate the calls to.
      */
-    public Size2D(final int width, final int height) {
-        this.width = width;
-        this.height = height;
+    public PosEnvelope(final Value<Pos> pos) {
+        this.pos = pos;
     }
 
     @Override
     public final <R> R result(final BiFunction<Integer, Integer, R> target) {
-        return target.apply(this.width, this.height);
+        return this.pos.content().result(target);
     }
 
     @Override
     public final void applyOn(final ObjIntConsumer<Integer> target) {
-        Size.super.applyOn(target);
+        this.pos.content().applyOn(target);
+    }
+
+    @Override
+    public final int hashCode() {
+        return this.pos.content().hashCode();
+    }
+
+    @Override
+    public final boolean equals(final Object obj) {
+        return this.pos.content().equals(obj);
+    }
+
+    @Override
+    public final String toString() {
+        return this.pos.content().toString();
     }
 }

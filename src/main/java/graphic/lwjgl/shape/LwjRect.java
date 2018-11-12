@@ -19,18 +19,42 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package graphic.j2d.shape;
+package graphic.lwjgl.shape;
 
-import java.awt.Graphics;
+import logic.metric.area.Area;
+import org.lwjgl.opengl.GL11;
 
 /**
- * A shape that is using java2d to draw itself.
- * @since 2.1.0
+ * A lwjgl based rectangle.
+ * <p>This class is immutable.</p>
+ * @since 7.1.0
  */
-public interface J2DShape {
+public class LwjRect implements LwjShape {
     /**
-     * Draws the shape.
-     * @param graphics The Graphics object to draw the shape.
+     * The area of this rect.
      */
-    void draw(Graphics graphics);
+    private final Area area;
+
+    /**
+     * Primary constructor.
+     * @param area The area of this rect.
+     */
+    public LwjRect(final Area area) {
+        this.area = area;
+    }
+
+    @Override
+    public final void draw() {
+        GL11.glBegin(GL11.GL_QUADS);
+        this.area.applyOn(
+            // @checkstyle ParameterNameCheck (1 line)
+            (x, y, width, height) -> {
+                GL11.glVertex2i(x, y);
+                GL11.glVertex2i(x + width, y);
+                GL11.glVertex2i(x + width, y  + height);
+                GL11.glVertex2i(x, y  + height);
+            }
+        );
+        GL11.glEnd();
+    }
 }
