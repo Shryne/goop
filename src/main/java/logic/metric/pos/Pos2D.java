@@ -21,8 +21,8 @@
 
 package logic.metric.pos;
 
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.ObjIntConsumer;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -69,7 +69,7 @@ public class Pos2D implements Pos {
     }
 
     @Override
-    public final void applyOn(final BiConsumer<Integer, Integer> target) {
+    public final void applyOn(final ObjIntConsumer<Integer> target) {
         Pos.super.applyOn(target);
     }
 }

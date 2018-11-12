@@ -21,8 +21,8 @@
 
 package logic.metric.size;
 
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.ObjIntConsumer;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -66,7 +66,7 @@ public class Size2D implements Size {
     }
 
     @Override
-    public final void applyOn(final BiConsumer<Integer, Integer> target) {
+    public final void applyOn(final ObjIntConsumer<Integer> target) {
         Size.super.applyOn(target);
     }
 }

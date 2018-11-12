@@ -21,8 +21,8 @@
 
 package logic.metric.size;
 
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.ObjIntConsumer;
 
 /*
 This interface is necessary (compared to using width and height each time)
@@ -50,7 +50,7 @@ public interface Size {
      * Gives the given consumer the width and height that define this size.
      * @param target Target that gets the width and height.
      */
-    default void applyOn(final BiConsumer<Integer, Integer> target) {
+    default void applyOn(final ObjIntConsumer<Integer> target) {
         this.result(
             (width, height) -> {
                 target.accept(width, height);

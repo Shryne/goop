@@ -21,8 +21,8 @@
 
 package logic.metric.pos;
 
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.ObjIntConsumer;
 
 /*
 This interface is necessary (compared to using x and y each time) because this
@@ -52,7 +52,7 @@ public interface Pos {
      * Gives the given consumer the x and y coordinates of this pos.
      * @param target Target that gets the Coordinates.
      */
-    default void applyOn(final BiConsumer<Integer, Integer> target) {
+    default void applyOn(final ObjIntConsumer<Integer> target) {
         this.result(
             // @checkstyle ParameterName (1 line)
             (x, y) -> {

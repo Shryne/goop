@@ -21,8 +21,8 @@
 
 package logic.metric.pos;
 
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.ObjIntConsumer;
 import logic.functional.Value;
 
 /**
@@ -49,7 +49,7 @@ public abstract class PosEnvelope implements Pos {
     }
 
     @Override
-    public final void applyOn(final BiConsumer<Integer, Integer> target) {
+    public final void applyOn(final ObjIntConsumer<Integer> target) {
         this.pos.content().applyOn(target);
     }
 
