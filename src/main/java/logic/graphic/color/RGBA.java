@@ -52,11 +52,14 @@ public class RGBA implements Color {
 
     /**
      * Ctor.
-     * @param red The red value from 0 (nothing) to 255 (full).
-     * @param green The green value from 0 (nothing) to 255 (full).
-     * @param blue The blue value from 0 (nothing) to 255 (full).
-     * @param alpha The alpha (transparency) value from 0 (nothing) to 255
+     * @param red The red value from 0 (nothing) to {@link Integer#MAX_VALUE}
      *  (full).
+     * @param green The green value from 0 (nothing) to
+     *  {@link Integer#MAX_VALUE} (full).
+     * @param blue The blue value from 0 (nothing) to {@link Integer#MAX_VALUE}
+     *  (full).
+     * @param alpha The alpha (transparency) value from 0 (nothing) to
+     *  {@link Integer#MAX_VALUE} (full).
      * @checkstyle ParameterNumber (2 lines)
      */
     public RGBA(
