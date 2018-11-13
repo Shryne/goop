@@ -22,6 +22,8 @@
 package graphic.lwjgl.shape;
 
 import logic.metric.area.Area;
+import logic.metric.area.Area2D;
+import logic.metric.size.Size;
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -36,7 +38,15 @@ public class LwjRect implements LwjShape {
     private final Area area;
 
     /**
-     * Primary constructor.
+     * Ctor.
+     * @param size The size of this rect.
+     */
+    public LwjRect(final Size size) {
+        this(new Area2D(size));
+    }
+
+    /**
+     * Ctor.
      * @param area The area of this rect.
      */
     public LwjRect(final Area area) {

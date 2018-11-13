@@ -24,6 +24,7 @@ package logic.metric.size;
 import java.util.function.BiFunction;
 import logic.metric.Animation;
 import logic.time.Elapsable;
+import logic.time.Expiration;
 
 /**
  * Represents a changing size.
@@ -45,6 +46,18 @@ public class Scaling implements Size, Animation {
      * The watch used to get the scaling progress.
      */
     private final Elapsable watch;
+
+    /**
+     * Ctor.
+     * @param origin The starting size of this object.
+     * @param ending The end size of this object.
+     * @param milliseconds Amount of milliseconds needed to fulfill the scaling.
+     */
+    public Scaling(
+        final Size origin, final Size ending, final long milliseconds
+    ) {
+        this(origin, ending, new Expiration(milliseconds));
+    }
 
     /**
      * Ctor.
