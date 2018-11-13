@@ -22,8 +22,12 @@
 package graphic.lwjgl.window;
 
 import logic.functional.Action;
+import logic.functional.Lazy;
+import logic.functional.Value;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GLCapabilities;
 
 /**
  * This buffer takes care of the correct swap interval, the color cleaning
@@ -39,23 +43,35 @@ public class BaseViewBuffer implements ViewBuffer {
     private final int interval;
 
     /**
+     * The OpenGL related capabilities contained by a value. This is necessary,
+     * because the capabilities can only be created after a {@link GlfwInit}
+     * implementation has been used.
+     */
+    private final Value<GLCapabilities> capabilities;
+
+    /**
      * Secondary constructor.
      */
     public BaseViewBuffer() {
-        this(0);
+        this(0, new Lazy<>(GL::createCapabilities));
     }
 
     /**
      * Primary constructor.
      * @param interval The interval of the swapping. A 60 would mean that the
      *  buffer would be swapped 60 times per second.
+     * @param capabilities The OpenGL related capabilities.
      */
-    public BaseViewBuffer(final int interval) {
+    public BaseViewBuffer(
+        final int interval, final Value<GLCapabilities> capabilities
+    ) {
         this.interval = interval;
+        this.capabilities = capabilities;
     }
 
     @Override
     public final void drawBuffered(final long window, final Action action) {
+        GL.setCapabilities(this.capabilities.content());
         GLFW.glfwSwapInterval(this.interval);
         GL11.glClearColor(
             1.0f, 1.0f, 1.0f, 1.0f

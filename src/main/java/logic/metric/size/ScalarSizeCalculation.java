@@ -22,59 +22,46 @@
 package logic.metric.size;
 
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.function.ObjIntConsumer;
-import lombok.ToString;
 
 /**
- * Defines a size that is calculated from two other sizes based on a given
- * operation. The order of the given sizes will be hold when the given operation
- * is called on them.
+ * Defines a calculation of a size object with a scalar value by using a given
+ * operation:
+ * <pre>{@code Size(10, 20) + 15 = Size(25, 35)}</pre>
  * <p>This class is immutable and thread-safe.</p>
- * @since 8.3.0
+ * @since 9.0.0
  */
-@ToString
-public class SizeCalculation implements Size {
+public class ScalarSizeCalculation implements Size {
     /**
-     * The first size for the calculation.
+     * The size of the calculation.
      */
-    private final Size first;
+    private final Size size;
 
     /**
-     * The second size for the calculation.
+     * The operation to be applied.
      */
-    private final Size second;
-
-    /**
-     * The operation to be applied on the widths and heights of the given sizes.
-     */
-    private final BiFunction<Integer, Integer, Integer> operation;
+    private final Function<Integer, Integer> operation;
 
     /**
      * Ctor.
-     * @param first The first size for the calculation.
-     * @param second The second size for the calculation.
-     * @param operation The operation to be applied on the widths and heights of
-     *  the given sizes.
+     * @param size The size of the calculation.
+     * @param operation The operation to be applied.
      */
-    public SizeCalculation(
-        final Size first,
-        final Size second,
-        final BiFunction<Integer, Integer, Integer> operation
+    public ScalarSizeCalculation(
+        final Size size,
+        final Function<Integer, Integer> operation
     ) {
-        this.first = first;
-        this.second = second;
+        this.size = size;
         this.operation = operation;
     }
 
     @Override
     public final <R> R result(final BiFunction<Integer, Integer, R> target) {
-        return this.first.result(
-            // @checkstyle ParameterName (2 lines)
-            (firstWidth, firstHeight) -> this.second.result(
-                (secondWidth, secondHeight) -> target.apply(
-                    this.operation.apply(firstWidth, secondWidth),
-                    this.operation.apply(firstHeight, secondHeight)
-                )
+        return this.size.result(
+            (width, height) -> target.apply(
+                this.operation.apply(width),
+                this.operation.apply(height)
             )
         );
     }

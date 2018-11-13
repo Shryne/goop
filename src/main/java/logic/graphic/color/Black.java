@@ -38,11 +38,6 @@ public class Black extends RGBA {
      * @param alpha The alpha value of this color.
      */
     public Black(final int alpha) {
-        super(
-            Integer.MAX_VALUE,
-            Integer.MAX_VALUE,
-            Integer.MAX_VALUE,
-            alpha
-        );
+        super(0, 0, 0, alpha);
     }
 }
