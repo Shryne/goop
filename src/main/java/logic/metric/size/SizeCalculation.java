@@ -23,7 +23,7 @@ package logic.metric.size;
 
 import java.util.function.BiFunction;
 import java.util.function.ObjIntConsumer;
-import lombok.ToString;
+import lombok.EqualsAndHashCode;
 
 /**
  * Defines a size that is calculated from two other sizes based on a given
@@ -32,7 +32,7 @@ import lombok.ToString;
  * <p>This class is immutable and thread-safe.</p>
  * @since 8.3.0
  */
-@ToString
+@EqualsAndHashCode
 public class SizeCalculation implements Size {
     /**
      * The first size for the calculation.
@@ -82,5 +82,49 @@ public class SizeCalculation implements Size {
     @Override
     public final void applyOn(final ObjIntConsumer<Integer> target) {
         Size.super.applyOn(target);
+    }
+
+    @Override
+    public final int hashCode() {
+        return this.result(
+            (width, height) -> {
+                var hash = 3;
+                hash = 31 * hash + Integer.hashCode(width);
+                hash = 31 * hash + Integer.hashCode(height);
+                return hash;
+            }
+        );
+    }
+
+    @Override
+    public final boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Size)) {
+            return false;
+        }
+        return ((Size) obj).result(
+            (otherWidth, otherHeight) -> this.result(
+                (width, height) ->
+                    width.equals(otherWidth) &&
+                        height.equals(otherHeight)
+            )
+        );
+    }
+
+    /**
+     * Format of the string: Size(varName1=value1, ..., varNameN=valueN)
+     * @return The string representation of this object.
+     */
+    @Override
+    public final String toString() {
+        return this.result(
+            (width, height) ->
+                new StringBuilder("Size")
+                    .append("(width=").append(width)
+                    .append(", height=").append(height)
+                    .append(')')
+        ).toString();
     }
 }

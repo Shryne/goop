@@ -31,6 +31,40 @@ import org.junit.Test;
  */
 public class SizeTest {
     /**
+     * Tests whether to sizes with the same values are equal.
+     */
+    @Test
+    public void equalSizes() {
+        final var width = 62;
+        final var height = 248;
+        final var first = new Size2D(width, height);
+        final var second = new Size2D(width, height);
+        MatcherAssert.assertThat(first, Matchers.equalTo(second));
+        MatcherAssert.assertThat(second, Matchers.equalTo(first));
+    }
+
+    /**
+     * Tests whether to sizes with different values aren't equal.
+     */
+    @Test
+    public void notEqualSizes() {
+        final var first = new Size2D(1434, 213);
+        final var second = new Size2D(4325, 4654);
+        MatcherAssert.assertThat(
+            first,
+            Matchers.not(
+                Matchers.equalTo(second)
+            )
+        );
+        MatcherAssert.assertThat(
+            second,
+            Matchers.not(
+                Matchers.equalTo(first)
+            )
+        );
+    }
+
+    /**
      * Aims to test, whether the correct result is returned.
      */
     @Test
@@ -38,12 +72,10 @@ public class SizeTest {
         final var width = 3445;
         final var height = 432;
         MatcherAssert.assertThat(
-            width + height,
-            Matchers.is(
-                new Size2D(width, height).result(
-                    Integer::sum
-                )
-            )
+            new Size2D(width, height).result(
+                Integer::sum
+            ),
+            Matchers.is(width + height)
         );
     }
 }
