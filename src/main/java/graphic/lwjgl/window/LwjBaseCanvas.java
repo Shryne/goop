@@ -59,7 +59,6 @@ public class LwjBaseCanvas implements LwjCanvas {
     public LwjBaseCanvas(
         final ViewBuffer buffer,
         final LwjCamera camera
-
     ) {
         this.buffer = buffer;
         this.camera = camera;

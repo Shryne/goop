@@ -86,16 +86,17 @@ public class SizeCalculation implements Size {
 
     @Override
     public final int hashCode() {
+        final var initial = 3;
+        final var prime = 31;
         return this.result(
             (width, height) -> {
-                var hash = 3;
-                hash = 31 * hash + Integer.hashCode(width);
-                hash = 31 * hash + Integer.hashCode(height);
-                return hash;
+                final var hash = prime * initial + width;
+                return prime * hash + height;
             }
         );
     }
 
+    @SuppressWarnings("PMD.OnlyOneReturn")
     @Override
     public final boolean equals(final Object obj) {
         if (this == obj) {
@@ -105,26 +106,21 @@ public class SizeCalculation implements Size {
             return false;
         }
         return ((Size) obj).result(
+            // @checkstyle ParameterName (1 line)
             (otherWidth, otherHeight) -> this.result(
-                (width, height) ->
-                    width.equals(otherWidth) &&
-                        height.equals(otherHeight)
+                (width, height) -> width.equals(otherWidth)
+                    && height.equals(otherHeight)
             )
         );
     }
 
-    /**
-     * Format of the string: Size(varName1=value1, ..., varNameN=valueN)
-     * @return The string representation of this object.
-     */
     @Override
     public final String toString() {
         return this.result(
-            (width, height) ->
-                new StringBuilder("Size")
-                    .append("(width=").append(width)
-                    .append(", height=").append(height)
-                    .append(')')
+            (width, height) -> new StringBuilder("Size")
+                .append("(width=").append(width)
+                .append(", height=").append(height)
+                .append(')')
         ).toString();
     }
 }

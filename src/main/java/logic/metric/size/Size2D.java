@@ -66,13 +66,24 @@ public class Size2D implements Size {
     }
 
     @Override
-    public final int hashCode() {
-        var hash = 3;
-        hash = 31 * hash + this.width;
-        hash = 31 * hash + this.height;
-        return hash;
+    public final <R> R result(final BiFunction<Integer, Integer, R> target) {
+        return target.apply(this.width, this.height);
     }
 
+    @Override
+    public final void applyOn(final ObjIntConsumer<Integer> target) {
+        Size.super.applyOn(target);
+    }
+
+    @Override
+    public final int hashCode() {
+        final var initial = 3;
+        final var prime = 31;
+        final var hash = prime * initial + this.width;
+        return prime * hash + this.height;
+    }
+
+    @SuppressWarnings("PMD.OnlyOneReturn")
     @Override
     public final boolean equals(final Object obj) {
         if (this == obj) {
@@ -82,18 +93,9 @@ public class Size2D implements Size {
             return false;
         }
         return ((Size) obj).result(
-            (otherWidth, otherHeight) -> otherWidth.equals(this.width) &&
-                otherHeight.equals(this.height)
+            // @checkstyle ParameterName (1 line)
+            (otherWidth, otherHeight) -> otherWidth.equals(this.width)
+                && otherHeight.equals(this.height)
         );
-    }
-
-    @Override
-    public final <R> R result(final BiFunction<Integer, Integer, R> target) {
-        return target.apply(this.width, this.height);
-    }
-
-    @Override
-    public final void applyOn(final ObjIntConsumer<Integer> target) {
-        Size.super.applyOn(target);
     }
 }
