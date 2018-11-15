@@ -26,48 +26,53 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Tests for {@link Sum}.
- * @since 9.1.0
+ * Tests for {@link Diff}.
+ * @since 9.1.1
  */
-public class SumTest {
+public class DiffTest {
+    /*
+    Normally, I would test the equality of Size2D and Diff in a separate method,
+    but to create Diff, I need Size2D and it would somehow still test whether
+    Size is constructed correctly. So in the end I would need to create a Diff
+    object without using Size2D. Since I don't have a fake for Size, I can't do
+    that so I put this test inside here. I don't see a point creating a fake
+    for a class that is as simple as Size2D
+     */
     /**
      * Tests for:
-     * <p>size1 + Size(0, 0) = size1</p>
+     * <p>size1 - Size(0, 0) = size1</p>
      * This test depends on {@link Size#equals(Object)} and
      * {@link SizeCalculation#equals(Object)}.
      */
     @Test
-    public void sizePlusZeroEqualsSize() {
-        final var width = 1342;
-        final var height = 2341;
+    public void sizeMinusZeroEqualsSize() {
+        final var width = 54;
+        final var height = 325;
         final var size = new Size2D(width, height);
-        final var sum = new Sum(size, new Size2D());
-        MatcherAssert.assertThat(
-            sum,
-            Matchers.equalTo(size)
-        );
+        final var diff = new Diff(size, new Size2D());
+        MatcherAssert.assertThat(diff, Matchers.equalTo(size));
     }
 
     /**
      * Test for:
-     * <p>size1 + size2 = size3</p>
+     * <p>size1 - size2 = size3</p>
      * This test depends on {@link Size#equals(Object)} and
      * {@link SizeCalculation}.
      */
     @Test
-    public void sizePlusSizeResult() {
+    public void sizeMinusSizeResult() {
         // @checkstyle LocalFinalVariableName (4 lines)
-        final var width1 = 234;
-        final var height1 = 345;
-        final var width2 = 438;
-        final var height2 = 4399;
+        final var width1 = 43;
+        final var height1 = 215;
+        final var width2 = 1534;
+        final var height2 = 123;
         MatcherAssert.assertThat(
             new Size2D(
-                width1 + width2,
-                height1 + height2
+                width1 - width2,
+                height1 - height2
             ),
             Matchers.equalTo(
-                new Sum(
+                new Diff(
                     new Size2D(width1, height1),
                     new Size2D(width2, height2)
                 )
