@@ -19,37 +19,8 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.graphic;
-
-import logic.graphic.color.RGBA;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
-
 /**
- * Tests for {@link logic.graphic.color.RGBA}.
- * @since 9.1.1
- * @checkstyle AbbreviationAsWordInName (2 lines)
+ * Tests regarding the logical graphics components.
+ * @since 9.1.2
  */
-public class RGBATest {
-    /**
-     * A test whether the applyOn method gives the right values into the
-     * consumer.
-     */
-    @Test
-    public void correctApply() {
-        final var red = 232;
-        final var green = 2382433;
-        final var blue = 2483;
-        final var alpha = 2345;
-        new RGBA(red, green, blue, alpha).applyOn(
-            // @checkstyle ParameterName (1 line)
-            (r, g, b, a) -> {
-                MatcherAssert.assertThat(r, Matchers.equalTo(red));
-                MatcherAssert.assertThat(g, Matchers.equalTo(green));
-                MatcherAssert.assertThat(b, Matchers.equalTo(blue));
-                MatcherAssert.assertThat(a, Matchers.equalTo(alpha));
-            }
-        );
-    }
-}
+package logic.graphic;

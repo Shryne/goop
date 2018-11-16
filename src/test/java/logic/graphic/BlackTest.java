@@ -21,35 +21,34 @@
 
 package logic.graphic;
 
+import logic.graphic.color.Black;
 import logic.graphic.color.RGBA;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Tests for {@link logic.graphic.color.RGBA}.
- * @since 9.1.1
- * @checkstyle AbbreviationAsWordInName (2 lines)
+ * Tests for {@link logic.graphic.color.Black}.
+ * @since 9.1.2
  */
-public class RGBATest {
+public class BlackTest {
     /**
-     * A test whether the applyOn method gives the right values into the
-     * consumer.
+     * Tests for:
+     * <p>color(0, 0, 0, 0) = black(0)</p>
+     * <p>black(0) = color(0, 0, 0, 0)</p>
+     * This test depends on {@link logic.graphic.color.Color#equals(Object)}.
      */
     @Test
-    public void correctApply() {
-        final var red = 232;
-        final var green = 2382433;
-        final var blue = 2483;
-        final var alpha = 2345;
-        new RGBA(red, green, blue, alpha).applyOn(
-            // @checkstyle ParameterName (1 line)
-            (r, g, b, a) -> {
-                MatcherAssert.assertThat(r, Matchers.equalTo(red));
-                MatcherAssert.assertThat(g, Matchers.equalTo(green));
-                MatcherAssert.assertThat(b, Matchers.equalTo(blue));
-                MatcherAssert.assertThat(a, Matchers.equalTo(alpha));
-            }
+    public void realBlack() {
+        final var color = new RGBA(0, 0, 0, 0);
+        final var black = new Black(0);
+        MatcherAssert.assertThat(
+            color,
+            Matchers.equalTo(black)
+        );
+        MatcherAssert.assertThat(
+            black,
+            Matchers.equalTo(color)
         );
     }
 }
