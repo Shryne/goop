@@ -33,10 +33,10 @@ import org.junit.Test;
 public class BlackTest {
     /**
      * Tests whether the constructor uses the correct values for the black
-     * color.
+     * color when the {@link Black#Black(int)} constructor is used.
      */
     @Test
-    public void realBlack() {
+    public void blackWithAlphaCreation() {
         new Black(0).applyOn(
             // @checkstyle ParameterName (1 line)
             (r, g, b, a) -> {
@@ -44,6 +44,26 @@ public class BlackTest {
                 MatcherAssert.assertThat(g, Matchers.equalTo(0));
                 MatcherAssert.assertThat(b, Matchers.equalTo(0));
                 MatcherAssert.assertThat(a, Matchers.equalTo(0));
+            }
+        );
+    }
+
+    /**
+     * Tests whether the constructor uses the correct values for the black
+     * color when the {@link Black#Black()} constructor is used.
+     */
+    @Test
+    public void defaultCreation() {
+        new Black().applyOn(
+            // @checkstyle ParameterName (1 line)
+            (r, g, b, a) -> {
+                MatcherAssert.assertThat(r, Matchers.equalTo(0));
+                MatcherAssert.assertThat(g, Matchers.equalTo(0));
+                MatcherAssert.assertThat(b, Matchers.equalTo(0));
+                MatcherAssert.assertThat(
+                    a,
+                    Matchers.equalTo(Integer.MAX_VALUE)
+                );
             }
         );
     }
