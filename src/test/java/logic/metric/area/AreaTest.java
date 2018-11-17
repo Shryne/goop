@@ -21,6 +21,8 @@
 
 package logic.metric.area;
 
+import java.util.function.BiFunction;
+import java.util.function.ObjIntConsumer;
 import logic.metric.pos.Pos2D;
 import logic.metric.size.Size2D;
 import org.hamcrest.MatcherAssert;
@@ -34,7 +36,8 @@ import org.junit.Test;
 public class AreaTest {
     /**
      * A test whether the applyOn method gives the right values into the
-     * consumer.
+     * consumer. This test depends on {@link Pos2D#applyOn(ObjIntConsumer)} and
+     * {@link Size2D#applyOn(ObjIntConsumer)}.
      */
     @Test
     public void correctApply() {
@@ -88,7 +91,9 @@ public class AreaTest {
     }
 
     /**
-     * Aims to test, whether the correct result is returned.
+     * Aims to test, whether the correct result is returned. This test depends
+     * on {@link Pos2D#result(BiFunction)} and
+     * {@link Size2D#result(BiFunction)}.
      */
     @Test
     public void correctResult() {

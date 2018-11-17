@@ -19,8 +19,17 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+package logic.metric;
+
 /**
- * Tests regarding the size components.
- * @since 4.9.0
+ * Defines an animation - a unit that transitions from one state to another in
+ * a certain time.
+ * @since 8.3.0
  */
-package logic.metric.size;
+public interface Animation {
+    /**
+     * Starts the animation. Calling this method multiple times will restart the
+     * animation every time.
+     */
+    void start();
+}

@@ -26,56 +26,52 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Tests for {@link Size}.
- * @since 4.9.0
+ * Tests for {@link Sum}.
+ * @since 9.1.0
  */
-public class SizeTest {
+public class SumTest {
     /**
-     * Tests whether to sizes with the same values are equal.
+     * Tests for:
+     * <p>size1 + Size(0, 0) = size1</p>
+     * This test depends on {@link Size#equals(Object)} and
+     * {@link SizeCalculation#equals(Object)}.
      */
     @Test
-    public void equalSizes() {
-        final var width = 62;
-        final var height = 248;
-        final var first = new Size2D(width, height);
-        final var second = new Size2D(width, height);
-        MatcherAssert.assertThat(first, Matchers.equalTo(second));
-        MatcherAssert.assertThat(second, Matchers.equalTo(first));
-    }
-
-    /**
-     * Tests whether to sizes with different values aren't equal.
-     */
-    @Test
-    public void notEqualSizes() {
-        final var first = new Size2D(1434, 213);
-        final var second = new Size2D(4325, 4654);
+    public void sizePlusZeroEqualsSize() {
+        final var width = 1342;
+        final var height = 2341;
+        final var size = new Size2D(width, height);
+        final var sum = new Sum(size, new Size2D());
         MatcherAssert.assertThat(
-            first,
-            Matchers.not(
-                Matchers.equalTo(second)
-            )
-        );
-        MatcherAssert.assertThat(
-            second,
-            Matchers.not(
-                Matchers.equalTo(first)
-            )
+            sum,
+            Matchers.equalTo(size)
         );
     }
 
     /**
-     * Aims to test, whether the correct result is returned.
+     * Test for:
+     * <p>size1 + size2 = size3</p>
+     * This test depends on {@link Size#equals(Object)} and
+     * {@link SizeCalculation}.
      */
     @Test
-    public void correctResult() {
-        final var width = 3445;
-        final var height = 432;
+    public void sizePlusSizeResult() {
+        // @checkstyle LocalFinalVariableName (4 lines)
+        final var width1 = 234;
+        final var height1 = 345;
+        final var width2 = 438;
+        final var height2 = 4399;
         MatcherAssert.assertThat(
-            new Size2D(width, height).result(
-                Integer::sum
+            new Size2D(
+                width1 + width2,
+                height1 + height2
             ),
-            Matchers.is(width + height)
+            Matchers.equalTo(
+                new Sum(
+                    new Size2D(width1, height1),
+                    new Size2D(width2, height2)
+                )
+            )
         );
     }
 }

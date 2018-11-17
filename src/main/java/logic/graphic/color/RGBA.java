@@ -26,7 +26,6 @@ import logic.functional.QuadConsumer;
 /**
  * A simple color implementation using red, green, blue and alpha values
  * spanning from 0 to 255.
- *
  * @since 3.1.0
  * @checkstyle AbbreviationAsWordInName (2 lines)
  */
@@ -52,16 +51,23 @@ public class RGBA implements Color {
     private final int alpha;
 
     /**
-     * Primary constructor.
-     * @param red The red value from 0 (nothing) to 255 (full).
-     * @param green The green value from 0 (nothing) to 255 (full).
-     * @param blue The blue value from 0 (nothing) to 255 (full).
-     * @param alpha The alpha (transparency) value from 0 (nothing) to 255
+     * Ctor.
+     * @param red The red value from 0 (nothing) to {@link Integer#MAX_VALUE}
      *  (full).
+     * @param green The green value from 0 (nothing) to
+     *  {@link Integer#MAX_VALUE} (full).
+     * @param blue The blue value from 0 (nothing) to {@link Integer#MAX_VALUE}
+     *  (full).
+     * @param alpha The alpha (transparency) value from 0 (nothing) to
+     *  {@link Integer#MAX_VALUE} (full).
      * @checkstyle ParameterNumber (2 lines)
      */
-    public RGBA(final int red, final int green,
-        final int blue, final int alpha) {
+    public RGBA(
+        final int red,
+        final int green,
+        final int blue,
+        final int alpha
+    ) {
         this.red = red;
         this.green = green;
         this.blue = blue;
@@ -70,7 +76,8 @@ public class RGBA implements Color {
 
     @Override
     public final void applyOn(
-        final QuadConsumer<Integer, Integer, Integer, Integer> target) {
+        final QuadConsumer<Integer, Integer, Integer, Integer> target
+    ) {
         target.accept(this.red, this.green, this.blue, this.alpha);
     }
 }

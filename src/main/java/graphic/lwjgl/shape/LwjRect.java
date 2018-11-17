@@ -21,12 +21,17 @@
 
 package graphic.lwjgl.shape;
 
+import logic.graphic.color.Black;
+import logic.graphic.color.Color;
 import logic.metric.area.Area;
+import logic.metric.area.Area2D;
+import logic.metric.size.Size;
 import org.lwjgl.opengl.GL11;
 
 /**
  * A lwjgl based rectangle.
- * <p>This class is immutable.</p>
+ * <p>This class is immutable, but uses the gl methods to draw itself which
+ * aren't thread-safe..</p>
  * @since 7.1.0
  */
 public class LwjRect implements LwjShape {
@@ -36,16 +41,40 @@ public class LwjRect implements LwjShape {
     private final Area area;
 
     /**
-     * Primary constructor.
+     * The color of this rect.
+     */
+    private final Color color;
+
+    /**
+     * Ctor.
+     * @param size The size of this rect.
+     */
+    public LwjRect(final Size size) {
+        this(new Area2D(size));
+    }
+
+    /**
+     * Ctor.
      * @param area The area of this rect.
      */
     public LwjRect(final Area area) {
+        this(area, new Black());
+    }
+
+    /**
+     * Ctor.
+     * @param area The area of this rect.
+     * @param color The color of this rect.
+     */
+    public LwjRect(final Area area, final Color color) {
         this.area = area;
+        this.color = color;
     }
 
     @Override
     public final void draw() {
         GL11.glBegin(GL11.GL_QUADS);
+        this.color.applyOn(GL11::glColor4i);
         this.area.applyOn(
             // @checkstyle ParameterNameCheck (1 line)
             (x, y, width, height) -> {

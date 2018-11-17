@@ -143,6 +143,7 @@ public class LwjBaseWindow implements Updateable, Showable, AutoCloseable,
                     this.pointer.content(), shape::draw
                 )
             );
+            GLFW.glfwPollEvents();
         }
     }
 

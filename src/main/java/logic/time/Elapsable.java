@@ -19,8 +19,22 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+package logic.time;
+
 /**
- * Tests regarding the size components.
- * @since 4.9.0
+ * Defines an elapsing unit.
+ * @since 8.3.0
  */
-package logic.metric.size;
+public interface Elapsable {
+    /**
+     * Returns the amount of time that shall elapse as a percentage value. The
+     * value spans from 0.0 to 1.0.
+     * @return The time to elapse.
+     */
+    double elapsedPercent();
+
+    /**
+     * Starts the elapsing.
+     */
+    void start();
+}

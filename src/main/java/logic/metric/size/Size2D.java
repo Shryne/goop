@@ -23,7 +23,6 @@ package logic.metric.size;
 
 import java.util.function.BiFunction;
 import java.util.function.ObjIntConsumer;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /*
@@ -37,7 +36,6 @@ chance that a user might use the class name as a parameter type
  * <p>This class is immutable and thread-safe.</p>
  * @since 3.4.0
  */
-@EqualsAndHashCode
 @ToString
 public class Size2D implements Size {
     /**
@@ -49,6 +47,13 @@ public class Size2D implements Size {
      * The height of the size.
      */
     private final int height;
+
+    /**
+     * Ctor. Creates a size with width = 0 and height = 0.
+     */
+    public Size2D() {
+        this(0, 0);
+    }
 
     /**
      * Primary constructor.
@@ -68,5 +73,29 @@ public class Size2D implements Size {
     @Override
     public final void applyOn(final ObjIntConsumer<Integer> target) {
         Size.super.applyOn(target);
+    }
+
+    @Override
+    public final int hashCode() {
+        final var initial = 3;
+        final var prime = 31;
+        final var hash = prime * initial + this.width;
+        return prime * hash + this.height;
+    }
+
+    @SuppressWarnings("PMD.OnlyOneReturn")
+    @Override
+    public final boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Size)) {
+            return false;
+        }
+        return ((Size) obj).result(
+            // @checkstyle ParameterName (1 line)
+            (otherWidth, otherHeight) -> otherWidth.equals(this.width)
+                && otherHeight.equals(this.height)
+        );
     }
 }

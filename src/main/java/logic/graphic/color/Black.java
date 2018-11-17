@@ -19,8 +19,25 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+package logic.graphic.color;
+
 /**
- * Tests regarding the size components.
- * @since 4.9.0
+ * Represents the black color.
+ * @since 8.4.0
  */
-package logic.metric.size;
+public class Black extends RGBA {
+    /**
+     * Ctor.
+     */
+    public Black() {
+        this(Integer.MAX_VALUE);
+    }
+
+    /**
+     * Ctor.
+     * @param alpha The alpha value of this color.
+     */
+    public Black(final int alpha) {
+        super(0, 0, 0, alpha);
+    }
+}

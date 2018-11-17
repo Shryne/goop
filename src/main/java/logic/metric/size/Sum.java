@@ -19,8 +19,24 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-/**
- * Tests regarding the size components.
- * @since 4.9.0
- */
 package logic.metric.size;
+
+/**
+ * The sum of two sizes:
+ * <pre>{@code Size(
+ *      firstSize.width + secondWidth.size,
+ *      firstSize.height + secondHeight.size
+ * )}</pre>
+ * <p>This class is immutable and thread-safe.</p>
+ * @since 8.3.0
+ */
+public class Sum extends SizeCalculation {
+    /**
+     * Ctor.
+     * @param first The first size.
+     * @param second The second size.
+     */
+    public Sum(final Size first, final Size second) {
+        super(first, second, Integer::sum);
+    }
+}

@@ -19,8 +19,24 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-/**
- * Tests regarding the size components.
- * @since 4.9.0
- */
 package logic.metric.size;
+
+/**
+ * Represents the difference between two sizes:
+ * <pre>{@code Size(
+ *      firstSize.width - secondSize.width,
+ *      firstSize.height - secondSize.height
+ * )}</pre>
+ * <p>This class is immutable and thread-safe.</p>
+ * @since 8.3.0
+ */
+public class Diff extends SizeCalculation {
+    /**
+     * Ctor.
+     * @param first The first size.
+     * @param second The second size.
+     */
+    public Diff(final Size first, final Size second) {
+        super(first, second, (firsts, seconds) -> firsts - seconds);
+    }
+}

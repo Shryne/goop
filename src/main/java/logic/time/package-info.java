@@ -20,7 +20,9 @@
  */
 
 /**
- * Tests regarding the size components.
- * @since 4.9.0
+ * Contains components to calculate and represent time. This is especially
+ * useful, because the components of this library change themselves from inside
+ * and time can be an event to trigger this mutation.
+ * @since 8.3.0
  */
-package logic.metric.size;
+package logic.time;

@@ -19,58 +19,50 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package graphic.lwjgl.window;
-
-import logic.functional.Action;
-import logic.metric.area.Area;
+package logic.functional;
 
 /**
- * The basic canvas for lwjgl. It will apply the given buffer and the camera.
- * <p>This class is not thread-safe, because it mutes the OpenGL state.</p>
- * @since 3.9.0
+ * An action that will be applied only once. Further calls of {@link #run()}
+ * won't be executed.
+ * <p>This class is mutable and not thread-safe, because it mutates its
+ * state when {@link #run()} is called.</p>
+ * @since 9.0.0
  */
-public class LwjBaseCanvas implements LwjCanvas {
+public class SingleAction implements Action {
     /**
-     * Tbe buffer of the canvas/window.
+     * The action to be called.
      */
-    private final ViewBuffer buffer;
+    private final Action action;
 
     /**
-     * The camera of the canvas.
+     * Boolean whether the action has been called or not.
      */
-    private final LwjCamera camera;
+    private boolean called;
 
     /**
-     * Secondary constructor.
-     * @param area The area of the camera used by the canvas.
+     * Ctor.
+     * @param action The action to be called.
      */
-    public LwjBaseCanvas(final Area area) {
-        this(
-            new BaseViewBuffer(),
-            new LwjBaseCamera(area)
-        );
+    public SingleAction(final Action action) {
+        this(action, false);
     }
 
     /**
-     * Primary constructor.
-     * @param buffer The buffer to be used for the drawing.
-     * @param camera The camera to be applied.
+     * Ctor.
+     * @param action The action to be called.
+     * @param called Boolean whether the action has been called or not. Passing
+     *  true as a value would mean that the action won't be called.
      */
-    public LwjBaseCanvas(
-        final ViewBuffer buffer,
-        final LwjCamera camera
-    ) {
-        this.buffer = buffer;
-        this.camera = camera;
+    public SingleAction(final Action action, final boolean called) {
+        this.action = action;
+        this.called = called;
     }
 
     @Override
-    public final void preparedDraw(final long window, final Action action) {
-        this.buffer.drawBuffered(
-            window, () -> {
-                this.camera.apply();
-                action.run();
-            }
-        );
+    public final void run() {
+        if (!this.called) {
+            this.action.run();
+            this.called = true;
+        }
     }
 }
