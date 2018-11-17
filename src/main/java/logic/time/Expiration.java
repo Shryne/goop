@@ -37,6 +37,11 @@ public class Expiration implements Elapsable {
     private static final double MAX_PERCENT = 1.0;
 
     /**
+     * The clock to retrieve the time from.
+     */
+    private final Clock clock;
+
+    /**
      * The amount of time needed to elapse.
      * @checkstyle MemberName (2 lines)
      */
@@ -48,27 +53,48 @@ public class Expiration implements Elapsable {
     private long beginning;
 
     /**
+     * This variable is true when {@link #start()} has been called at least once
+     * and it then stays true forever.
+     */
+    private boolean started;
+
+    /**
      * Ctor.
      * @param toElapse The amount of time needed to elapse.
      * @checkstyle ParameterName (2 lines)
      */
     public Expiration(final long toElapse) {
+        this(new SystemClock(), toElapse);
+    }
+
+    /**
+     * Ctor.
+     * @param clock The clock to retrieve the time from.
+     * @param toElapse The amount of time needed to elapse.
+     * @checkstyle ParameterName (2 lines)
+     */
+    public Expiration(final Clock clock, final long toElapse) {
+        this.clock = clock;
         this.toElapse = toElapse;
         this.beginning = 0L;
+        this.started = false;
     }
 
     @Override
     public final double elapsedPercent() {
-        return Math.max(
-            (double)
-                (System.currentTimeMillis() - this.beginning)
-                / (double) this.toElapse,
-            Expiration.MAX_PERCENT
-        );
+        double elapsed = 0.0;
+        if (this.started) {
+            elapsed = Math.min(
+                (double) (this.clock.millis() - this.beginning)
+                    / (double) this.toElapse, Expiration.MAX_PERCENT
+            );
+        }
+        return elapsed;
     }
 
     @Override
     public final void start() {
-        this.beginning = System.currentTimeMillis();
+        this.started = true;
+        this.beginning = this.clock.millis();
     }
 }

@@ -19,8 +19,17 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+package logic.time;
+
 /**
- * Tests regarding the size components.
- * @since 4.9.0
+ * A simple clock that offers the time in milli seconds. See
+ * {@link SystemClock}.
+ * @since 9.2.2
  */
-package logic.metric.size;
+public interface Clock {
+    /**
+     * Returns the system time in milli seconds.
+     * @return The system time.
+     */
+    long millis();
+}

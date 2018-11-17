@@ -22,7 +22,6 @@
 package logic.graphic;
 
 import logic.graphic.color.Black;
-import logic.graphic.color.RGBA;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -33,22 +32,19 @@ import org.junit.Test;
  */
 public class BlackTest {
     /**
-     * Tests for:
-     * <p>color(0, 0, 0, 0) = black(0)</p>
-     * <p>black(0) = color(0, 0, 0, 0)</p>
-     * This test depends on {@link logic.graphic.color.Color#equals(Object)}.
+     * Tests whether the constructor uses the correct values for the black
+     * color.
      */
     @Test
     public void realBlack() {
-        final var color = new RGBA(0, 0, 0, 0);
-        final var black = new Black(0);
-        MatcherAssert.assertThat(
-            color,
-            Matchers.equalTo(black)
-        );
-        MatcherAssert.assertThat(
-            black,
-            Matchers.equalTo(color)
+        new Black(0).applyOn(
+            // @checkstyle ParameterName (1 line)
+            (r, g, b, a) -> {
+                MatcherAssert.assertThat(r, Matchers.equalTo(0));
+                MatcherAssert.assertThat(g, Matchers.equalTo(0));
+                MatcherAssert.assertThat(b, Matchers.equalTo(0));
+                MatcherAssert.assertThat(a, Matchers.equalTo(0));
+            }
         );
     }
 }

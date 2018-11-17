@@ -6,7 +6,7 @@
 
     <groupId>com.goop</groupId>
     <artifactId>goop</artifactId>
-    <version>9.1.2</version>
+    <version>9.2.2</version>
 
     <properties>
         <sonar.sources>src/main/java</sonar.sources>
@@ -169,6 +169,11 @@
             <artifactId>lombok</artifactId>
             <version>1.18.4</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.cactoos</groupId>
+            <artifactId>cactoos</artifactId>
+            <version>0.38</version>
         </dependency>
     </dependencies>
 </project>

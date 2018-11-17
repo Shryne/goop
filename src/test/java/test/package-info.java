@@ -20,7 +20,7 @@
  */
 
 /**
- * Tests regarding the size components.
- * @since 4.9.0
+ * Contains additional components only used for the tests.
+ * @since 9.2.2
  */
-package logic.metric.size;
+package test;
