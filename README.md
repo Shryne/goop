@@ -58,4 +58,4 @@ new Window(
   )
 ).show();
 ```
-The class Moving implements Pos and Rect takes a Pos - no getter/setter needed, because the object itself is in control.  
+The class Moving implements Pos and Rect takes a Pos - no getter/setter needed, because the object itself is in control.
