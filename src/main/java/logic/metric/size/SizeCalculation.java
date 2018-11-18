@@ -30,6 +30,8 @@ import lombok.EqualsAndHashCode;
  * Defines a size that is calculated from two other sizes based on a given
  * operation. The order of the given sizes will be hold when the given operation
  * is called on them.
+ * <p>This class reuses the objects and doesn't create new ones when the
+ * calculation is applied.</p>
  * <p>This class is immutable and thread-safe.</p>
  * @since 8.3.0
  */
