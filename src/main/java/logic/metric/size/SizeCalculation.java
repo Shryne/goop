@@ -24,7 +24,6 @@ package logic.metric.size;
 import java.util.function.BiFunction;
 import java.util.function.IntBinaryOperator;
 import java.util.function.ObjIntConsumer;
-import lombok.EqualsAndHashCode;
 
 /**
  * Defines a size that is calculated from two other sizes based on a given
@@ -35,7 +34,6 @@ import lombok.EqualsAndHashCode;
  * <p>This class is immutable and thread-safe.</p>
  * @since 8.3.0
  */
-@EqualsAndHashCode
 public class SizeCalculation implements Size {
     /**
      * The first size for the calculation.

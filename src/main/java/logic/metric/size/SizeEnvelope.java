@@ -36,7 +36,7 @@ public abstract class SizeEnvelope implements Size {
     private final Value<Size> size;
 
     /**
-     * Primary constructor.
+     * Ctor.
      * @param size The size to delegate the calls to.
      */
     public SizeEnvelope(final Value<Size> size) {

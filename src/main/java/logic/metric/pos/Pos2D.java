@@ -23,8 +23,6 @@ package logic.metric.pos;
 
 import java.util.function.BiFunction;
 import java.util.function.ObjIntConsumer;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /*
 I am not happy about this naming, but my other idea's regarding the interface
@@ -37,8 +35,6 @@ chance that a user might use the class name as a parameter type
  * <p>This class is immutable and thread-safe.</p>
  * @since 3.4.0
  */
-@EqualsAndHashCode
-@ToString
 public class Pos2D implements Pos {
     /**
      * The x coordinate.
@@ -53,7 +49,7 @@ public class Pos2D implements Pos {
     private final int y;
 
     /**
-     * Primary constructor.
+     * Ctor.
      * @param x The x coordinate.
      * @param y The y coordinate.
      * @checkstyle ParameterName (2 lines)
