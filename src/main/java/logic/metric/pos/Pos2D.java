@@ -68,4 +68,13 @@ public class Pos2D implements Pos {
     public final void applyOn(final ObjIntConsumer<Integer> target) {
         Pos.super.applyOn(target);
     }
+
+    @Override
+    public final String toString() {
+        return new StringBuilder("Pos")
+            .append("(x=").append(this.x)
+            .append(", y=").append(this.y)
+            .append(')')
+            .toString();
+    }
 }

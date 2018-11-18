@@ -29,7 +29,7 @@ import org.junit.Test;
  * Tests for {@link Size}.
  * @since 4.9.0
  */
-public class SizeTest {
+public class Size2DTest {
     /**
      * Tests whether to sizes with different values aren't equal.
      */
@@ -63,6 +63,23 @@ public class SizeTest {
                 Integer::sum
             ),
             Matchers.is(width + height)
+        );
+    }
+
+    /**
+     * Tests whether {@link Size2D#toString()}} works as expected.
+     */
+    @Test
+    public void correctToString() {
+        final var width = 313;
+        final var height = 238;
+        MatcherAssert.assertThat(
+            new Size2D(width, height).toString(),
+            Matchers.equalTo(
+                String.format(
+                    "Size(width=%d, height=%d)", width, height
+                )
+            )
         );
     }
 }
