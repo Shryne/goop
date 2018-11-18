@@ -53,6 +53,7 @@ public class Pos2DTest {
      */
     @Test
     public void correctToString() {
+        // @checkstyle LocalFinalVariableName (2 lines)
         final var x = 31453;
         final var y = 4538;
         MatcherAssert.assertThat(

@@ -60,7 +60,6 @@ public class BaseWindowPointer extends Lazy<Long> implements WindowPointer {
         this(new Area2D(pos, size));
     }
 
-
     // @todo #1 The static initialization of GlfwBaseInit is dangerous. If a
     //  user uses this constructor, he won't be able to tell which GlfwInit
     //  implementation was used and could then use another. The glfw

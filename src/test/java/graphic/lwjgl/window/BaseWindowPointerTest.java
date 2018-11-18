@@ -30,7 +30,6 @@ import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
 
-
 // @todo #4 Make this an integration test
 /**
  * Contains tests for the {@link BaseWindowPointer} class.
