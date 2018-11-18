@@ -16,7 +16,7 @@ Goop is an object oriented graphics library. It uses [LWJGL](https://www.lwjgl.o
 - No setters/getters  
 - Small classes and interfaces  
 - Every method is defined by an interface  
-
+And most important: **The object knows what happens to him**.  
 Here is an example to visualize how it will look:  
 ```java
 new Window(
@@ -44,23 +44,19 @@ new Window(
   )
 ).show();
 ```
-The JavaFX approach would look like this:
+This is how a moving rect would look like:  
 ```java
-public class Test extends Application {
-    @Override
-    public void start(Stage stage) {
-        final Rectangle rectangle = new Rectangle(0, 0, 500, 500);
-        final Group root = new Group(rectangle);
-        final Scene scene = new Scene(root, 500, 500);
-        stage.setTitle("I am a window");
-        stage.setScene(scene);
-        stage.show();
-    }
-    public static void main(String args[]){
-        launch(args);
-    }
-}
+new Window(
+  "I am a window with a moving rect",
+  new Size(500, 500),
+  new Rect(
+    new Moving(
+      new Pos2D(0, 0), // from
+      new Pos2D(100, 100), // to
+      10_000 // ms needed
+    ),
+    new Size2D(200, 200)
+  )
+).show();
 ```
-In this case we are quite lucky, because the Rectangle class has a constructor that allows us to define the area of the rectangle, but this is quite rare.  
-Additionally, as you can see, the JavaFX components need many getters. This is neccessary, because their state is defined outside of the object. Take a fade animation as an example. If you want a fading rectangle, you will probably create an Animation object, give the rectangle to that object and the Animation object will take control.  
-They other way is to define that Animation as a special kind of Color and give that color to the rectangle. This way, you don't need any getters and the logic regarding the rectangle is right there inside the rectangle.  
+The class Moving implements Pos and Rect takes a Pos - no getter/setter needed, because the object itself is in control.
