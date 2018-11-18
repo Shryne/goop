@@ -31,7 +31,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /*
-@todo #7 Make this an integration test
+@todo #4 Make this an integration test
  */
 /**
  * Contains tests for the {@link BaseWindowPointer} class.
