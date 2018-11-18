@@ -39,8 +39,7 @@ Or using the defaults and assuming that the size of the rectangle is equal to th
 new Window(
   "I am a window",
   new Rect(
-    new Size2D(500, 500),
-    new Black()
+    new Size2D(500, 500)
   )
 ).show();
 ```
