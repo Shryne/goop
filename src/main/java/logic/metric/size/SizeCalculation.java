@@ -22,17 +22,18 @@
 package logic.metric.size;
 
 import java.util.function.BiFunction;
+import java.util.function.IntBinaryOperator;
 import java.util.function.ObjIntConsumer;
-import lombok.EqualsAndHashCode;
 
 /**
  * Defines a size that is calculated from two other sizes based on a given
  * operation. The order of the given sizes will be hold when the given operation
  * is called on them.
+ * <p>This class reuses the objects and doesn't create new ones when the
+ * calculation is applied.</p>
  * <p>This class is immutable and thread-safe.</p>
  * @since 8.3.0
  */
-@EqualsAndHashCode
 public class SizeCalculation implements Size {
     /**
      * The first size for the calculation.
@@ -47,7 +48,7 @@ public class SizeCalculation implements Size {
     /**
      * The operation to be applied on the widths and heights of the given sizes.
      */
-    private final BiFunction<Integer, Integer, Integer> operation;
+    private final IntBinaryOperator operation;
 
     /**
      * Ctor.
@@ -59,7 +60,7 @@ public class SizeCalculation implements Size {
     public SizeCalculation(
         final Size first,
         final Size second,
-        final BiFunction<Integer, Integer, Integer> operation
+        final IntBinaryOperator operation
     ) {
         this.first = first;
         this.second = second;
@@ -72,8 +73,8 @@ public class SizeCalculation implements Size {
             // @checkstyle ParameterName (2 lines)
             (firstWidth, firstHeight) -> this.second.result(
                 (secondWidth, secondHeight) -> target.apply(
-                    this.operation.apply(firstWidth, secondWidth),
-                    this.operation.apply(firstHeight, secondHeight)
+                    this.operation.applyAsInt(firstWidth, secondWidth),
+                    this.operation.applyAsInt(firstHeight, secondHeight)
                 )
             )
         );
@@ -82,36 +83,6 @@ public class SizeCalculation implements Size {
     @Override
     public final void applyOn(final ObjIntConsumer<Integer> target) {
         Size.super.applyOn(target);
-    }
-
-    @Override
-    public final int hashCode() {
-        final var initial = 3;
-        final var prime = 31;
-        return this.result(
-            (width, height) -> {
-                final var hash = prime * initial + width;
-                return prime * hash + height;
-            }
-        );
-    }
-
-    @SuppressWarnings("PMD.OnlyOneReturn")
-    @Override
-    public final boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof Size)) {
-            return false;
-        }
-        return ((Size) obj).result(
-            // @checkstyle ParameterName (1 line)
-            (otherWidth, otherHeight) -> this.result(
-                (width, height) -> width.equals(otherWidth)
-                    && height.equals(otherHeight)
-            )
-        );
     }
 
     @Override

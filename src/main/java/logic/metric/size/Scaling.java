@@ -21,24 +21,18 @@
 
 package logic.metric.size;
 
-import java.util.function.BiFunction;
+import logic.functional.Lazy;
+import logic.functional.Value;
 import logic.metric.Animation;
 import logic.time.Elapsable;
 import logic.time.Expiration;
-import lombok.ToString;
 
 /**
  * Represents a changing size.
  * <p>This class is mutable and not thread-safe.</p>
  * @since 8.3.0
  */
-@ToString(of = "size")
-public class Scaling implements Size, Animation {
-    /**
-     * The starting size of this object.
-     */
-    private final Size size;
-
+public class Scaling extends SizeEnvelope implements Animation {
     /**
      * The watch used to get the scaling progress.
      */
@@ -66,11 +60,15 @@ public class Scaling implements Size, Animation {
         final Size origin, final Size ending, final Elapsable watch
     ) {
         this(
-            new Sum(
-                origin,
-                new ScalarSizeCalculation(
-                    new Diff(ending, origin),
-                    value -> (int) Math.round(value * watch.elapsedPercent())
+            new Lazy<>(
+                () -> new Sum(
+                    origin,
+                    new ScalarSizeCalculation(
+                        new Diff(ending, origin),
+                        value -> (int) Math.round(
+                            value * watch.elapsedPercent()
+                        )
+                    )
                 )
             ),
             watch
@@ -82,14 +80,9 @@ public class Scaling implements Size, Animation {
      * @param size The size of scaling.
      * @param watch The watch used to get the scaling progress.
      */
-    private Scaling(final Size size, final Elapsable watch) {
-        this.size = size;
+    private Scaling(final Value<Size> size, final Elapsable watch) {
+        super(size);
         this.watch = watch;
-    }
-
-    @Override
-    public final <R> R result(final BiFunction<Integer, Integer, R> target) {
-        return this.size.result(target);
     }
 
     @Override

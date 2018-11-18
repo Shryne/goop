@@ -21,27 +21,26 @@
 
 package logic.metric.size;
 
-import java.util.function.ObjIntConsumer;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Tests for {@link Sum}.
- * @since 9.1.0
+ * Tests for {@link ScalarSizeCalculation}.
+ * @since 10.0.1
  */
-public class SumTest {
+public class ScalarSizeCalculationTest {
     /**
-     * Tests for:
-     * <p>size1 + Size(0, 0) = size1</p>
-     * This test depends on {@link SizeCalculation#applyOn(ObjIntConsumer)}.
+     * Tests whether a size addition with 0 will result in the given size.
      */
     @Test
-    public void sizePlusZeroEqualsSize() {
-        final var width = 1342;
-        final var height = 2341;
-        final var size = new Size2D(width, height);
-        new Sum(size, new Size2D()).applyOn(
+    public void identityMultiplication() {
+        final var width = 234;
+        final var height = 3243;
+        new ScalarSizeCalculation(
+            new Size2D(width, height),
+            value -> value
+        ).applyOn(
             // @checkstyle ParameterName (1 line)
             (resWidth, resHeight) -> {
                 MatcherAssert.assertThat(resWidth, Matchers.equalTo(width));
@@ -51,30 +50,44 @@ public class SumTest {
     }
 
     /**
-     * Test for:
-     * <p>size1 + size2 = size3</p>
-     * This test depends on {@link SizeCalculation#applyOn(ObjIntConsumer)}.
+     * Tests whether a size multiplied with 0 will result in size(0|0).
      */
     @Test
-    public void sizePlusSizeResult() {
-        // @checkstyle LocalFinalVariableName (4 lines)
-        final var width1 = 234;
-        final var height1 = 345;
-        final var width2 = 438;
-        final var height2 = 4399;
-        new Sum(
-            new Size2D(width1, height1),
-            new Size2D(width2, height2)
+    public void sizeMultipliedWithZero() {
+        final var width = 45;
+        final var height = 4324;
+        new ScalarSizeCalculation(
+            new Size2D(width, height),
+            value -> 0
+        ).applyOn(
+            // @checkstyle ParameterName (1 line)
+            (resWidth, resHeight) -> {
+                MatcherAssert.assertThat(resWidth, Matchers.equalTo(0));
+                MatcherAssert.assertThat(resHeight, Matchers.equalTo(0));
+            }
+        );
+    }
+
+    /**
+     * Tests whether a size multiplied with some value will result in
+     * size(width * value|height * value).
+     */
+    @Test
+    public void normalMultiplication() {
+        final var width = 564;
+        final var height = 342;
+        final var multiplier = 44;
+        new ScalarSizeCalculation(
+            new Size2D(width, height),
+            value -> value * multiplier
         ).applyOn(
             // @checkstyle ParameterName (1 line)
             (resWidth, resHeight) -> {
                 MatcherAssert.assertThat(
-                    resWidth,
-                    Matchers.equalTo(width1 + width2)
+                    resWidth, Matchers.equalTo(width * multiplier)
                 );
                 MatcherAssert.assertThat(
-                    resHeight,
-                    Matchers.equalTo(height1 + height2)
+                    resHeight, Matchers.equalTo(height * multiplier)
                 );
             }
         );

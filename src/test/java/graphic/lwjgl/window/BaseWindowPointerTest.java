@@ -31,7 +31,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /*
-@todo #7 Make this an integration test
+@todo #4 Make this an integration test
  */
 /**
  * Contains tests for the {@link BaseWindowPointer} class.
@@ -75,11 +75,17 @@ public class BaseWindowPointerTest {
      */
     @Test
     public void hasCorrectSize() throws Exception {
-        final var size = new Size2D(439, 543);
-        try (var window = new BaseWindowPointer(size)) {
-            MatcherAssert.assertThat(
-                new SizeOfWindow(window),
-                Matchers.equalTo(size)
+        final var width = 439;
+        final var height = 543;
+        try (var window = new BaseWindowPointer(new Size2D(width, height))) {
+            new SizeOfWindow(window).applyOn(
+                // @checkstyle ParameterName (1 line)
+                (resWidth, resHeight) -> {
+                    MatcherAssert.assertThat(resWidth, Matchers.equalTo(width));
+                    MatcherAssert.assertThat(
+                        resHeight, Matchers.equalTo(height)
+                    );
+                }
             );
         }
     }

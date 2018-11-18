@@ -29,8 +29,6 @@ import logic.metric.pos.Pos;
 import logic.metric.pos.Pos2D;
 import logic.metric.size.Size;
 import logic.metric.size.Size2D;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /*
 I am not happy about this naming, but my other idea's regarding the interface
@@ -47,8 +45,6 @@ chance that a user might use the class name as a parameter type
  * safe-copies for performance reasons.</p>
  * @since 3.3.0
  */
-@ToString
-@EqualsAndHashCode
 public class Area2D implements Area {
     /**
      * The pos of this area.
@@ -61,8 +57,7 @@ public class Area2D implements Area {
     private final Size size;
 
     /**
-     * Secondary constructor. Uses an immutable implementation of {@link Pos}
-     * and {@link Size}.
+     * Ctor.
      * @param x The x coordinate for the pos.
      * @param y The y coordinate for the pos.
      * @param width The width for the size.
@@ -78,19 +73,15 @@ public class Area2D implements Area {
     }
 
     /**
-     * Secondary constructor. Uses (0|0) as its pos. The chosen pos is
-     * will be immutable.
+     * Ctor. Uses (0|0) as its pos.
      * @param size The size of the area.
      */
     public Area2D(final Size size) {
-        this(
-            new Pos2D(0, 0),
-            size
-        );
+        this(new Pos2D(0, 0), size);
     }
 
     /**
-     * Primary constructor.
+     * Ctor.
      * @param pos The pos of the area.
      * @param size The size of the area.
      */

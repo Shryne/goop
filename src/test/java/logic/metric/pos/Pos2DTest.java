@@ -29,7 +29,7 @@ import org.junit.Test;
  * Tests for {@link Pos}.
  * @since 4.9.0
  */
-public class PosTest {
+public class Pos2DTest {
     /**
      * Aims to test, whether the correct result is returned.
      */
@@ -43,6 +43,24 @@ public class PosTest {
             Matchers.is(
                 new Pos2D(x, y).result(
                     Integer::sum
+                )
+            )
+        );
+    }
+
+    /**
+     * Tests whether {@link Pos2D#toString()}} works as expected.
+     */
+    @Test
+    public void correctToString() {
+        final var x = 31453;
+        final var y = 4538;
+        MatcherAssert.assertThat(
+            // @checkstyle LocalFinalVariableName (1 line)
+            new Pos2D(x, y).toString(),
+            Matchers.equalTo(
+                String.format(
+                    "Pos(x=%d, y=%d)", x, y
                 )
             )
         );

@@ -23,7 +23,6 @@ package logic.metric.size;
 
 import java.util.function.BiFunction;
 import java.util.function.ObjIntConsumer;
-import lombok.ToString;
 
 /*
 I am not happy about this naming, but my other idea's regarding the interface
@@ -36,7 +35,6 @@ chance that a user might use the class name as a parameter type
  * <p>This class is immutable and thread-safe.</p>
  * @since 3.4.0
  */
-@ToString
 public class Size2D implements Size {
     /**
      * The width of the size.
@@ -56,7 +54,7 @@ public class Size2D implements Size {
     }
 
     /**
-     * Primary constructor.
+     * Ctor.
      * @param width The width for the size.
      * @param height The height for the size.
      */
@@ -76,26 +74,11 @@ public class Size2D implements Size {
     }
 
     @Override
-    public final int hashCode() {
-        final var initial = 3;
-        final var prime = 31;
-        final var hash = prime * initial + this.width;
-        return prime * hash + this.height;
-    }
-
-    @SuppressWarnings("PMD.OnlyOneReturn")
-    @Override
-    public final boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof Size)) {
-            return false;
-        }
-        return ((Size) obj).result(
-            // @checkstyle ParameterName (1 line)
-            (otherWidth, otherHeight) -> otherWidth.equals(this.width)
-                && otherHeight.equals(this.height)
-        );
+    public final String toString() {
+        return new StringBuilder("Size")
+            .append("(width=").append(this.width)
+            .append(", height=").append(this.height)
+            .append(')')
+        .toString();
     }
 }
