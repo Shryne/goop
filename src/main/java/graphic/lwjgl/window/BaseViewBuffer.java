@@ -50,14 +50,14 @@ public class BaseViewBuffer implements ViewBuffer {
     private final Value<GLCapabilities> capabilities;
 
     /**
-     * Secondary constructor.
+     * Ctor.
      */
     public BaseViewBuffer() {
         this(0, new Lazy<>(GL::createCapabilities));
     }
 
     /**
-     * Primary constructor.
+     * Ctor.
      * @param interval The interval of the swapping. A 60 would mean that the
      *  buffer would be swapped 60 times per second.
      * @param capabilities The OpenGL related capabilities.
