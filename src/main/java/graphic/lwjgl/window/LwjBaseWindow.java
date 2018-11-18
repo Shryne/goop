@@ -30,10 +30,9 @@ import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 
-/*
-@todo #3 A window seems to have a minimum width of 120. I should be at least be
-able to retrieve that size
- */
+
+// @todo #3 A window seems to have a minimum width of 120. I should be at least be
+// able to retrieve that size
 /**
  * A window using lwjgl to show itself. Note that this class only represents the
  * window without any threads. It's enough to start the window, but one has to
