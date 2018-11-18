@@ -60,12 +60,12 @@ public class BaseWindowPointer extends Lazy<Long> implements WindowPointer {
         this(new Area2D(pos, size));
     }
 
-    /*
-    @todo #1 The static initialization of GlfwBaseInit is dangerous. If a user
-     uses this constructor, he won't be able to tell which GlfwInit
-     implementation was used and could then use another. The glfw implementation
-     should know somehow that there is already another glfw instance
-     */
+
+    // @todo #1 The static initialization of GlfwBaseInit is dangerous. If a
+    // user uses this constructor, he won't be able to tell which GlfwInit
+    // implementation was used and could then use another. The glfw
+    // implementation should know somehow that there is already another glfw
+    // instance
     /**
      * Secondary constructor. Uses the static initialization of
      * {@link GlfwBaseInit}.
@@ -107,7 +107,7 @@ public class BaseWindowPointer extends Lazy<Long> implements WindowPointer {
     public final void close() throws Exception {
         // @checkstyle MethodBodyCommentsCheck (2 lines)
         // @todo #2 It should be checked whether it's really fine to add methods
-        //  to an extended class
+        // to an extended class
         this.glfw.close();
     }
 
