@@ -22,7 +22,7 @@
 package logic.metric.size;
 
 import java.util.function.BiFunction;
-import java.util.function.Function;
+import java.util.function.IntUnaryOperator;
 import java.util.function.ObjIntConsumer;
 
 /**
@@ -41,7 +41,7 @@ public class ScalarSizeCalculation implements Size {
     /**
      * The operation to be applied.
      */
-    private final Function<Integer, Integer> operation;
+    private final IntUnaryOperator operation;
 
     /**
      * Ctor.
@@ -50,7 +50,7 @@ public class ScalarSizeCalculation implements Size {
      */
     public ScalarSizeCalculation(
         final Size size,
-        final Function<Integer, Integer> operation
+        final IntUnaryOperator operation
     ) {
         this.size = size;
         this.operation = operation;
@@ -60,8 +60,8 @@ public class ScalarSizeCalculation implements Size {
     public final <R> R result(final BiFunction<Integer, Integer, R> target) {
         return this.size.result(
             (width, height) -> target.apply(
-                this.operation.apply(width),
-                this.operation.apply(height)
+                this.operation.applyAsInt(width),
+                this.operation.applyAsInt(height)
             )
         );
     }

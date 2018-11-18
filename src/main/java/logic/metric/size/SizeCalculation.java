@@ -22,6 +22,7 @@
 package logic.metric.size;
 
 import java.util.function.BiFunction;
+import java.util.function.IntBinaryOperator;
 import java.util.function.ObjIntConsumer;
 import lombok.EqualsAndHashCode;
 
@@ -47,7 +48,7 @@ public class SizeCalculation implements Size {
     /**
      * The operation to be applied on the widths and heights of the given sizes.
      */
-    private final BiFunction<Integer, Integer, Integer> operation;
+    private final IntBinaryOperator operation;
 
     /**
      * Ctor.
@@ -59,7 +60,7 @@ public class SizeCalculation implements Size {
     public SizeCalculation(
         final Size first,
         final Size second,
-        final BiFunction<Integer, Integer, Integer> operation
+        final IntBinaryOperator operation
     ) {
         this.first = first;
         this.second = second;
@@ -72,8 +73,8 @@ public class SizeCalculation implements Size {
             // @checkstyle ParameterName (2 lines)
             (firstWidth, firstHeight) -> this.second.result(
                 (secondWidth, secondHeight) -> target.apply(
-                    this.operation.apply(firstWidth, secondWidth),
-                    this.operation.apply(firstHeight, secondHeight)
+                    this.operation.applyAsInt(firstWidth, secondWidth),
+                    this.operation.applyAsInt(firstHeight, secondHeight)
                 )
             )
         );

@@ -28,8 +28,7 @@ package logic.metric;
  */
 public interface Animation {
     /**
-     * Starts the animation. Calling this method multiple times will restart the
-     * animation every time.
+     * Starts the animation.
      */
     void start();
 }
