@@ -21,6 +21,7 @@
 
 package logic.metric.size;
 
+import java.util.function.ObjIntConsumer;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -30,21 +31,10 @@ import org.junit.Test;
  * @since 9.1.1
  */
 public class SizeCalculationTest {
-    /*
-    Normally, I would test the equality of Size2D and SizeCalculation in a
-    separate method, but to create SizeCalculation, I need Size2D and it would
-    somehow still test whether Size is constructed correctly. So in the end I
-    would need to create a SizeCalculation object without using Size2D. Since I
-    don't have a fake for Size, I can't do that so I put this test inside
-    here. I don't see a point creating a fake for a class that is as simple as
-    Size2D
-    */
     /**
      * Tests for:
      * <p>Size(a, b) * Size(c, d) = Size(a * c, c * d)</p>
-     * <p>Size(a * c, c * d) = Size(a, b) * Size(c, d)</p>
-     * This test depends on {@link Size#equals(Object)} and
-     * {@link SizeCalculation#equals(Object)}.
+     * This test depends on {@link SizeCalculation#applyOn(ObjIntConsumer)}.
      */
     @Test
     public void sizeMultipliedEquals() {
@@ -53,19 +43,19 @@ public class SizeCalculationTest {
         final var height1 = 544;
         final var width2 = 352;
         final var height2 = 6543;
-        final var expected = new Size2D(width1 * width2, height1 * height2);
-        final var result = new SizeCalculation(
+        new SizeCalculation(
             new Size2D(width1, height1),
             new Size2D(width2, height2),
             (first, second) -> first * second
-        );
-        MatcherAssert.assertThat(
-            result,
-            Matchers.equalTo(expected)
-        );
-        MatcherAssert.assertThat(
-            expected,
-            Matchers.equalTo(result)
+        ).applyOn(
+            (width, height) -> {
+                MatcherAssert.assertThat(
+                    width, Matchers.equalTo(width1 * width2)
+                );
+                MatcherAssert.assertThat(
+                    height, Matchers.equalTo(height1 * height2)
+                );
+            }
         );
     }
 

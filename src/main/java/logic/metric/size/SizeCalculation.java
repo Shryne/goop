@@ -86,36 +86,6 @@ public class SizeCalculation implements Size {
     }
 
     @Override
-    public final int hashCode() {
-        final var initial = 3;
-        final var prime = 31;
-        return this.result(
-            (width, height) -> {
-                final var hash = prime * initial + width;
-                return prime * hash + height;
-            }
-        );
-    }
-
-    @SuppressWarnings("PMD.OnlyOneReturn")
-    @Override
-    public final boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof Size)) {
-            return false;
-        }
-        return ((Size) obj).result(
-            // @checkstyle ParameterName (1 line)
-            (otherWidth, otherHeight) -> this.result(
-                (width, height) -> width.equals(otherWidth)
-                    && height.equals(otherHeight)
-            )
-        );
-    }
-
-    @Override
     public final String toString() {
         return this.result(
             (width, height) -> new StringBuilder("Size")

@@ -65,7 +65,9 @@ public class Scaling extends SizeEnvelope implements Animation {
                     origin,
                     new ScalarSizeCalculation(
                         new Diff(ending, origin),
-                        value -> (int) Math.round(value * watch.elapsedPercent())
+                        value -> (int) Math.round(
+                            value * watch.elapsedPercent()
+                        )
                     )
                 )
             ),

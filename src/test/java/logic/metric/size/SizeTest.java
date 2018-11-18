@@ -31,19 +31,6 @@ import org.junit.Test;
  */
 public class SizeTest {
     /**
-     * Tests whether to sizes with the same values are equal.
-     */
-    @Test
-    public void equalSizes() {
-        final var width = 62;
-        final var height = 248;
-        final var first = new Size2D(width, height);
-        final var second = new Size2D(width, height);
-        MatcherAssert.assertThat(first, Matchers.equalTo(second));
-        MatcherAssert.assertThat(second, Matchers.equalTo(first));
-    }
-
-    /**
      * Tests whether to sizes with different values aren't equal.
      */
     @Test

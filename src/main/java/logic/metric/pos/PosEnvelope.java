@@ -36,7 +36,7 @@ public abstract class PosEnvelope implements Pos {
     private final Value<Pos> pos;
 
     /**
-     * Primary constructor.
+     * Ctor.
      * @param pos The pos to delegate the calls to.
      */
     public PosEnvelope(final Value<Pos> pos) {

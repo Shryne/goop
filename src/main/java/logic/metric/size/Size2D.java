@@ -74,30 +74,6 @@ public class Size2D implements Size {
     }
 
     @Override
-    public final int hashCode() {
-        final var initial = 3;
-        final var prime = 31;
-        final var hash = prime * initial + this.width;
-        return prime * hash + this.height;
-    }
-
-    @SuppressWarnings("PMD.OnlyOneReturn")
-    @Override
-    public final boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof Size)) {
-            return false;
-        }
-        return ((Size) obj).result(
-            // @checkstyle ParameterName (1 line)
-            (otherWidth, otherHeight) -> otherWidth.equals(this.width)
-                && otherHeight.equals(this.height)
-        );
-    }
-
-    @Override
     public final String toString() {
         return new StringBuilder("Size")
             .append("(width=").append(this.width)
