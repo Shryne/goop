@@ -21,9 +21,7 @@
 
 package logic.metric.size;
 
-import java.util.function.BiFunction;
 import java.util.function.IntUnaryOperator;
-import java.util.function.ObjIntConsumer;
 
 /**
  * Defines a calculation of a size object with a scalar value by using a given
@@ -32,17 +30,7 @@ import java.util.function.ObjIntConsumer;
  * <p>This class is immutable and thread-safe.</p>
  * @since 9.0.0
  */
-public class ScalarSizeCalculation implements Size {
-    /**
-     * The size of the calculation.
-     */
-    private final Size size;
-
-    /**
-     * The operation to be applied.
-     */
-    private final IntUnaryOperator operation;
-
+public class ScalarSizeCalculation extends SizeCalculation {
     /**
      * Ctor.
      * @param size The size of the calculation.
@@ -52,22 +40,10 @@ public class ScalarSizeCalculation implements Size {
         final Size size,
         final IntUnaryOperator operation
     ) {
-        this.size = size;
-        this.operation = operation;
-    }
-
-    @Override
-    public final <R> R result(final BiFunction<Integer, Integer, R> target) {
-        return this.size.result(
-            (width, height) -> target.apply(
-                this.operation.applyAsInt(width),
-                this.operation.applyAsInt(height)
-            )
+        super(
+            size,
+            new Size2D(0, 0),
+            (first, second) -> operation.applyAsInt(first)
         );
-    }
-
-    @Override
-    public final void applyOn(final ObjIntConsumer<Integer> target) {
-        Size.super.applyOn(target);
     }
 }
