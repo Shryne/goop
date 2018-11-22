@@ -2,7 +2,7 @@
 [![EO principles respected here](http://www.elegantobjects.org/badge.svg)](http://www.elegantobjects.org)
 [![DevOps By Rultor.com](http://www.rultor.com/b/Shryne/goop)](http://www.rultor.com/p/Shryne/goop)  
 
-![Sonar coverage](https://sonarcloud.io/api/project_badges/measure?project=Shryne_goo&metric=coverage)
+[![Sonar coverage](https://sonarcloud.io/api/project_badges/measure?project=Shryne_goo&metric=coverage)](https://sonarcloud.io/dashboard?id=Shryne_goo)
 [![PDD status](http://www.0pdd.com/svg?name=Shryne/goop)](http://www.0pdd.com/p?name=Shryne/goop)
 [![Known Vulnerabilities](https://snyk.io/test/github/Shryne/goop/badge.svg)](https://snyk.io/test/github/Shryne/goop)
 [![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)  
