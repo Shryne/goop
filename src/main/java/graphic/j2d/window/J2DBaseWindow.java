@@ -56,8 +56,7 @@ public class J2DBaseWindow implements Showable {
     private final Value<JFrame> window;
 
     /**
-     * Secondary constructor. Uses the arguments to define how a JFrame will be
-     * constructed using them. The primary constructor is private.
+     * Ctor.
      * @param area The area of this window.
      * @param shapes The shapes that are on this window.
      */
@@ -66,8 +65,7 @@ public class J2DBaseWindow implements Showable {
     }
 
     /**
-     * Secondary constructor. Uses the arguments to define how a JFrame will be
-     * constructed using them. The primary constructor is private.
+     * Ctor.
      * @param area The area of this window.
      * @param settings Certain  settings regarding the window.
      * @param shapes The shapes that are on this window.
@@ -81,16 +79,19 @@ public class J2DBaseWindow implements Showable {
             new Lazy<>(
                 () -> {
                     final var frame = new JFrame();
-                    settings.forEach(setting -> setting.accept(frame));
                     area.applyOn(frame::setBounds);
-                    final var panel = new JPanel() {
-                        @Override
-                        protected void paintComponent(final Graphics graphics) {
-                            super.paintComponent(graphics);
-                            shapes.forEach(shape -> shape.draw(graphics));
+                    settings.forEach(setting -> setting.accept(frame));
+                    frame.add(
+                        new JPanel() {
+                            @Override
+                            protected void paintComponent(
+                                final Graphics graphics
+                            ) {
+                                super.paintComponent(graphics);
+                                shapes.forEach(shape -> shape.draw(graphics));
+                            }
                         }
-                    };
-                    frame.add(panel);
+                    );
                     frame.setVisible(true);
                     return frame;
                 }
@@ -99,10 +100,10 @@ public class J2DBaseWindow implements Showable {
     }
 
     /**
-     * Primary constructor.
+     * Ctor.
      * @param window The construction of the window
      */
-    private J2DBaseWindow(final Value<JFrame> window) {
+    J2DBaseWindow(final Value<JFrame> window) {
         this.window = window;
     }
 

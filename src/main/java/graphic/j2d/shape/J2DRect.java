@@ -31,7 +31,6 @@ import logic.metric.area.Area;
  * depends on the given constructor arguments. Additionally whether this
  * class is thread-safe or not, depends on the given graphics instance for
  * {@link this#draw(Graphics)}.</p>
- *
  * @since 2.1.0
  */
 public class J2DRect implements J2DShape {
@@ -46,7 +45,7 @@ public class J2DRect implements J2DShape {
     private final Color color;
 
     /**
-     * Primary constructor.
+     * Ctor.
      * @param area The area of this rect.
      * @param color The color of this rect.
      */

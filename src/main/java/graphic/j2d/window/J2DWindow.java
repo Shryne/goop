@@ -22,9 +22,13 @@
 package graphic.j2d.window;
 
 import graphic.j2d.shape.J2DShape;
-import java.util.List;
+import java.util.function.Consumer;
+import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 import logic.metric.area.Area;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Joined;
+import org.cactoos.list.ListOf;
 
 /**
  * The default implementation of a java 2d window. It uses a
@@ -40,21 +44,49 @@ import logic.metric.area.Area;
  */
 public class J2DWindow extends J2DBaseWindow {
     /**
-     * Primary constructor.
+     * Ctor.
      * @param title The title that is shown at the top of the window.
      * @param area The area of the window.
      * @param shapes The shapes that are drawn on the window.
+     * @param settings Certain settings regarding the window.
      */
     public J2DWindow(
-        final String title, final Area area, final Iterable<J2DShape> shapes
+        final String title,
+        final Area area,
+        final Iterable<J2DShape> shapes,
+        final Consumer<JFrame>... settings
+    ) {
+        this(
+            title,
+            area,
+            new ListOf<>(settings),
+            shapes
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param title The title that is shown at the top of the window.
+     * @param area The area of the window.
+     * @param settings Certain settings regarding the window.
+     * @param shapes The shapes that are drawn on the window.
+     */
+    public J2DWindow(
+        final String title,
+        final Area area,
+        final Iterable<Consumer<JFrame>> settings,
+        final Iterable<J2DShape> shapes
     ) {
         super(
             area,
-            List.of(
-                frame -> frame.setTitle(title),
-                frame -> frame.setDefaultCloseOperation(
-                    WindowConstants.EXIT_ON_CLOSE
-                )
+            new Joined<>(
+                new IterableOf<>(
+                    frame -> frame.setTitle(title),
+                    frame -> frame.setDefaultCloseOperation(
+                        WindowConstants.EXIT_ON_CLOSE
+                    )
+                ),
+                settings
             ),
             shapes
         );
