@@ -49,6 +49,7 @@ public class J2DWindow extends J2DBaseWindow {
      * @param area The area of the window.
      * @param shapes The shapes that are drawn on the window.
      * @param settings Certain settings regarding the window.
+     * @checkstyle ParameterNumberCheck (2 lines)
      */
     public J2DWindow(
         final String title,
@@ -70,6 +71,7 @@ public class J2DWindow extends J2DBaseWindow {
      * @param area The area of the window.
      * @param settings Certain settings regarding the window.
      * @param shapes The shapes that are drawn on the window.
+     * @checkstyle ParameterNumberCheck (2 lines)
      */
     public J2DWindow(
         final String title,

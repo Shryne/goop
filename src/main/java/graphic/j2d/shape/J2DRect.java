@@ -21,6 +21,7 @@
 
 package graphic.j2d.shape;
 
+import graphic.j2d.event.mouse.J2DMouse;
 import java.awt.Graphics;
 import logic.graphic.color.Color;
 import logic.metric.area.Area;
@@ -33,7 +34,7 @@ import logic.metric.area.Area;
  * {@link this#draw(Graphics)}.</p>
  * @since 2.1.0
  */
-public class J2DRect implements J2DShape {
+public class J2DRect implements J2DMouseShape {
     /**
      * The area of this rect.
      */
@@ -62,5 +63,10 @@ public class J2DRect implements J2DShape {
             )
         );
         this.area.applyOn(graphics::fillRect);
+    }
+
+    @Override
+    public final void registerFor(final J2DMouse source) {
+        throw new UnsupportedOperationException("#registerFor()");
     }
 }
