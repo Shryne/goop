@@ -19,25 +19,31 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package graphic.j2d.shape;
+package graphic.j2d.shape.event;
 
+import graphic.j2d.event.mouse.J2DMouse;
+import graphic.j2d.shape.J2DMouseShape;
+import graphic.j2d.shape.J2DShapeTarget;
 import java.awt.Graphics;
+import java.util.List;
 import logic.graphic.color.Color;
-import logic.metric.area.Area;
+import logic.metric.area.PosOverlap;
+import org.cactoos.list.ListOf;
 
 /**
- * A rectangle using java2d.
+ * A java 2d rect that supports mouse events.
  * <p>This class doesn't change its own state. Whether it is immutable or not,
  * depends on the given constructor arguments. Additionally whether this
  * class is thread-safe or not, depends on the given graphics instance for
  * {@link this#draw(Graphics)}.</p>
  * @since 2.1.0
  */
-public class J2DRect implements J2DShape {
+public class J2DRect implements J2DMouseShape {
     /**
-     * The area of this rect.
+     * The area of this rect. It needs to be a PosOverlap area to check whether
+     * a mouse event occurred on itself.
      */
-    private final Area area;
+    private final PosOverlap area;
 
     /**
      * The color of this rect.
@@ -45,13 +51,37 @@ public class J2DRect implements J2DShape {
     private final Color color;
 
     /**
+     * The targets for the mouse events.
+     */
+    private final List<J2DShapeTarget> targets;
+
+    /**
      * Ctor.
      * @param area The area of this rect.
      * @param color The color of this rect.
      */
-    public J2DRect(final Area area, final Color color) {
+    public J2DRect(final PosOverlap area, final Color color) {
+        this(
+            area,
+            color,
+            new ListOf<>()
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param area The area of this rect.
+     * @param color The color of this rect.
+     * @param targets The targets for the mouse events.
+     */
+    public J2DRect(
+        final PosOverlap area,
+        final Color color,
+        final List<J2DShapeTarget> targets
+    ) {
         this.area = area;
         this.color = color;
+        this.targets = targets;
     }
 
     @Override
@@ -62,5 +92,10 @@ public class J2DRect implements J2DShape {
             )
         );
         this.area.applyOn(graphics::fillRect);
+    }
+
+    @Override
+    public final void registerFor(final J2DMouse source) {
+        this.targets.forEach(target -> target.registerFor(source, this.area));
     }
 }

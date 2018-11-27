@@ -28,13 +28,13 @@ import logic.metric.size.Size;
  * An area that knows when a point overlaps with itself.
  * @since 12.5.0
  */
-public class PosOverlapArea extends Area2D implements PosOverlap {
+public class PosOverlap2D extends Area2D implements PosOverlap {
     /**
      * Ctor.
      * @param pos The position of the area.
      * @param size The size of the area.
      */
-    public PosOverlapArea(final Pos pos, final Size size) {
+    public PosOverlap2D(final Pos pos, final Size size) {
         super(pos, size);
     }
 

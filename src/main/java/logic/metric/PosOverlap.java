@@ -19,48 +19,23 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package graphic.j2d.shape;
+package logic.metric;
 
-import java.awt.Graphics;
-import logic.graphic.color.Color;
-import logic.metric.area.Area;
+import logic.metric.pos.Pos;
 
 /**
- * A rectangle using java2d.
- * <p>This class doesn't change its own state. Whether it is immutable or not,
- * depends on the given constructor arguments. Additionally whether this
- * class is thread-safe or not, depends on the given graphics instance for
- * {@link this#draw(Graphics)}.</p>
- * @since 2.1.0
+ * Can determine whether a given position is inside itself.
+ * @since 12.5.0
  */
-public class J2DRect implements J2DShape {
+public interface PosOverlap {
     /**
-     * The area of this rect.
+     * Tells whether the given pos is inside itself. Example:
+     * <p>Area(0, 0, 100, 100).contains(0, 0) => true</p>
+     * <p>Area(0, 0, 100, 100).contains(50, 50) => true</p>
+     * <p>Area(0, 0, 100, 100).contains(100, 100) => true</p>
+     * <p>Area(0, 0, 100, 100).contains(101, 101) => false</p>
+     * @param pos The position to check for.
+     * @return True if the position is inside, otherwise false.
      */
-    private final Area area;
-
-    /**
-     * The color of this rect.
-     */
-    private final Color color;
-
-    /**
-     * Ctor.
-     * @param area The area of this rect.
-     * @param color The color of this rect.
-     */
-    public J2DRect(final Area area, final Color color) {
-        this.area = area;
-        this.color = color;
-    }
-
-    @Override
-    public final void draw(final Graphics graphics) {
-        this.color.applyOn(
-            (red, green, blue, alpha) -> graphics.setColor(
-                new java.awt.Color(red, green, blue, alpha)
-            )
-        );
-        this.area.applyOn(graphics::fillRect);
-    }
+    boolean contains(Pos pos);
 }

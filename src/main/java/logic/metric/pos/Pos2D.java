@@ -49,6 +49,13 @@ public class Pos2D implements Pos {
     private final int y;
 
     /**
+     * Ctor. Sets x = 0 and y = 0 as its values.
+     */
+    public Pos2D() {
+        this(0, 0);
+    }
+
+    /**
      * Ctor.
      * @param x The x coordinate.
      * @param y The y coordinate.

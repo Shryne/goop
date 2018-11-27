@@ -26,7 +26,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import logic.functional.Action;
-import logic.metric.area.PosOverlap;
+import logic.metric.PosOverlap;
 import logic.metric.pos.Pos2D;
 
 /**

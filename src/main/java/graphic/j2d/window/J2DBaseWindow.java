@@ -60,7 +60,10 @@ public class J2DBaseWindow implements Showable {
      * @param area The area of this window.
      * @param shapes The shapes that are on this window.
      */
-    public J2DBaseWindow(final Area area, final Iterable<J2DShape> shapes) {
+    public J2DBaseWindow(
+        final Area area,
+        final Iterable<? extends J2DShape> shapes
+    ) {
         this(area, Collections.emptyList(), shapes);
     }
 
@@ -73,7 +76,7 @@ public class J2DBaseWindow implements Showable {
     public J2DBaseWindow(
         final Area area,
         final Iterable<Consumer<JFrame>> settings,
-        final Iterable<J2DShape> shapes
+        final Iterable<? extends J2DShape> shapes
     ) {
         this(
             new Lazy<>(

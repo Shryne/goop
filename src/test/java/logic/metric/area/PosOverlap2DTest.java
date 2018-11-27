@@ -28,10 +28,10 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Tests for {@link PosOverlapArea}.
+ * Tests for {@link PosOverlap2D}.
  * @since 12.5.0
  */
-public class PosOverlapAreaTest {
+public class PosOverlap2DTest {
     /**
      * Tests whether Area(x, y, width, height).contains(Pos(x, y)) == true.
      */
@@ -43,7 +43,7 @@ public class PosOverlapAreaTest {
         final var width = 50;
         final var height = 100;
         MatcherAssert.assertThat(
-            new PosOverlapArea(
+            new PosOverlap2D(
                 new Pos2D(x, y),
                 new Size2D(width, height)
             ).contains(new Pos2D(x, y)),
@@ -63,7 +63,7 @@ public class PosOverlapAreaTest {
         final var width = 324;
         final var height = 4538;
         MatcherAssert.assertThat(
-            new PosOverlapArea(
+            new PosOverlap2D(
                 new Pos2D(x, y),
                 new Size2D(width, height)
             ).contains(new Pos2D(x + width, y + height)),
@@ -83,7 +83,7 @@ public class PosOverlapAreaTest {
         final var width = 31;
         final var height = 5645;
         MatcherAssert.assertThat(
-            new PosOverlapArea(
+            new PosOverlap2D(
                 new Pos2D(x, y),
                 new Size2D(width, height)
             ).contains(
@@ -108,7 +108,7 @@ public class PosOverlapAreaTest {
         final var width = 534;
         final var height = 123;
         MatcherAssert.assertThat(
-            new PosOverlapArea(
+            new PosOverlap2D(
                 new Pos2D(x, y),
                 new Size2D(width, height)
             ).contains(
@@ -130,7 +130,7 @@ public class PosOverlapAreaTest {
         final var width = 432;
         final var height = 5432;
         MatcherAssert.assertThat(
-            new PosOverlapArea(
+            new PosOverlap2D(
                 new Pos2D(x, y),
                 new Size2D(width, height)
             ).contains(
@@ -152,7 +152,7 @@ public class PosOverlapAreaTest {
         final var width = 0;
         final var height = 0;
         MatcherAssert.assertThat(
-            new PosOverlapArea(
+            new PosOverlap2D(
                 new Pos2D(x, y),
                 new Size2D(width, height)
             ).contains(new Pos2D(x, y)),

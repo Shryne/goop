@@ -19,46 +19,51 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package graphic.j2d.window;
+package graphic.j2d.window.event;
 
-import graphic.j2d.shape.J2DShape;
+import graphic.j2d.event.mouse.J2DBaseMouse;
+import graphic.j2d.event.mouse.J2DMouse;
+import graphic.j2d.shape.J2DMouseShape;
+import graphic.j2d.window.J2DBaseWindow;
+import java.util.Collections;
 import java.util.function.Consumer;
 import javax.swing.JFrame;
-import javax.swing.WindowConstants;
 import logic.metric.area.Area;
 import logic.metric.area.Area2D;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
-import org.cactoos.list.ListOf;
 
 /**
- * The default implementation of a java 2d window. It uses a
- * {@link J2DBaseWindow} and adds the following settings to it:
+ * The default implementation of a java 2d window that supports events. It uses
+ * a {@link J2DBaseWindow} and adds the following settings to it:
  * <ul>
  *     <li>sets the title</li>
  *     <li>sets the default close operation (end application on close)</li>
  * </ul>
+ * Additionally, it uses {@link graphic.j2d.shape.J2DMouseShape} instead of
+ * {@link graphic.j2d.shape.J2DShape}.
  * <p>This class mutates its state when {@link J2DBaseWindow#show()} is called.
  * Since show isn't synchronized, this class isn't thread-safe. Additionally,
  * the setting can change its state.</p>
- * @since 3.2.0
+ * @since 13.0.0
  */
-public class J2DWindow extends J2DBaseWindow {
+public class J2DWindow extends graphic.j2d.window.J2DWindow {
     /**
      * Ctor.
      * @param width The width of the window.
      * @param height The height of the window.
-     * @param shapes The shapes that are drawn on the window.
+     * @param shapes The mouse event shapes that are drawn on the window.
      */
     public J2DWindow(
         final int width,
         final int height,
-        final J2DShape... shapes
+        final J2DMouseShape... shapes
     ) {
         this(
             "",
             new Area2D(width, height),
-            new ListOf<>(shapes)
+            Collections.emptyList(),
+            new IterableOf<>(shapes)
         );
     }
 
@@ -66,20 +71,20 @@ public class J2DWindow extends J2DBaseWindow {
      * Ctor.
      * @param title The title that is shown at the top of the window.
      * @param area The area of the window.
-     * @param shapes The shapes that are drawn on the window.
+     * @param shapes The mouse event shapes that are drawn on the window.
      * @param settings Certain settings regarding the window.
      * @checkstyle ParameterNumberCheck (2 lines)
      */
     public J2DWindow(
         final String title,
         final Area area,
-        final Iterable<? extends J2DShape> shapes,
+        final Iterable<J2DMouseShape> shapes,
         final Consumer<JFrame>... settings
     ) {
         this(
             title,
             area,
-            new ListOf<>(settings),
+            new IterableOf<>(settings),
             shapes
         );
     }
@@ -89,23 +94,24 @@ public class J2DWindow extends J2DBaseWindow {
      * @param title The title that is shown at the top of the window.
      * @param area The area of the window.
      * @param settings Certain settings regarding the window.
-     * @param shapes The shapes that are drawn on the window.
+     * @param shapes The mouse event shapes that are drawn on the window.
      * @checkstyle ParameterNumberCheck (2 lines)
      */
     public J2DWindow(
         final String title,
         final Area area,
         final Iterable<Consumer<JFrame>> settings,
-        final Iterable<? extends J2DShape> shapes
+        final Iterable<J2DMouseShape> shapes
     ) {
         super(
+            title,
             area,
             new Joined<>(
                 new IterableOf<>(
-                    frame -> frame.setTitle(title),
-                    frame -> frame.setDefaultCloseOperation(
-                        WindowConstants.EXIT_ON_CLOSE
-                    )
+                    frame -> {
+                        final J2DMouse mouse = new J2DBaseMouse(frame);
+                        shapes.forEach(it -> it.registerFor(mouse));
+                    }
                 ),
                 settings
             ),

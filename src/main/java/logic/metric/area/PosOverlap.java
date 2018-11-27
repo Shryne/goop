@@ -21,21 +21,8 @@
 
 package logic.metric.area;
 
-import logic.metric.pos.Pos;
-
 /**
- * Can determine whether a given position is inside itself.
- * @since 12.5.0
+ * An area that knows than a given pos overlaps with it.
+ * @since 13.0.0
  */
-public interface PosOverlap {
-    /**
-     * Tells whether the given pos is inside itself. Example:
-     * <p>Area(0, 0, 100, 100).contains(0, 0) => true</p>
-     * <p>Area(0, 0, 100, 100).contains(50, 50) => true</p>
-     * <p>Area(0, 0, 100, 100).contains(100, 100) => true</p>
-     * <p>Area(0, 0, 100, 100).contains(101, 101) => false</p>
-     * @param pos The position to check for.
-     * @return True if the position is inside, otherwise false.
-     */
-    boolean contains(Pos pos);
-}
+public interface PosOverlap extends logic.metric.PosOverlap, Area { }
