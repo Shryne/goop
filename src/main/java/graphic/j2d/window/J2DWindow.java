@@ -26,6 +26,7 @@ import java.util.function.Consumer;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 import logic.metric.area.Area;
+import logic.metric.area.Area2D;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
 import org.cactoos.list.ListOf;
@@ -43,6 +44,24 @@ import org.cactoos.list.ListOf;
  * @since 3.2.0
  */
 public class J2DWindow extends J2DBaseWindow {
+    /**
+     * Ctor.
+     * @param width The width of the window.
+     * @param height The height of the window.
+     * @param shapes The shapes that are drawn on the window.
+     */
+    public J2DWindow(
+        final int width,
+        final int height,
+        final J2DShape... shapes
+    ) {
+        this(
+            "",
+            new Area2D(width, height),
+            new ListOf<>(shapes)
+        );
+    }
+
     /**
      * Ctor.
      * @param title The title that is shown at the top of the window.

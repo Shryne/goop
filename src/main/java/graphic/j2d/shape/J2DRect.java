@@ -21,10 +21,13 @@
 
 package graphic.j2d.shape;
 
+import graphic.j2d.event.J2DMouseTarget;
 import graphic.j2d.event.mouse.J2DMouse;
 import java.awt.Graphics;
+import java.util.List;
 import logic.graphic.color.Color;
 import logic.metric.area.Area;
+import org.cactoos.list.ListOf;
 
 /**
  * A rectangle using java2d.
@@ -46,13 +49,37 @@ public class J2DRect implements J2DMouseShape {
     private final Color color;
 
     /**
+     * The targets for the mouse events.
+     */
+    private final List<J2DMouseTarget> targets;
+
+    /**
      * Ctor.
      * @param area The area of this rect.
      * @param color The color of this rect.
      */
     public J2DRect(final Area area, final Color color) {
+        this(
+            area,
+            color,
+            new ListOf<>()
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param area The area of this rect.
+     * @param color The color of this rect.
+     * @param targets The targets for the mouse events.
+     */
+    public J2DRect(
+        final Area area,
+        final Color color,
+        final List<J2DMouseTarget> targets
+    ) {
         this.area = area;
         this.color = color;
+        this.targets = targets;
     }
 
     @Override
@@ -67,6 +94,6 @@ public class J2DRect implements J2DMouseShape {
 
     @Override
     public final void registerFor(final J2DMouse source) {
-        throw new UnsupportedOperationException("#registerFor()");
+        this.targets.forEach(target -> target.registerFor(source));
     }
 }
