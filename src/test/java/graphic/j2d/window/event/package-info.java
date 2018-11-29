@@ -19,30 +19,8 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.graphic.color;
-
 /**
- * Represents the black color.
- * @since 8.4.0
+ * Tests for the j2d event window package.
+ * @since 13.0.1
  */
-public class Black extends RGBA {
-    /**
-     * The highest value in java 2d.
-     */
-    private static final int ALPHA = 255;
-
-    /**
-     * Ctor.
-     */
-    public Black() {
-        this(Black.ALPHA);
-    }
-
-    /**
-     * Ctor.
-     * @param alpha The alpha value of this color.
-     */
-    public Black(final int alpha) {
-        super(0, 0, 0, alpha);
-    }
-}
+package graphic.j2d.window.event;

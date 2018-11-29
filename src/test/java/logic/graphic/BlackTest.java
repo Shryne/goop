@@ -24,6 +24,7 @@ package logic.graphic;
 import logic.graphic.color.Black;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -52,6 +53,7 @@ public class BlackTest {
      * Tests whether the constructor uses the correct values for the black
      * color when the {@link Black#Black()} constructor is used.
      */
+    @Ignore
     @Test
     public void defaultCreation() {
         new Black().applyOn(

@@ -22,13 +22,32 @@
 package logic.metric.area;
 
 import logic.metric.pos.Pos;
+import logic.metric.pos.Pos2D;
 import logic.metric.size.Size;
+import logic.metric.size.Size2D;
 
 /**
  * An area that knows when a point overlaps with itself.
  * @since 12.5.0
  */
 public class PosOverlap2D extends Area2D implements PosOverlap {
+    /**
+     * Ctor. Uses (0|0) as its position.
+     * @param width The width of the area.
+     * @param height The height of the area.
+     */
+    public PosOverlap2D(final int width, final int height) {
+        this(new Size2D(width, height));
+    }
+
+    /**
+     * Ctor. Uses (0|0) as its position.
+     * @param size The size of the area.
+     */
+    public PosOverlap2D(final Size size) {
+        super(new Pos2D(), size);
+    }
+
     /**
      * Ctor.
      * @param pos The position of the area.
@@ -40,7 +59,7 @@ public class PosOverlap2D extends Area2D implements PosOverlap {
 
     @Override
     public final boolean contains(final Pos pos) {
-        return result(
+        return this.result(
             // @checkstyle ParameterName (1 line)
             (x, y, width, height) -> pos.result(
                 // @checkstyle ParameterName (1 line)

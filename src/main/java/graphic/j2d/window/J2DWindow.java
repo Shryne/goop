@@ -22,8 +22,6 @@
 package graphic.j2d.window;
 
 import graphic.j2d.shape.J2DShape;
-import java.util.function.Consumer;
-import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 import logic.metric.area.Area;
 import logic.metric.area.Area2D;
@@ -40,7 +38,7 @@ import org.cactoos.list.ListOf;
  * </ul>
  * <p>This class mutates its state when {@link J2DBaseWindow#show()} is called.
  * Since show isn't synchronized, this class isn't thread-safe. Additionally,
- * the setting can change its state.</p>
+ * the features can change its state.</p>
  * @since 3.2.0
  */
 public class J2DWindow extends J2DBaseWindow {
@@ -67,19 +65,19 @@ public class J2DWindow extends J2DBaseWindow {
      * @param title The title that is shown at the top of the window.
      * @param area The area of the window.
      * @param shapes The shapes that are drawn on the window.
-     * @param settings Certain settings regarding the window.
+     * @param features Certain features regarding the window.
      * @checkstyle ParameterNumberCheck (2 lines)
      */
     public J2DWindow(
         final String title,
         final Area area,
         final Iterable<? extends J2DShape> shapes,
-        final Consumer<JFrame>... settings
+        final J2DWindowFeature... features
     ) {
         this(
             title,
             area,
-            new ListOf<>(settings),
+            new ListOf<>(features),
             shapes
         );
     }
@@ -88,14 +86,14 @@ public class J2DWindow extends J2DBaseWindow {
      * Ctor.
      * @param title The title that is shown at the top of the window.
      * @param area The area of the window.
-     * @param settings Certain settings regarding the window.
+     * @param features Certain features regarding the window.
      * @param shapes The shapes that are drawn on the window.
      * @checkstyle ParameterNumberCheck (2 lines)
      */
     public J2DWindow(
         final String title,
         final Area area,
-        final Iterable<Consumer<JFrame>> settings,
+        final Iterable<J2DWindowFeature> features,
         final Iterable<? extends J2DShape> shapes
     ) {
         super(
@@ -107,7 +105,7 @@ public class J2DWindow extends J2DBaseWindow {
                         WindowConstants.EXIT_ON_CLOSE
                     )
                 ),
-                settings
+                features
             ),
             shapes
         );

@@ -19,30 +19,9 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.graphic.color;
-
 /**
- * Represents the black color.
- * @since 8.4.0
+ * Contains all components needed to get information of the window. Example:
+ * position, size, area
+ * @since 13.0.1
  */
-public class Black extends RGBA {
-    /**
-     * The highest value in java 2d.
-     */
-    private static final int ALPHA = 255;
-
-    /**
-     * Ctor.
-     */
-    public Black() {
-        this(Black.ALPHA);
-    }
-
-    /**
-     * Ctor.
-     * @param alpha The alpha value of this color.
-     */
-    public Black(final int alpha) {
-        super(0, 0, 0, alpha);
-    }
-}
+package graphic.j2d.window.information;

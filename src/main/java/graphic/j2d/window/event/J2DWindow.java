@@ -25,11 +25,9 @@ import graphic.j2d.event.mouse.J2DBaseMouse;
 import graphic.j2d.event.mouse.J2DMouse;
 import graphic.j2d.shape.J2DMouseShape;
 import graphic.j2d.window.J2DBaseWindow;
+import graphic.j2d.window.J2DWindowFeature;
 import java.util.Collections;
-import java.util.function.Consumer;
-import javax.swing.JFrame;
 import logic.metric.area.Area;
-import logic.metric.area.Area2D;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
 
@@ -40,28 +38,64 @@ import org.cactoos.iterable.Joined;
  *     <li>sets the title</li>
  *     <li>sets the default close operation (end application on close)</li>
  * </ul>
- * Additionally, it uses {@link graphic.j2d.shape.J2DMouseShape} instead of
+ * Additionally, it uses {@link J2DMouseShape} instead of
  * {@link graphic.j2d.shape.J2DShape}.
  * <p>This class mutates its state when {@link J2DBaseWindow#show()} is called.
  * Since show isn't synchronized, this class isn't thread-safe. Additionally,
- * the setting can change its state.</p>
+ * the features can change its state.</p>
  * @since 13.0.0
  */
 public class J2DWindow extends graphic.j2d.window.J2DWindow {
     /**
      * Ctor.
-     * @param width The width of the window.
-     * @param height The height of the window.
+     * @param area The area of the window.
      * @param shapes The mouse event shapes that are drawn on the window.
+     * @checkstyle ParameterNumberCheck (2 lines)
      */
     public J2DWindow(
-        final int width,
-        final int height,
+        final Area area,
         final J2DMouseShape... shapes
     ) {
         this(
             "",
-            new Area2D(width, height),
+            area,
+            shapes
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param area The area of the window.
+     * @param shapes The mouse event shapes that are drawn on the window.
+     * @checkstyle ParameterNumberCheck (2 lines)
+     */
+    public J2DWindow(
+        final Area area,
+        final Iterable<J2DMouseShape> shapes
+    ) {
+        this(
+            "",
+            area,
+            Collections.emptyList(),
+            shapes
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param title The title that is shown at the top of the window.
+     * @param area The area of the window.
+     * @param shapes The mouse event shapes that are drawn on the window.
+     * @checkstyle ParameterNumberCheck (2 lines)
+     */
+    public J2DWindow(
+        final String title,
+        final Area area,
+        final J2DMouseShape... shapes
+    ) {
+        this(
+            title,
+            area,
             Collections.emptyList(),
             new IterableOf<>(shapes)
         );
@@ -71,36 +105,14 @@ public class J2DWindow extends graphic.j2d.window.J2DWindow {
      * Ctor.
      * @param title The title that is shown at the top of the window.
      * @param area The area of the window.
-     * @param shapes The mouse event shapes that are drawn on the window.
-     * @param settings Certain settings regarding the window.
-     * @checkstyle ParameterNumberCheck (2 lines)
-     */
-    public J2DWindow(
-        final String title,
-        final Area area,
-        final Iterable<J2DMouseShape> shapes,
-        final Consumer<JFrame>... settings
-    ) {
-        this(
-            title,
-            area,
-            new IterableOf<>(settings),
-            shapes
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param title The title that is shown at the top of the window.
-     * @param area The area of the window.
-     * @param settings Certain settings regarding the window.
+     * @param features Certain features regarding the window.
      * @param shapes The mouse event shapes that are drawn on the window.
      * @checkstyle ParameterNumberCheck (2 lines)
      */
     public J2DWindow(
         final String title,
         final Area area,
-        final Iterable<Consumer<JFrame>> settings,
+        final Iterable<J2DWindowFeature> features,
         final Iterable<J2DMouseShape> shapes
     ) {
         super(
@@ -113,7 +125,7 @@ public class J2DWindow extends graphic.j2d.window.J2DWindow {
                         shapes.forEach(it -> it.registerFor(mouse));
                     }
                 ),
-                settings
+                features
             ),
             shapes
         );
