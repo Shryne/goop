@@ -73,12 +73,6 @@ public class J2DRect implements J2DMouseShape {
      * Ctor.
      * @param size The size of the rect.
      * @param targets The targets for the mouse events.
-     */
-    public J2DRect(final Size size, final J2DShapeTarget... targets) {
-        this(size, new ListOf<>(targets));
-    }
-
-    /**
      * Ctor.
      * @param size The size of the rect.
      * @param targets The targets for the mouse events.

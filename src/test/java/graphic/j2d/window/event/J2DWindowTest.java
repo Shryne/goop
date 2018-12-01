@@ -41,8 +41,7 @@ public class J2DWindowTest {
     /**
      * Tests if the full specified rectangular area is clickable. This is
      * necessary because swing tends to take the bar size into the calculation.
-     * This tests the {@link J2DWindow} and
-     * {@link J2DRect}. Additionally, the
+     * This tests the {@link J2DWindow} and {@link J2DRect}. Additionally, the
      * {@link Robot} is used.
      * @throws Exception Thanks to the used {@link Robot} and to
      *  {@link Thread#sleep(long)}. I need to wait for the window to be created
