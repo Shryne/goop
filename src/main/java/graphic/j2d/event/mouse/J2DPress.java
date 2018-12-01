@@ -30,23 +30,21 @@ import logic.metric.PosOverlap;
 import logic.metric.pos.Pos2D;
 
 /**
- * A mouse click bound on a component to apply some action on activation. The
- * action (thus the click) will only be applied when the mouse has been pressed
- * and released.
+ * A mouse press bound on a component to apply some action on activation.
  * <p>This class is immutable, but does mutate the state of the mouse.</p>
- * @since 12.5.0
+ * @since 13.1.2
  */
-public class J2DClick implements J2DShapeTarget {
+public class J2DPress implements J2DShapeTarget {
     /**
-     * The action to be applied when the click occurs.
+     * The action to be applied when the press occurs.
      */
     private final Action action;
 
     /**
      * Ctor.
-     * @param action The action to be applied when the click occurs.
+     * @param action The action to be applied when the press occurs.
      */
-    public J2DClick(final Action action) {
+    public J2DPress(final Action action) {
         this.action = action;
     }
 
@@ -58,14 +56,14 @@ public class J2DClick implements J2DShapeTarget {
         source.register(
             (MouseListener) new MouseAdapter() {
                 @Override
-                public void mouseClicked(final MouseEvent event) {
+                public void mousePressed(final MouseEvent event) {
                     if (overlap.contains(
                         new Pos2D(
                             event.getX(),
                             event.getY()
                         )
                     )) {
-                        J2DClick.this.action.run();
+                        J2DPress.this.action.run();
                     }
                 }
             }

@@ -32,12 +32,12 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Tests for {@link J2DClick}.
- * @since 13.0.2
+ * Tests for {@link J2DPress}.
+ * @since 13.1.2
  */
-public class J2DClickTest {
+public class J2DPressTest {
     /**
-     * Tests whether the click object applies the given action. This test
+     * Tests whether the press object applies the given action. This test
      * uses a {@link JFrame} instead of a
      * {@link J2DWindow} to isolate the click object as much as possible.
      * {@link Robot} is used to click on the window.
@@ -45,37 +45,37 @@ public class J2DClickTest {
      *  {@link Thread#sleep(long)}.
      */
     @Test
-    public void clickAppliesAction() throws Exception {
-        final var clicked = new AtomicBoolean(false);
+    public void pressAppliesAction() throws Exception {
+        final var pressed = new AtomicBoolean(false);
         // @checkstyle LocalFinalVariableName (2 lines)
         final var x = 0;
         final var y = 0;
-        final var width = 100;
-        final var height = 80;
+        final var width = 550;
+        final var height = 215;
         final var robot = new Robot();
         final var frame = new JFrame();
         frame.setSize(width, height);
-        new J2DClick(
-            () -> clicked.set(true)
+        new J2DPress(
+            () -> pressed.set(true)
         ).registerFor(
             new J2DBaseMouse(frame),
             new PosOverlap2D(width, height)
         );
         frame.setVisible(true);
         final var wait = 50L;
-        final var shift = 20;
+        final var shift = 30;
         robot.mouseMove(x + shift, y + frame.getInsets().top + shift);
+        Thread.sleep(wait);
+        MatcherAssert.assertThat(
+            pressed.get(),
+            Matchers.is(false)
+        );
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         Thread.sleep(wait);
         MatcherAssert.assertThat(
-            clicked.get(),
-            Matchers.is(false)
-        );
-        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-        Thread.sleep(wait);
-        MatcherAssert.assertThat(
-            clicked.get(),
+            pressed.get(),
             Matchers.is(true)
         );
+        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
     }
 }

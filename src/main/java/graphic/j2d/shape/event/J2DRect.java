@@ -29,8 +29,6 @@ import java.util.List;
 import logic.graphic.color.Black;
 import logic.graphic.color.Color;
 import logic.metric.area.PosOverlap;
-import logic.metric.area.PosOverlap2D;
-import logic.metric.size.Size;
 import org.cactoos.list.ListOf;
 
 /**
@@ -67,18 +65,6 @@ public class J2DRect implements J2DMouseShape {
             area,
             new Black()
         );
-    }
-
-    /**
-     * Ctor.
-     * @param size The size of the rect.
-     * @param targets The targets for the mouse events.
-     * Ctor.
-     * @param size The size of the rect.
-     * @param targets The targets for the mouse events.
-     */
-    public J2DRect(final Size size, final List<J2DShapeTarget> targets) {
-        this(new PosOverlap2D(size), targets);
     }
 
     /**
