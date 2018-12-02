@@ -22,9 +22,9 @@
 package graphic.j2d.window;
 
 import graphic.j2d.shape.J2DShape;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.Collections;
-import java.util.function.Consumer;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import logic.functional.Lazy;
@@ -33,19 +33,19 @@ import logic.graphic.window.Showable;
 import logic.metric.area.Area;
 
 /*
-Passing the JFrame to the setting isn't beautiful but necessary, because the
+Passing the JFrame to the feature isn't beautiful but necessary, because the
 window can't be decorated without using the JFrame. At least by using the
-setting I made the window pass the JFrame to something instead of providing a
+feature I made the window pass the JFrame to something instead of providing a
 direct getter to the state
 */
 /**
  * Represents a simple java 2d window. To apply some settings on this window,
- * one has to use a constructor that takes a setting. This setting gets
- * the JFrame of this window to apply the needed settings. By using this,
- * one can bind the setting on a certain event like a click on a button.
- * <b>Don't capture the JFrame to use it elsewhere!</b>
+ * one has to use a constructor that takes a feature. This feature gets
+ * the JFrame of this window to apply the needed settings or to get information
+ * from it. By using this, one can bind the feature on a certain event like a
+ * click on a button. <b>Don't capture the JFrame to use it elsewhere!</b>
  * <p>This class is not thread-safe, because it mutates its state when
- * {@link #show} is called. Additionally the settings can change its state.</p>
+ * {@link #show} is called. Additionally the features can change its state.</p>
  * @since 3.5.0
  */
 public class J2DBaseWindow implements Showable {
@@ -56,42 +56,55 @@ public class J2DBaseWindow implements Showable {
     private final Value<JFrame> window;
 
     /**
-     * Secondary constructor. Uses the arguments to define how a JFrame will be
-     * constructed using them. The primary constructor is private.
+     * Ctor.
      * @param area The area of this window.
-     * @param shapes The shapes that are on this window.
-     */
-    public J2DBaseWindow(final Area area, final Iterable<J2DShape> shapes) {
-        this(area, Collections.emptyList(), shapes);
-    }
-
-    /**
-     * Secondary constructor. Uses the arguments to define how a JFrame will be
-     * constructed using them. The primary constructor is private.
-     * @param area The area of this window.
-     * @param settings Certain  settings regarding the window.
      * @param shapes The shapes that are on this window.
      */
     public J2DBaseWindow(
         final Area area,
-        final Iterable<Consumer<JFrame>> settings,
-        final Iterable<J2DShape> shapes
+        final Iterable<? extends J2DShape> shapes
+    ) {
+        this(area, Collections.emptyList(), shapes);
+    }
+
+    /**
+     * Ctor.
+     * @param area The area of this window.
+     * @param features Certain  features regarding the window.
+     * @param shapes The shapes that are on this window.
+     */
+    public J2DBaseWindow(
+        final Area area,
+        final Iterable<J2DWindowFeature> features,
+        final Iterable<? extends J2DShape> shapes
     ) {
         this(
             new Lazy<>(
                 () -> {
                     final var frame = new JFrame();
-                    settings.forEach(setting -> setting.accept(frame));
-                    area.applyOn(frame::setBounds);
                     final var panel = new JPanel() {
                         @Override
-                        protected void paintComponent(final Graphics graphics) {
+                        protected void paintComponent(
+                            final Graphics graphics
+                        ) {
                             super.paintComponent(graphics);
                             shapes.forEach(shape -> shape.draw(graphics));
                         }
                     };
+                    area.applyOn(
+                        (pos, size) -> {
+                            pos.applyOn(frame::setLocation);
+                            size.applyOn(
+                                (width, height) -> panel.setPreferredSize(
+                                    new Dimension(width, height)
+                                )
+                            );
+                        }
+                    );
                     frame.add(panel);
+                    frame.pack();
                     frame.setVisible(true);
+                    features.forEach(it -> it.accept(frame));
                     return frame;
                 }
             )
@@ -99,10 +112,10 @@ public class J2DBaseWindow implements Showable {
     }
 
     /**
-     * Primary constructor.
+     * Ctor.
      * @param window The construction of the window
      */
-    private J2DBaseWindow(final Value<JFrame> window) {
+    J2DBaseWindow(final Value<JFrame> window) {
         this.window = window;
     }
 

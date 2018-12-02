@@ -19,48 +19,48 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package graphic.j2d.shape;
+package graphic.j2d.window.information;
 
-import java.awt.Graphics;
-import logic.graphic.color.Color;
-import logic.metric.area.Area;
+import graphic.j2d.window.J2DWindow;
+import javax.swing.JFrame;
+import logic.functional.Lazy;
+import logic.metric.size.Size2D;
+import logic.metric.size.SizeEnvelope;
 
 /**
- * A rectangle using java2d.
- * <p>This class doesn't change its own state. Whether it is immutable or not,
- * depends on the given constructor arguments. Additionally whether this
- * class is thread-safe or not, depends on the given graphics instance for
- * {@link this#draw(Graphics)}.</p>
- * @since 2.1.0
+ * The size of a java 2d window bar. This class is intended to be used like
+ * this:
+ * <pre>
+ *     {@code new J2DWindow(
+ *          // ...
+ *          new ListOf<J2DWindowFeatures>(
+ *              jframe -> new BarSize(jframe).applyOn {
+ *                  (width, height) -> // The action to be applied
+ *              }
+ *          );
+ *     );}
+ * </pre>
+ * In this case, the action will be applied when {@link J2DWindow#show()} is
+ * called.
+ * <p>This class is immutable and thread-safe.</p>
+ * @since 13.0.1
  */
-public class J2DRect implements J2DShape {
-    /**
-     * The area of this rect.
-     */
-    private final Area area;
-
-    /**
-     * The color of this rect.
-     */
-    private final Color color;
-
+public class BarSize extends SizeEnvelope {
     /**
      * Ctor.
-     * @param area The area of this rect.
-     * @param color The color of this rect.
+     * @param frame The frame to get the bar size from.
      */
-    public J2DRect(final Area area, final Color color) {
-        this.area = area;
-        this.color = color;
-    }
-
-    @Override
-    public final void draw(final Graphics graphics) {
-        this.color.applyOn(
-            (red, green, blue, alpha) -> graphics.setColor(
-                new java.awt.Color(red, green, blue, alpha)
+    public BarSize(final JFrame frame) {
+        super(
+            new Lazy<>(
+                () -> {
+                    final var insets = frame.getInsets();
+                    return new Size2D(
+                        frame.getWidth(),
+                        insets.top
+                    );
+                }
             )
         );
-        this.area.applyOn(graphics::fillRect);
     }
 }

@@ -19,30 +19,12 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.graphic.color;
+package graphic.j2d.shape;
+
+import graphic.j2d.event.J2DMouseTarget;
 
 /**
- * Represents the black color.
- * @since 8.4.0
+ * A shape that can register itself for a certain event.
+ * @since 12.4.0
  */
-public class Black extends RGBA {
-    /**
-     * The highest value in java 2d.
-     */
-    private static final int ALPHA = 255;
-
-    /**
-     * Ctor.
-     */
-    public Black() {
-        this(Black.ALPHA);
-    }
-
-    /**
-     * Ctor.
-     * @param alpha The alpha value of this color.
-     */
-    public Black(final int alpha) {
-        super(0, 0, 0, alpha);
-    }
-}
+public interface J2DMouseShape extends J2DShape, J2DMouseTarget { }

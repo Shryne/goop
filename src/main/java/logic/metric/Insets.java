@@ -19,30 +19,24 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.graphic.color;
+package logic.metric;
+
+import logic.functional.QuadFunction;
 
 /**
- * Represents the black color.
- * @since 8.4.0
+ * Defines the size of the border sides of a java 2d based element. It consists
+ * of a top, left, right and bottom side.
+ * @since 13.2.2
  */
-public class Black extends RGBA {
+public interface Insets {
     /**
-     * The highest value in java 2d.
+     * Gives the given function the size of the top, left, right and bottom side
+     * (in this order) and returns the result of this function.
+     * @param target The target that gets the top, left, right and bottom sizes
+     *  (in this order).
+     * @param <T> The type of the result.
+     * @return The result of the given function.
+     * @checkstyle ParameterCount (2 lines)
      */
-    private static final int ALPHA = 255;
-
-    /**
-     * Ctor.
-     */
-    public Black() {
-        this(Black.ALPHA);
-    }
-
-    /**
-     * Ctor.
-     * @param alpha The alpha value of this color.
-     */
-    public Black(final int alpha) {
-        super(0, 0, 0, alpha);
-    }
+    <T> T result(QuadFunction<Integer, Integer, Integer, Integer, T> target);
 }

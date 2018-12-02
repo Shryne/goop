@@ -19,50 +19,45 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.functional;
+package graphic.j2d.event.mouse;
+
+import java.awt.Component;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelListener;
 
 /**
- * An action that will be applied only once. Further calls of {@link #run()}
- * won't be executed.
- * <p>This class is mutable and not thread-safe, because it mutates its
- * state when {@link #run()} is called.</p>
- * @since 9.0.0
+ * Just registers and delegates the events to the event classes.
+ * <p>This class is mutable and not thread-safe, because it mutates the state
+ * of the given JFrame..</p>
+ * @since 12.2.0
  */
-public class SingleAction implements Action {
+public class J2DBaseMouse implements J2DMouse {
     /**
-     * The action to be called.
+     * The component who will get the listeners.
      */
-    private final Action action;
-
-    /**
-     * Boolean whether the action has been called or not.
-     */
-    private boolean called;
+    private final Component component;
 
     /**
      * Ctor.
-     * @param action The action to be called.
+     * @param component The component to register the events for.
      */
-    public SingleAction(final Action action) {
-        this(action, false);
-    }
-
-    /**
-     * Ctor.
-     * @param action The action to be called.
-     * @param called Boolean whether the action has been called or not. Passing
-     *  true as a value would mean that the action won't be called.
-     */
-    public SingleAction(final Action action, final boolean called) {
-        this.action = action;
-        this.called = called;
+    public J2DBaseMouse(final Component component) {
+        this.component = component;
     }
 
     @Override
-    public final void run() {
-        if (!this.called) {
-            this.action.run();
-            this.called = true;
-        }
+    public final void register(final MouseListener target) {
+        this.component.addMouseListener(target);
+    }
+
+    @Override
+    public final void register(final MouseMotionListener target) {
+        this.component.addMouseMotionListener(target);
+    }
+
+    @Override
+    public final void register(final MouseWheelListener target) {
+        this.component.addMouseWheelListener(target);
     }
 }

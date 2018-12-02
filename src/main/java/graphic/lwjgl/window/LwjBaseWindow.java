@@ -30,18 +30,16 @@ import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 
-
-// @todo #3 A window seems to have a minimum width of 120. I should be at least be
-//  able to retrieve that size
+// @todo #3 A window seems to have a minimum width of 120. I should be at least
+//  be able to retrieve that size
 /**
  * A window using lwjgl to show itself. Note that this class only represents the
- * window without any threads. It's enough to start the window, but one has to
- * consecutively call {@link #update()} to sustain it.
+ * window without any threads. One has to consecutively call {@link #show()}
+ * to show and sustain the window.
  * <p>This class is not thread-safe.</p>
  * @since 3.9.0
  */
-public class LwjBaseWindow implements Updateable, Showable, AutoCloseable,
-    Failable {
+public class LwjBaseWindow implements Showable, AutoCloseable, Failable {
     /**
      * The creation of the window that results in the lwjgl long handle to it.
      */
@@ -59,7 +57,7 @@ public class LwjBaseWindow implements Updateable, Showable, AutoCloseable,
     private final Iterable<LwjShape> shapes;
 
     /**
-     * Secondary constructor.
+     * Ctor.
      * @param area The area of the window.
      * @param shapes The shapes to be drawn on this window.
      */
@@ -77,10 +75,7 @@ public class LwjBaseWindow implements Updateable, Showable, AutoCloseable,
     }
 
     /**
-     * Secondary constructor. Uses the parameters to define the initialization
-     * of the actual window. The initialization will be executed when
-     * {@link #show()} is called the first time. The primary constructor is
-     * private.
+     * Ctor.
      * @param area The area of this window.
      * @param canvas The canvas that contains the background information for the
      *  drawing and applies it accordingly.
@@ -90,10 +85,7 @@ public class LwjBaseWindow implements Updateable, Showable, AutoCloseable,
     }
 
     /**
-     * Secondary constructor. Uses the parameters to define the initialization
-     * of the actual window. The initialization will be executed when
-     * {@link #show()} is called the first time. The primary constructor is
-     * private.
+     * Ctor.
      * @param area The area of this window.
      * @param canvas The canvas that contains the background information for the
      *  drawing and applies it accordingly.
@@ -112,7 +104,7 @@ public class LwjBaseWindow implements Updateable, Showable, AutoCloseable,
     }
 
     /**
-     * Primary constructor.
+     * Ctor.
      * @param pointer The value containing the long lwjgl handle to the window.
      * @param canvas The canvas that contains the background information for the
      *  drawing and applies it accordingly.
@@ -128,13 +120,11 @@ public class LwjBaseWindow implements Updateable, Showable, AutoCloseable,
         this.shapes = shapes;
     }
 
+    // @todo #5 It should be tried to merge hasFailed and show because
+    //  currently, they are temporally coupled. One has to call hasFailed,
+    //  check it and then run show or do something else.
     @Override
     public final void show() {
-        GLFW.glfwShowWindow(this.pointer.content());
-    }
-
-    @Override
-    public final void update() {
         if (!GLFW.glfwWindowShouldClose(this.pointer.content())) {
             GLFW.glfwMakeContextCurrent(this.pointer.content());
             this.shapes.forEach(

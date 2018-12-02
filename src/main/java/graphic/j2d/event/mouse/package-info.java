@@ -19,15 +19,8 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package graphic.lwjgl.window;
-
 /**
- * An interface for windows that are update based.
- * @since 5.9.1
+ * Contains the mouse event components.
+ * @since 12.2.0
  */
-public interface Updateable {
-    /**
-     * Updates the window. This can involve redrawing and similar stuff.
-     */
-    void update();
-}
+package graphic.j2d.event.mouse;

@@ -44,7 +44,7 @@ public class BaseWindowPointer extends Lazy<Long> implements WindowPointer {
     private final GlfwInit glfw;
 
     /**
-     * Secondary constructor. The position will be (0|0).
+     * Ctor. The position will be (0|0).
      * @param size The size of the window that will be pointed by this object.
      */
     public BaseWindowPointer(final Size size) {
@@ -52,7 +52,7 @@ public class BaseWindowPointer extends Lazy<Long> implements WindowPointer {
     }
 
     /**
-     * Secondary constructor.
+     * Ctor.
      * @param pos The position of window that will be pointed by this object.
      * @param size The size of the window that will be pointed by this object.
      */
@@ -60,15 +60,13 @@ public class BaseWindowPointer extends Lazy<Long> implements WindowPointer {
         this(new Area2D(pos, size));
     }
 
-
     // @todo #1 The static initialization of GlfwBaseInit is dangerous. If a
     //  user uses this constructor, he won't be able to tell which GlfwInit
     //  implementation was used and could then use another. The glfw
     //  implementation should know somehow that there is already another glfw
     //  instance
     /**
-     * Secondary constructor. Uses the static initialization of
-     * {@link GlfwBaseInit}.
+     * Ctor. Uses the static initialization of {@link GlfwBaseInit}.
      * @param area The area of the window that will be pointed by this object.
      */
     public BaseWindowPointer(final Area area) {
@@ -79,7 +77,7 @@ public class BaseWindowPointer extends Lazy<Long> implements WindowPointer {
     }
 
     /**
-     * Primary constructor.
+     * Ctor.
      * @param glfw This is needed to use the glfw methods to create the window.
      * @param area The area of the window that will be pointed by this object.
      */

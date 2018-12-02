@@ -19,30 +19,21 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.graphic.color;
+package graphic.j2d.shape;
+
+import graphic.j2d.event.mouse.J2DMouse;
+import logic.metric.PosOverlap;
 
 /**
- * Represents the black color.
- * @since 8.4.0
+ * The target for the shape events.
+ * @since 12.5.0
  */
-public class Black extends RGBA {
+public interface J2DShapeTarget {
     /**
-     * The highest value in java 2d.
+     * The target registers itself for the event (if he wants to).
+     * @param source The source of the event.
+     * @param overlap The object to check whether the event occurred on the
+     *  shape.
      */
-    private static final int ALPHA = 255;
-
-    /**
-     * Ctor.
-     */
-    public Black() {
-        this(Black.ALPHA);
-    }
-
-    /**
-     * Ctor.
-     * @param alpha The alpha value of this color.
-     */
-    public Black(final int alpha) {
-        super(0, 0, 0, alpha);
-    }
+    void registerFor(J2DMouse source, PosOverlap overlap);
 }

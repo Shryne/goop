@@ -19,30 +19,23 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.graphic.color;
+package logic.metric;
+
+import logic.metric.pos.Pos;
 
 /**
- * Represents the black color.
- * @since 8.4.0
+ * Can determine whether a given position is inside itself.
+ * @since 12.5.0
  */
-public class Black extends RGBA {
+public interface PosOverlap {
     /**
-     * The highest value in java 2d.
+     * Tells whether the given pos is inside itself. Example:
+     * <p>Area(0, 0, 100, 100).contains(0, 0) => true</p>
+     * <p>Area(0, 0, 100, 100).contains(50, 50) => true</p>
+     * <p>Area(0, 0, 100, 100).contains(100, 100) => true</p>
+     * <p>Area(0, 0, 100, 100).contains(101, 101) => false</p>
+     * @param pos The position to check for.
+     * @return True if the position is inside, otherwise false.
      */
-    private static final int ALPHA = 255;
-
-    /**
-     * Ctor.
-     */
-    public Black() {
-        this(Black.ALPHA);
-    }
-
-    /**
-     * Ctor.
-     * @param alpha The alpha value of this color.
-     */
-    public Black(final int alpha) {
-        super(0, 0, 0, alpha);
-    }
+    boolean contains(Pos pos);
 }

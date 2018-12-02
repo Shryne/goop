@@ -19,30 +19,10 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.graphic.color;
+package logic.metric.area;
 
 /**
- * Represents the black color.
- * @since 8.4.0
+ * An area that knows than a given pos overlaps with it.
+ * @since 13.0.0
  */
-public class Black extends RGBA {
-    /**
-     * The highest value in java 2d.
-     */
-    private static final int ALPHA = 255;
-
-    /**
-     * Ctor.
-     */
-    public Black() {
-        this(Black.ALPHA);
-    }
-
-    /**
-     * Ctor.
-     * @param alpha The alpha value of this color.
-     */
-    public Black(final int alpha) {
-        super(0, 0, 0, alpha);
-    }
-}
+public interface PosOverlap extends logic.metric.PosOverlap, Area { }

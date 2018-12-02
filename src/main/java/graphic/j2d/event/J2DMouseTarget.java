@@ -19,30 +19,19 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.graphic.color;
+package graphic.j2d.event;
+
+import graphic.j2d.event.mouse.J2DMouse;
 
 /**
- * Represents the black color.
- * @since 8.4.0
+ * The observer of a certain event.
+ * @since 12.4.0
  */
-public class Black extends RGBA {
+public interface J2DMouseTarget {
     /**
-     * The highest value in java 2d.
+     * Can register itself for an event source. Whether the object actually
+     * registers itself depends on whether it needs an event.
+     * @param source The source of the event.
      */
-    private static final int ALPHA = 255;
-
-    /**
-     * Ctor.
-     */
-    public Black() {
-        this(Black.ALPHA);
-    }
-
-    /**
-     * Ctor.
-     * @param alpha The alpha value of this color.
-     */
-    public Black(final int alpha) {
-        super(0, 0, 0, alpha);
-    }
+    void registerFor(J2DMouse source);
 }
