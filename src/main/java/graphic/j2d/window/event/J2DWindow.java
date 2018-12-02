@@ -121,7 +121,9 @@ public class J2DWindow extends graphic.j2d.window.J2DWindow {
             new Joined<>(
                 new IterableOf<>(
                     frame -> {
-                        final J2DMouse mouse = new J2DBaseMouse(frame);
+                        final J2DMouse mouse = new J2DBaseMouse(
+                            frame.getContentPane()
+                        );
                         shapes.forEach(it -> it.registerFor(mouse));
                     }
                 ),

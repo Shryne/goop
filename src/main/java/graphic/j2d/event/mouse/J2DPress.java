@@ -25,6 +25,7 @@ import graphic.j2d.shape.J2DShapeTarget;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.function.BiConsumer;
 import logic.functional.Action;
 import logic.metric.PosOverlap;
 import logic.metric.pos.Pos2D;
@@ -36,16 +37,29 @@ import logic.metric.pos.Pos2D;
  */
 public class J2DPress implements J2DShapeTarget {
     /**
-     * The action to be applied when the press occurs.
+     * The target action to be applied with the x and y coordinates of the
+     * press.
      */
-    private final Action action;
+    private final BiConsumer<Integer, Integer> target;
 
     /**
      * Ctor.
      * @param action The action to be applied when the press occurs.
      */
     public J2DPress(final Action action) {
-        this.action = action;
+        this(
+            // @checkstyle ParameterName (1 line)
+            (x, y) -> action.run()
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param target The target with the action, who gets the x and y
+     *  coordinates of the press.
+     */
+    public J2DPress(final BiConsumer<Integer, Integer> target) {
+        this.target = target;
     }
 
     @Override
@@ -57,13 +71,11 @@ public class J2DPress implements J2DShapeTarget {
             (MouseListener) new MouseAdapter() {
                 @Override
                 public void mousePressed(final MouseEvent event) {
-                    if (overlap.contains(
-                        new Pos2D(
-                            event.getX(),
-                            event.getY()
-                        )
-                    )) {
-                        J2DPress.this.action.run();
+                    // @checkstyle LocalFinalVariableName (2 lines)
+                    final var x = event.getX();
+                    final var y = event.getY();
+                    if (overlap.contains(new Pos2D(x, y))) {
+                        J2DPress.this.target.accept(x, y);
                     }
                 }
             }

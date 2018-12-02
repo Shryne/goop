@@ -22,6 +22,7 @@
 package graphic.j2d.window;
 
 import graphic.j2d.shape.J2DShape;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.Collections;
 import javax.swing.JFrame;
@@ -81,20 +82,29 @@ public class J2DBaseWindow implements Showable {
             new Lazy<>(
                 () -> {
                     final var frame = new JFrame();
-                    frame.setVisible(true);
-                    area.applyOn(frame::setBounds);
-                    features.forEach(it -> it.accept(frame));
-                    frame.add(
-                        new JPanel() {
-                            @Override
-                            protected void paintComponent(
-                                final Graphics graphics
-                            ) {
-                                super.paintComponent(graphics);
-                                shapes.forEach(shape -> shape.draw(graphics));
-                            }
+                    final var panel = new JPanel() {
+                        @Override
+                        protected void paintComponent(
+                            final Graphics graphics
+                        ) {
+                            super.paintComponent(graphics);
+                            shapes.forEach(shape -> shape.draw(graphics));
+                        }
+                    };
+                    area.applyOn(
+                        (pos, size) -> {
+                            pos.applyOn(frame::setLocation);
+                            size.applyOn(
+                                (width, height) -> panel.setPreferredSize(
+                                    new Dimension(width, height)
+                                )
+                            );
                         }
                     );
+                    frame.add(panel);
+                    frame.pack();
+                    frame.setVisible(true);
+                    features.forEach(it -> it.accept(frame));
                     return frame;
                 }
             )

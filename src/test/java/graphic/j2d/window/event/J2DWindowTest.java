@@ -21,9 +21,9 @@
 
 package graphic.j2d.window.event;
 
+import graphic.j2d.J2DContainerInsets;
 import graphic.j2d.event.mouse.J2DClick;
 import graphic.j2d.shape.event.J2DRect;
-import graphic.j2d.window.information.BarSize;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.util.List;
@@ -39,10 +39,11 @@ import org.junit.Test;
  */
 public class J2DWindowTest {
     /**
-     * Tests if the full specified rectangular area is clickable. This is
-     * necessary because swing tends to take the bar size into the calculation.
-     * This tests the {@link J2DWindow} and {@link J2DRect}. Additionally, the
-     * {@link Robot} is used.
+     * Tests if the full specified rectangular area is clickable. This tests the
+     * {@link J2DWindow} and {@link J2DRect}. Additionally, them {@link Robot}
+     * is used. The robot will click somewhere at the top of the area so this
+     * test will probably succeed even if the insets of the window aren't taken
+     * into account.
      * @throws Exception Thanks to the used {@link Robot} and to
      *  {@link Thread#sleep(long)}. I need to wait for the window to be created
      *  until I can start the robot and unfortunately I don't know how to let
@@ -51,25 +52,24 @@ public class J2DWindowTest {
      *  multiple components and not just {@link J2DWindow}.
      */
     @Test
-    public void fullClickableArea() throws Exception {
+    public void fullClickableAreaTop() throws Exception {
         final var clicked = new AtomicBoolean(false);
         // @checkstyle LocalFinalVariableName (2 lines)
         final var x = 0;
         final var y = 0;
         final var width = 200;
         final var height = 200;
-        final var shift = 20;
         final var robot = new Robot();
         new J2DWindow(
             "",
             new PosOverlap2D(width, height),
             List.of(
-                frame -> new BarSize(frame).applyOn(
-                    // @checkstyle ParameterNameCheck (1 line)
-                    (w, h) -> {
-                        robot.mouseMove(x + shift, y + h + shift);
+                frame -> new J2DContainerInsets(frame).result(
+                    (top, left, right, bottom) -> {
+                        robot.mouseMove(x + left, y + top);
                         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
                         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+                        return Void.TYPE;
                     }
                 )
             ),
@@ -80,7 +80,60 @@ public class J2DWindowTest {
                 )
             )
         ).show();
-        final var wait = 250L;
+        final var wait = 50L;
+        Thread.sleep(wait);
+        MatcherAssert.assertThat(
+            clicked.get(),
+            Matchers.is(true)
+        );
+    }
+
+    /**
+     * Tests if the full specified rectangular area is clickable. This tests the
+     * {@link J2DWindow} and {@link J2DRect}. Additionally, the {@link Robot} is
+     * used. The robot will click somewhere near the bottom to ensure that the
+     * bar size of the window is taken into account.
+     * @throws Exception Thanks to the used {@link Robot} and to
+     *  {@link Thread#sleep(long)}. I need to wait for the window to be created
+     *  until I can start the robot and unfortunately I don't know how to let
+     *  the window tell me when it's built up.
+     * @todo #6 This test belongs to somewhere else because it aims to check
+     *  multiple components and not just {@link J2DWindow}.
+     */
+    @Test
+    public void fullClickableAreaBottom() throws Exception {
+        final var clicked = new AtomicBoolean(false);
+        // @checkstyle LocalFinalVariableName (2 lines)
+        final var x = 0;
+        final var y = 0;
+        final var width = 150;
+        final var height = 300;
+        final var robot = new Robot();
+        new J2DWindow(
+            "",
+            new PosOverlap2D(width, height),
+            List.of(
+                frame -> new J2DContainerInsets(frame).result(
+                    // @checkstyle ParameterNameCheck (1 line)
+                    (top, left, right, bottom) -> {
+                        robot.mouseMove(
+                            x + left + width - 1,
+                            y + top + height - 1
+                        );
+                        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+                        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+                        return Void.TYPE;
+                    }
+                )
+            ),
+            List.of(
+                new J2DRect(
+                    new PosOverlap2D(width, height),
+                    new J2DClick(() -> clicked.set(true))
+                )
+            )
+        ).show();
+        final var wait = 50L;
         Thread.sleep(wait);
         MatcherAssert.assertThat(
             clicked.get(),
