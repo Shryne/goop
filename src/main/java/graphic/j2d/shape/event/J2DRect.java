@@ -37,7 +37,7 @@ import org.cactoos.list.ListOf;
  * depends on the given constructor arguments. Additionally whether this
  * class is thread-safe or not, depends on the given graphics instance for
  * {@link this#draw(Graphics)}.</p>
- * @since 2.1.0
+ * @since 13.0.0
  */
 public class J2DRect implements J2DMouseShape {
     /**
