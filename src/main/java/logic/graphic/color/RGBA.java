@@ -23,7 +23,7 @@ package logic.graphic.color;
 
 import logic.functional.QuadConsumer;
 
-// @todo Swing is byte based and lwjgl is integer based / can be integer based.
+// @todo #7 Swing is byte based and lwjgl is integer based / can be integer based.
 //  I need to adjust that.
 /**
  * A simple color implementation using red, green, blue and alpha values
