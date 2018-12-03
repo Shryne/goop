@@ -24,9 +24,9 @@ package graphic.j2d;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import logic.functional.QuadFunction;
+import logic.matcher.CorrectInsets;
 import logic.metric.Insets;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -49,17 +49,9 @@ public class J2DContainerInsetsTest {
             top, left, bottom, right
         );
         panel.setBorder(padding);
-        new J2DContainerInsets(
-            panel
-        ).result(
-            // @checkstyle ParameterNameCheck (1 line)
-            (resTop, resLeft, resRight, resBottom) -> {
-                MatcherAssert.assertThat(resTop, Matchers.equalTo(top));
-                MatcherAssert.assertThat(resLeft, Matchers.equalTo(left));
-                MatcherAssert.assertThat(resRight, Matchers.equalTo(right));
-                MatcherAssert.assertThat(resBottom, Matchers.equalTo(bottom));
-                return Void.TYPE;
-            }
+        MatcherAssert.assertThat(
+            new J2DContainerInsets(panel),
+            new CorrectInsets(top, left, right, bottom)
         );
     }
 
@@ -94,15 +86,9 @@ public class J2DContainerInsetsTest {
         panel.setBorder(
             BorderFactory.createEmptyBorder(top, left, bottom, right)
         );
-        insets.result(
-            // @checkstyle ParameterNameCheck (1 line)
-            (resTop, resLeft, resRight, resBottom) -> {
-                MatcherAssert.assertThat(resTop, Matchers.equalTo(top));
-                MatcherAssert.assertThat(resLeft, Matchers.equalTo(left));
-                MatcherAssert.assertThat(resRight, Matchers.equalTo(right));
-                MatcherAssert.assertThat(resBottom, Matchers.equalTo(bottom));
-                return Void.TYPE;
-            }
+        MatcherAssert.assertThat(
+            insets,
+            new CorrectInsets(top, left, right, bottom)
         );
     }
 }
