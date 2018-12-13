@@ -125,7 +125,7 @@ public class LwjBaseWindow implements Showable, AutoCloseable, Failable {
     //  check it and then run show or do something else.
     @Override
     public final void show() {
-        if (!GLFW.glfwWindowShouldClose(this.pointer.content())) {
+        while (!GLFW.glfwWindowShouldClose(this.pointer.content())) {
             GLFW.glfwMakeContextCurrent(this.pointer.content());
             this.shapes.forEach(
                 shape -> this.canvas.preparedDraw(

@@ -21,10 +21,10 @@
 
 package graphic.lwjgl.shape;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import logic.functional.Lazy;
 import logic.functional.Value;
 import logic.graphic.GraphicsChoice;
@@ -61,12 +61,11 @@ public class LwjLazyShapes implements Iterable<LwjShape> {
      */
     public LwjLazyShapes(
         final GraphicsChoice<LwjShape> choice,
-        final Collection<Shape> shapes
+        final Iterable<Shape> shapes
     ) {
         this(
             new Lazy<>(
-                () -> shapes
-                    .stream()
+                () -> StreamSupport.stream(shapes.spliterator(), false)
                     .map(it -> new LwjLazyShape(choice, it))
                     .collect(Collectors.toList())
             )

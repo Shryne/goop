@@ -21,10 +21,10 @@
 
 package graphic.j2d.shape;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import logic.functional.Lazy;
 import logic.functional.Value;
 import logic.graphic.GraphicsChoice;
@@ -61,12 +61,11 @@ public class J2DLazyShapes implements Iterable<J2DShape> {
      */
     public J2DLazyShapes(
         final GraphicsChoice<J2DShape> choice,
-        final Collection<Shape> shapes
+        final Iterable<Shape> shapes
     ) {
         this(
             new Lazy<>(
-                () -> shapes
-                    .stream()
+                () -> StreamSupport.stream(shapes.spliterator(), false)
                     .map(it -> new J2DLazyShape(choice, it))
                     .collect(Collectors.toList())
             )
