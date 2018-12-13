@@ -25,7 +25,7 @@ import graphic.lwjgl.shape.LwjShape;
 import java.util.Collections;
 import java.util.List;
 import logic.graphic.window.Showable;
-import logic.metric.area.Area;
+import logic.unit.area.Area;
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;

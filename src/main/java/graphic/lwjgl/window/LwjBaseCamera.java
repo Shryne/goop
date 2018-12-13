@@ -21,9 +21,9 @@
 
 package graphic.lwjgl.window;
 
-import logic.metric.area.Area;
-import logic.metric.area.Area2D;
-import logic.metric.size.Size;
+import logic.unit.area.Area;
+import logic.unit.area.Area2D;
+import logic.unit.size.Size;
 import org.lwjgl.opengl.GL11;
 
 /**

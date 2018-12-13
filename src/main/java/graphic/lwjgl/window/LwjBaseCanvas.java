@@ -22,7 +22,7 @@
 package graphic.lwjgl.window;
 
 import logic.functional.Action;
-import logic.metric.area.Area;
+import logic.unit.area.Area;
 
 /**
  * The basic canvas for lwjgl. It will apply the given buffer and the camera.

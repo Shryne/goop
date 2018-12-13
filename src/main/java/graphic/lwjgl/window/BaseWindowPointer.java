@@ -22,10 +22,10 @@
 package graphic.lwjgl.window;
 
 import logic.functional.Lazy;
-import logic.metric.area.Area;
-import logic.metric.area.Area2D;
-import logic.metric.pos.Pos;
-import logic.metric.size.Size;
+import logic.unit.area.Area;
+import logic.unit.area.Area2D;
+import logic.unit.pos.Pos;
+import logic.unit.size.Size;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.system.MemoryUtil;
 

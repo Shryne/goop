@@ -30,7 +30,7 @@ import javax.swing.JPanel;
 import logic.functional.Lazy;
 import logic.functional.Value;
 import logic.graphic.window.Showable;
-import logic.metric.area.Area;
+import logic.unit.area.Area;
 
 /*
 Passing the JFrame to the feature isn't beautiful but necessary, because the

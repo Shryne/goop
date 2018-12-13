@@ -24,8 +24,8 @@ package graphic.j2d;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import logic.functional.QuadFunction;
-import logic.matcher.CorrectInsets;
-import logic.metric.Insets;
+import logic.matcher.RightInsetsResult;
+import logic.unit.Insets;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -51,7 +51,7 @@ public class J2DContainerInsetsTest {
         panel.setBorder(padding);
         MatcherAssert.assertThat(
             new J2DContainerInsets(panel),
-            new CorrectInsets(top, left, right, bottom)
+            new RightInsetsResult(top, left, right, bottom)
         );
     }
 
@@ -88,7 +88,7 @@ public class J2DContainerInsetsTest {
         );
         MatcherAssert.assertThat(
             insets,
-            new CorrectInsets(top, left, right, bottom)
+            new RightInsetsResult(top, left, right, bottom)
         );
     }
 }

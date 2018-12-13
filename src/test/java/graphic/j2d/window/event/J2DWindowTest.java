@@ -28,7 +28,7 @@ import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-import logic.metric.area.PosOverlap2D;
+import logic.unit.area.PosOverlap2D;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;

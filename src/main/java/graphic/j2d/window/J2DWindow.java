@@ -23,8 +23,8 @@ package graphic.j2d.window;
 
 import graphic.j2d.shape.J2DShape;
 import javax.swing.WindowConstants;
-import logic.metric.area.Area;
-import logic.metric.area.Area2D;
+import logic.unit.area.Area;
+import logic.unit.area.Area2D;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
 import org.cactoos.list.ListOf;

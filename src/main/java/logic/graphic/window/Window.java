@@ -31,7 +31,7 @@ import logic.functional.Value;
 import logic.graphic.shape.J2DShapeChoice;
 import logic.graphic.shape.LwjShapeChoice;
 import logic.graphic.shape.Shape;
-import logic.metric.area.Area;
+import logic.unit.area.Area;
 
 /**
  * This window checks which graphics library is supported on the current

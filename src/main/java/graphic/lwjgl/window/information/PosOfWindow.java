@@ -24,8 +24,8 @@ package graphic.lwjgl.window.information;
 import graphic.lwjgl.window.WindowPointer;
 import java.nio.IntBuffer;
 import logic.functional.Lazy;
-import logic.metric.pos.Pos2D;
-import logic.metric.pos.PosEnvelope;
+import logic.unit.pos.Pos2D;
+import logic.unit.pos.PosEnvelope;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.system.MemoryStack;
 

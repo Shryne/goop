@@ -25,7 +25,7 @@ import graphic.j2d.shape.J2DRect;
 import graphic.lwjgl.shape.LwjRect;
 import logic.graphic.GraphicsChoice;
 import logic.graphic.color.Color;
-import logic.metric.area.Area;
+import logic.unit.area.Area;
 
 /**
  * This rect chooses the concrete rect version depending on the previously

@@ -22,7 +22,7 @@
 package graphic.j2d.shape;
 
 import graphic.j2d.event.mouse.J2DMouse;
-import logic.metric.PosOverlap;
+import logic.unit.PosOverlap;
 
 /**
  * The target for the shape events.

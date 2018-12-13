@@ -27,8 +27,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.function.BiConsumer;
 import logic.functional.Action;
-import logic.metric.PosOverlap;
-import logic.metric.pos.Pos2D;
+import logic.unit.PosOverlap;
+import logic.unit.pos.Pos2D;
 
 /**
  * A mouse press bound on a component to apply some action on activation.

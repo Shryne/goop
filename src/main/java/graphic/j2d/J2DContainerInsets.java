@@ -23,7 +23,7 @@ package graphic.j2d;
 
 import java.awt.Container;
 import logic.functional.QuadFunction;
-import logic.metric.Insets;
+import logic.unit.Insets;
 
 /**
  * The insets of a java 2d based container ({@link Container} to be

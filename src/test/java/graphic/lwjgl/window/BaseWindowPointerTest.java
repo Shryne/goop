@@ -23,8 +23,8 @@ package graphic.lwjgl.window;
 
 import graphic.lwjgl.window.information.PosOfWindow;
 import graphic.lwjgl.window.information.SizeOfWindow;
-import logic.metric.pos.Pos2D;
-import logic.metric.size.Size2D;
+import logic.unit.pos.Pos2D;
+import logic.unit.size.Size2D;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
