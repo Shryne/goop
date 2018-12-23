@@ -19,44 +19,37 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.unit.size;
+package logic.matcher;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import logic.functional.Lazy;
+import org.hamcrest.Description;
 
 /**
- * Tests for {@link Size}.
- * @since 4.9.0
+ * The expectation of a matcher in a text form. It is supposed to be used in
+ * the overridden version of
+ * {@link org.hamcrest.TypeSafeDiagnosingMatcher#describeTo(Description)}.
+ * <p>Example:</p>
+ * <p>Class: Size(width = 15, height = 34)</p>
+ * <p>ExpectationString(name = "Size", namedExpectation = [NameExpectation(
+ * "width", 15), NamedExpectation("height", 34)]</p>
+ * <p>Result of {@link #toString()}: "Size with the following values: width: 15,
+ * height: 34"</p>
+ * <p>This class uses {@link Lazy} and is therefore mutable and not thread-safe.
+ * </p>
+ * @see NamedExpectation
+ * @since 14.2.0
  */
-public class Size2DTest {
-    /**
-     * Aims to test, whether the correct result is returned.
-     */
-    @Test
-    public void correctResult() {
-        final var width = 3445;
-        final var height = 432;
-        MatcherAssert.assertThat(
-            new Size2D(width, height).result(
-                Integer::sum
-            ),
-            Matchers.is(width + height)
-        );
-    }
-
-    /**
-     * Tests whether {@link Size2D#toString()}} works as expected.
-     */
-    @Test
-    public void correctToString() {
-        final var width = 313;
-        final var height = 238;
-        MatcherAssert.assertThat(
-            new Size2D(width, height).toString(),
-            Matchers.equalTo(
-                String.format(
-                    "Size(width=%d, height=%d)", width, height
+public class ExpectationText extends CharSequenceEnvelope {
+    public ExpectationText(
+        final String name, final CharSequence... expectations
+    ) {
+        super(
+            new Lazy<>(
+                () -> String.join(
+                    "",
+                    name,
+                    "with the following values: ",
+                    new NamedExpectations(expectations)
                 )
             )
         );

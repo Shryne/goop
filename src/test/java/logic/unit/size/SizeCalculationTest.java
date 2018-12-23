@@ -22,6 +22,7 @@
 package logic.unit.size;
 
 import java.util.function.ObjIntConsumer;
+import logic.matcher.RightSizeResult;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -56,6 +57,14 @@ public class SizeCalculationTest {
                     height, Matchers.equalTo(height1 * height2)
                 );
             }
+        );
+        MatcherAssert.assertThat(
+            new SizeCalculation(
+                new Size2D(width1, height1),
+                new Size2D(width2, height2),
+                (first, second) -> first * second
+            ),
+            new RightSizeResult(width1 * width2, height1 * height2)
         );
     }
 

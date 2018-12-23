@@ -19,46 +19,29 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.unit.size;
+package logic.matcher;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import logic.functional.Lazy;
 
 /**
- * Tests for {@link Size}.
- * @since 4.9.0
+ * A combination of an expectation and the name of it. <p>Example: "width" as
+ * the name of the expectation and 16 as the value of it.</p>
+ * <p>Result of {@link #toString()}: "width: 16"</p>
+ * This class is intended to be used with {@link ExpectationText}.
+ * <p>This class uses {@link Lazy} and is therefore mutable and not thread-safe.
+ * </p>
+ * @see NamedExpectations
+ * @since 14.2.0
  */
-public class Size2DTest {
+public class NamedExpectation extends CharSequenceEnvelope {
     /**
-     * Aims to test, whether the correct result is returned.
+     * Ctor.
+     * @param name The name of the expected value.
+     * @param value The expected value.
      */
-    @Test
-    public void correctResult() {
-        final var width = 3445;
-        final var height = 432;
-        MatcherAssert.assertThat(
-            new Size2D(width, height).result(
-                Integer::sum
-            ),
-            Matchers.is(width + height)
-        );
-    }
-
-    /**
-     * Tests whether {@link Size2D#toString()}} works as expected.
-     */
-    @Test
-    public void correctToString() {
-        final var width = 313;
-        final var height = 238;
-        MatcherAssert.assertThat(
-            new Size2D(width, height).toString(),
-            Matchers.equalTo(
-                String.format(
-                    "Size(width=%d, height=%d)", width, height
-                )
-            )
+    public NamedExpectation(final String name, final Object value) {
+        super(
+            new Lazy<>(() -> String.join(": ", name, String.valueOf(value)))
         );
     }
 }

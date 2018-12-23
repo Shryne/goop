@@ -87,6 +87,16 @@ public class RightInsetsResult extends TypeSafeDiagnosingMatcher<Insets> {
                 ", bottom: ", Integer.toString(this.fourth)
             )
         );
+
+        description.appendText(
+            new ExpectationText(
+                "Insets",
+                new NamedExpectation("top", this.first),
+                new NamedExpectation("left", this.second),
+                new NamedExpectation("right", this.third),
+                new NamedExpectation("bottom", this.fourth)
+            ).toString()
+        );
     }
 
     @Override

@@ -19,44 +19,34 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.unit.size;
+package logic.matcher;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Tests for {@link Size}.
- * @since 4.9.0
+ * Tests for {@link NamedExpectation}. Even though it provides multiple methods
+ * because of {@link CharSequenceEnvelope}, only
+ * {@link NamedExpectation#toString()} is tested, because that's the method
+ * whose result matters.
+ * @since 14.2.0
  */
-public class Size2DTest {
+public class NamedExpectationTest {
     /**
-     * Aims to test, whether the correct result is returned.
+     * Tests whether a normal input (some name and some value) will give the
+     * right result.
      */
     @Test
-    public void correctResult() {
-        final var width = 3445;
-        final var height = 432;
+    public void normalInput() {
+        final var name = "SomeName";
+        final var value = 156;
         MatcherAssert.assertThat(
-            new Size2D(width, height).result(
-                Integer::sum
-            ),
-            Matchers.is(width + height)
-        );
-    }
-
-    /**
-     * Tests whether {@link Size2D#toString()}} works as expected.
-     */
-    @Test
-    public void correctToString() {
-        final var width = 313;
-        final var height = 238;
-        MatcherAssert.assertThat(
-            new Size2D(width, height).toString(),
+            new NamedExpectation(name, value),
             Matchers.equalTo(
-                String.format(
-                    "Size(width=%d, height=%d)", width, height
+                String.join(
+                    "",
+                    "SomeName: ", Integer.toString(value)
                 )
             )
         );

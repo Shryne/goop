@@ -19,46 +19,27 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.unit.size;
+package logic.matcher;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.hamcrest.Description;
 
 /**
- * Tests for {@link Size}.
- * @since 4.9.0
+ * A check of a single value. This is intentioned to be used for
+ * {@link java.util.function.Function} and {@link java.util.function.Consumer}
+ * related checks.
+ * @param <T> The type of the value that is expected.
+ * @see BiFunctionCheck
+ * @since 14.2.0
  */
-public class Size2DTest {
+public interface OneValueCheck<T> {
     /**
-     * Aims to test, whether the correct result is returned.
+     * Checks whether the given expectation is equal (according to
+     * {@link java.util.Objects#equals(Object, Object)}) to the value that this
+     * object holds.
+     * @param expected The expected value.
+     * @param description The description that is used to write what went wrong.
+     *  It is only used if the values aren't equal.
+     * @return True if the values are equal and false otherwise.
      */
-    @Test
-    public void correctResult() {
-        final var width = 3445;
-        final var height = 432;
-        MatcherAssert.assertThat(
-            new Size2D(width, height).result(
-                Integer::sum
-            ),
-            Matchers.is(width + height)
-        );
-    }
-
-    /**
-     * Tests whether {@link Size2D#toString()}} works as expected.
-     */
-    @Test
-    public void correctToString() {
-        final var width = 313;
-        final var height = 238;
-        MatcherAssert.assertThat(
-            new Size2D(width, height).toString(),
-            Matchers.equalTo(
-                String.format(
-                    "Size(width=%d, height=%d)", width, height
-                )
-            )
-        );
-    }
+    boolean checkFirst(T expected, Description description);
 }
