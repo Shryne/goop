@@ -24,8 +24,8 @@ package graphic.j2d.window.information;
 import graphic.j2d.window.J2DWindow;
 import javax.swing.JFrame;
 import logic.functional.Lazy;
-import logic.metric.size.Size2D;
-import logic.metric.size.SizeEnvelope;
+import logic.unit.size.Size2D;
+import logic.unit.size.SizeEnvelope;
 
 /**
  * The size of a java 2d window bar. This class is intended to be used like

@@ -28,7 +28,7 @@ import java.awt.Graphics;
 import java.util.List;
 import logic.graphic.color.Black;
 import logic.graphic.color.Color;
-import logic.metric.area.PosOverlap;
+import logic.unit.area.PosOverlap;
 import org.cactoos.list.ListOf;
 
 /**

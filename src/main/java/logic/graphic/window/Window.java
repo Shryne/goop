@@ -25,13 +25,13 @@ import graphic.j2d.shape.J2DLazyShapes;
 import graphic.j2d.window.J2DWindow;
 import graphic.lwjgl.shape.LwjLazyShapes;
 import graphic.lwjgl.window.LwjBaseWindow;
-import java.util.Collection;
+import java.util.List;
 import logic.functional.Lazy;
 import logic.functional.Value;
 import logic.graphic.shape.J2DShapeChoice;
 import logic.graphic.shape.LwjShapeChoice;
 import logic.graphic.shape.Shape;
-import logic.metric.area.Area;
+import logic.unit.area.Area;
 
 /**
  * This window checks which graphics library is supported on the current
@@ -50,12 +50,53 @@ public class Window implements Showable {
 
     /**
      * Ctor.
+     * @param area The area of the window.
+     * @param shapes The shapes to be drawn on the window.
+     */
+    public Window(final Area area, final Shape... shapes) {
+        this(
+            area,
+            List.of(shapes)
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param area The area of the window.
+     * @param shapes The shapes to be drawn on the window.
+     */
+    public Window(final Area area, final Iterable<Shape> shapes) {
+        this(
+            "",
+            area,
+            shapes
+        );
+    }
+
+    /**
+     * Ctor.
      * @param title The title of the window.
      * @param area The area of the window.
      * @param shapes The shapes to be drawn on the window.
      */
     public Window(
-        final String title, final Area area, final Collection<Shape> shapes
+        final String title, final Area area, final Shape... shapes
+    ) {
+        this(
+            title,
+            area,
+            List.of(shapes)
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param title The title of the window.
+     * @param area The area of the window.
+     * @param shapes The shapes to be drawn on the window.
+     */
+    public Window(
+        final String title, final Area area, final Iterable<Shape> shapes
     ) {
         this(
             new Lazy<>(

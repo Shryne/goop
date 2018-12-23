@@ -27,7 +27,7 @@ import graphic.j2d.shape.J2DMouseShape;
 import graphic.j2d.window.J2DBaseWindow;
 import graphic.j2d.window.J2DWindowFeature;
 import java.util.Collections;
-import logic.metric.area.Area;
+import logic.unit.area.Area;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
 
