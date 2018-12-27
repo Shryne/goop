@@ -74,7 +74,7 @@ public class SizeCalculationTest {
                 new Size2D(),
                 Integer::sum
             ).toString(),
-            Matchers.equalTo(
+            Matchers.hasToString(
                 String.format(
                     "Size(width=%d, height=%d)", width, height
                 )

@@ -55,6 +55,15 @@ public class LwjRect implements LwjShape {
 
     /**
      * Ctor.
+     * @param size The size of this rect.
+     * @param color The color of this rect.
+     */
+    public LwjRect(final Size size, final Color color) {
+        this(new Area2D(size), color);
+    }
+
+    /**
+     * Ctor.
      * @param area The area of this rect.
      */
     public LwjRect(final Area area) {
