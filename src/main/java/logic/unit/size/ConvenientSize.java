@@ -28,7 +28,10 @@ import java.util.function.ObjIntConsumer;
  * @since 15.3.0
  */
 public abstract class ConvenientSize implements Size {
-    @Override
+    /**
+     * Gives the given consumer the width and height that define this size.
+     * @param target Target that gets the width and height.
+     */
     public final void applyOn(final ObjIntConsumer<Integer> target) {
         this.result(
             (width, height) -> {
