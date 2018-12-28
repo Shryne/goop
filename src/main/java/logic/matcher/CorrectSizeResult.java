@@ -71,12 +71,15 @@ public class CorrectSizeResult extends TypeSafeDiagnosingMatcher<Size> {
     protected final boolean matchesSafely(
         final Size size, final Description description
     ) {
-        final boolean result = size.result(
+        return size.result(
             // @checkstyle ParameterNameCheck (1 line)
-            (resWidth, resHeight) -> this.width.equals(resWidth)
-                && this.height.equals(resHeight)
+            (resWidth, resHeight) -> {
+                description.appendText(
+                    String.format("width: %d, height: %d", resWidth, resHeight)
+                );
+                return this.width.equals(resWidth)
+                    && this.height.equals(resHeight);
+            }
         );
-        description.appendText(size.toString());
-        return result;
     }
 }

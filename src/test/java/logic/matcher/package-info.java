@@ -20,8 +20,7 @@
  */
 
 /**
- * Contains the custom hamcrest matchers for the classes of the logic package
- * and classes needed for them.
- * @since 15.1.0
+ * Tests regarding the matchers for the logic components.
+ * @since 15.2.0
  */
 package logic.matcher;
