@@ -22,7 +22,6 @@
 package logic.unit.pos;
 
 import java.util.function.BiFunction;
-import java.util.function.ObjIntConsumer;
 
 /*
 I am not happy about this naming, but my other idea's regarding the interface
@@ -69,11 +68,6 @@ public class Pos2D implements Pos {
     @Override
     public final <R> R result(final BiFunction<Integer, Integer, R> target) {
         return target.apply(this.x, this.y);
-    }
-
-    @Override
-    public final void applyOn(final ObjIntConsumer<Integer> target) {
-        Pos.super.applyOn(target);
     }
 
     @Override

@@ -39,7 +39,7 @@ import org.cactoos.list.ListOf;
  * {@link this#draw(Graphics)}.</p>
  * @since 13.0.0
  */
-public class J2DRect implements J2DMouseShape {
+public class J2DEventRect implements J2DMouseShape {
     /**
      * The area of this rect. It needs to be a PosOverlap area to check whether
      * a mouse event occurred on itself.
@@ -60,7 +60,7 @@ public class J2DRect implements J2DMouseShape {
      * Ctor.
      * @param area The area of the rect.
      */
-    public J2DRect(final PosOverlap area) {
+    public J2DEventRect(final PosOverlap area) {
         this(
             area,
             new Black()
@@ -72,7 +72,9 @@ public class J2DRect implements J2DMouseShape {
      * @param area The area of this rect.
      * @param targets The targets for the mouse events.
      */
-    public J2DRect(final PosOverlap area, final J2DShapeTarget... targets) {
+    public J2DEventRect(
+        final PosOverlap area, final J2DShapeTarget... targets
+    ) {
         this(
             area,
             List.of(targets)
@@ -84,7 +86,9 @@ public class J2DRect implements J2DMouseShape {
      * @param area The area of this rect.
      * @param targets The targets for the mouse events.
      */
-    public J2DRect(final PosOverlap area, final List<J2DShapeTarget> targets) {
+    public J2DEventRect(
+        final PosOverlap area, final List<J2DShapeTarget> targets
+    ) {
         this(
             area,
             new Black(),
@@ -97,7 +101,7 @@ public class J2DRect implements J2DMouseShape {
      * @param area The area of this rect.
      * @param color The color of this rect.
      */
-    public J2DRect(final PosOverlap area, final Color color) {
+    public J2DEventRect(final PosOverlap area, final Color color) {
         this(
             area,
             color,
@@ -111,7 +115,7 @@ public class J2DRect implements J2DMouseShape {
      * @param color The color of this rect.
      * @param targets The targets for the mouse events.
      */
-    public J2DRect(
+    public J2DEventRect(
         final PosOverlap area,
         final Color color,
         final List<J2DShapeTarget> targets

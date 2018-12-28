@@ -25,7 +25,7 @@ import graphic.j2d.shape.J2DShapeTarget;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.function.BiConsumer;
+import java.util.function.ObjIntConsumer;
 import logic.functional.Action;
 import logic.unit.PosOverlap;
 import logic.unit.pos.Pos2D;
@@ -40,7 +40,7 @@ public class J2DPress implements J2DShapeTarget {
      * The target action to be applied with the x and y coordinates of the
      * press.
      */
-    private final BiConsumer<Integer, Integer> target;
+    private final ObjIntConsumer<Integer> target;
 
     /**
      * Ctor.
@@ -58,7 +58,7 @@ public class J2DPress implements J2DShapeTarget {
      * @param target The target with the action, who gets the x and y
      *  coordinates of the press.
      */
-    public J2DPress(final BiConsumer<Integer, Integer> target) {
+    public J2DPress(final ObjIntConsumer<Integer> target) {
         this.target = target;
     }
 

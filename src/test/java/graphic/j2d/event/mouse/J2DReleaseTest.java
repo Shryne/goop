@@ -21,7 +21,7 @@
 
 package graphic.j2d.event.mouse;
 
-import graphic.j2d.window.event.J2DWindow;
+import graphic.j2d.window.event.J2DEventWindow;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -39,7 +39,7 @@ public class J2DReleaseTest {
     /**
      * Tests whether the release object applies the given action. This test
      * uses a {@link JFrame} instead of a
-     * {@link J2DWindow} to isolate the release object as much as possible.
+     * {@link J2DEventWindow} to isolate the release object as much as possible.
      * {@link Robot} is used to click on the window.
      * @throws Exception because of {@link Robot} and because of
      *  {@link Thread#sleep(long)}.
