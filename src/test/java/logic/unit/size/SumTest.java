@@ -21,9 +21,10 @@
 
 package logic.unit.size;
 
+import java.util.function.BiFunction;
 import java.util.function.ObjIntConsumer;
+import logic.matcher.CorrectSizeResult;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -40,20 +41,19 @@ public class SumTest {
     public void sizePlusZeroEqualsSize() {
         final var width = 1342;
         final var height = 2341;
-        final var size = new Size2D(width, height);
-        new Sum(size, new Size2D()).applyOn(
-            // @checkstyle ParameterName (1 line)
-            (resWidth, resHeight) -> {
-                MatcherAssert.assertThat(resWidth, Matchers.equalTo(width));
-                MatcherAssert.assertThat(resHeight, Matchers.equalTo(height));
-            }
+        MatcherAssert.assertThat(
+            new Sum(
+                new Size2D(width, height),
+                new Size2D()
+            ),
+            new CorrectSizeResult(width, height)
         );
     }
 
     /**
      * Test for:
      * <p>size1 + size2 = size3</p>
-     * This test depends on {@link SizeCalculation#applyOn(ObjIntConsumer)}.
+     * This test depends on {@link SizeCalculation#result(BiFunction)}.
      */
     @Test
     public void sizePlusSizeResult() {
@@ -62,21 +62,12 @@ public class SumTest {
         final var height1 = 345;
         final var width2 = 438;
         final var height2 = 4399;
-        new Sum(
-            new Size2D(width1, height1),
-            new Size2D(width2, height2)
-        ).applyOn(
-            // @checkstyle ParameterName (1 line)
-            (resWidth, resHeight) -> {
-                MatcherAssert.assertThat(
-                    resWidth,
-                    Matchers.equalTo(width1 + width2)
-                );
-                MatcherAssert.assertThat(
-                    resHeight,
-                    Matchers.equalTo(height1 + height2)
-                );
-            }
+        MatcherAssert.assertThat(
+            new Sum(
+                new Size2D(width1, height1),
+                new Size2D(width2, height2)
+            ),
+            new CorrectSizeResult(width1 + width2, height1 + height2)
         );
     }
 }

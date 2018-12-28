@@ -22,7 +22,6 @@
 package logic.unit.size;
 
 import java.util.function.BiFunction;
-import java.util.function.ObjIntConsumer;
 
 /*
 This interface is necessary (compared to using width and height each time)
@@ -45,10 +44,4 @@ public interface Size {
      * @return The result of the applied function.
      */
     <R> R result(BiFunction<Integer, Integer, R> target);
-
-    /**
-     * Gives the given consumer the width and height that define this size.
-     * @param target Target that gets the width and height.
-     */
-    void applyOn(ObjIntConsumer<Integer> target);
 }

@@ -37,7 +37,7 @@ public class AreaTest {
     /**
      * A test whether the applyOn method gives the right values into the
      * consumer. This test depends on {@link Pos2D#applyOn(ObjIntConsumer)} and
-     * {@link Size2D#applyOn(ObjIntConsumer)}.
+     * {@link Size2D#result(BiFunction)}.
      */
     @Test
     public void correctApply() {
@@ -58,10 +58,11 @@ public class AreaTest {
                         MatcherAssert.assertThat(y, Matchers.is(resY));
                     }
                 );
-                size.applyOn(
+                size.result(
                     (width, height) -> {
                         MatcherAssert.assertThat(width, Matchers.is(resW));
                         MatcherAssert.assertThat(height, Matchers.is(resH));
+                        return null;
                     }
                 );
             }

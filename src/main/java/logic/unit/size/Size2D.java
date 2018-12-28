@@ -34,7 +34,7 @@ chance that a user might use the class name as a parameter type
  * <p>This class is immutable and thread-safe.</p>
  * @since 3.4.0
  */
-public class Size2D extends ConvenientSize {
+public class Size2D implements Size {
     /**
      * The width of the size.
      */
@@ -58,7 +58,6 @@ public class Size2D extends ConvenientSize {
      * @param height The height for the size.
      */
     public Size2D(final int width, final int height) {
-        super();
         this.width = width;
         this.height = height;
     }

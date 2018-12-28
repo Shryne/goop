@@ -21,8 +21,9 @@
 
 package logic.unit.size;
 
+import java.util.function.IntUnaryOperator;
+import logic.matcher.CorrectSizeResult;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -37,15 +38,12 @@ public class ScalarSizeCalculationTest {
     public void identityMultiplication() {
         final var width = 234;
         final var height = 3243;
-        new ScalarSizeCalculation(
-            new Size2D(width, height),
-            value -> value
-        ).applyOn(
-            // @checkstyle ParameterName (1 line)
-            (resWidth, resHeight) -> {
-                MatcherAssert.assertThat(resWidth, Matchers.equalTo(width));
-                MatcherAssert.assertThat(resHeight, Matchers.equalTo(height));
-            }
+        MatcherAssert.assertThat(
+            new ScalarSizeCalculation(
+                new Size2D(width, height),
+                IntUnaryOperator.identity()
+            ),
+            new CorrectSizeResult(width, height)
         );
     }
 
@@ -56,15 +54,12 @@ public class ScalarSizeCalculationTest {
     public void sizeMultipliedWithZero() {
         final var width = 45;
         final var height = 4324;
-        new ScalarSizeCalculation(
-            new Size2D(width, height),
-            value -> 0
-        ).applyOn(
-            // @checkstyle ParameterName (1 line)
-            (resWidth, resHeight) -> {
-                MatcherAssert.assertThat(resWidth, Matchers.equalTo(0));
-                MatcherAssert.assertThat(resHeight, Matchers.equalTo(0));
-            }
+        MatcherAssert.assertThat(
+            new ScalarSizeCalculation(
+                new Size2D(width, height),
+                value -> 0
+            ),
+            new CorrectSizeResult(0, 0)
         );
     }
 
@@ -77,19 +72,12 @@ public class ScalarSizeCalculationTest {
         final var width = 564;
         final var height = 342;
         final var multiplier = 44;
-        new ScalarSizeCalculation(
-            new Size2D(width, height),
-            value -> value * multiplier
-        ).applyOn(
-            // @checkstyle ParameterName (1 line)
-            (resWidth, resHeight) -> {
-                MatcherAssert.assertThat(
-                    resWidth, Matchers.equalTo(width * multiplier)
-                );
-                MatcherAssert.assertThat(
-                    resHeight, Matchers.equalTo(height * multiplier)
-                );
-            }
+        MatcherAssert.assertThat(
+            new ScalarSizeCalculation(
+                new Size2D(width, height),
+                value -> value * multiplier
+            ),
+            new CorrectSizeResult(width * multiplier, height * multiplier)
         );
     }
 }

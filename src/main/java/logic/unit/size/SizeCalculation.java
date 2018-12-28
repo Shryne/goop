@@ -33,7 +33,7 @@ import java.util.function.IntBinaryOperator;
  * <p>This class is immutable and thread-safe.</p>
  * @since 8.3.0
  */
-public class SizeCalculation extends ConvenientSize {
+public class SizeCalculation implements Size {
     /**
      * The first size for the calculation.
      */
@@ -61,7 +61,6 @@ public class SizeCalculation extends ConvenientSize {
         final Size second,
         final IntBinaryOperator operation
     ) {
-        super();
         this.first = first;
         this.second = second;
         this.operation = operation;

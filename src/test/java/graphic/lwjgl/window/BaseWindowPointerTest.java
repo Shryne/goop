@@ -76,13 +76,14 @@ public class BaseWindowPointerTest {
         final var width = 439;
         final var height = 543;
         try (var window = new BaseWindowPointer(new Size2D(width, height))) {
-            new SizeOfWindow(window).applyOn(
+            new SizeOfWindow(window).result(
                 // @checkstyle ParameterName (1 line)
                 (resWidth, resHeight) -> {
                     MatcherAssert.assertThat(resWidth, Matchers.equalTo(width));
                     MatcherAssert.assertThat(
                         resHeight, Matchers.equalTo(height)
                     );
+                    return null;
                 }
             );
         }

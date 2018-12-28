@@ -22,7 +22,6 @@
 package logic.unit.size;
 
 import java.util.function.BiFunction;
-import java.util.function.ObjIntConsumer;
 import logic.functional.Value;
 
 /**
@@ -46,11 +45,6 @@ public abstract class SizeEnvelope implements Size {
     @Override
     public final <R> R result(final BiFunction<Integer, Integer, R> target) {
         return this.size.content().result(target);
-    }
-
-    @Override
-    public final void applyOn(final ObjIntConsumer<Integer> target) {
-        this.size.content().applyOn(target);
     }
 
     @Override

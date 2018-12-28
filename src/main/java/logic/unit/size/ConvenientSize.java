@@ -21,13 +21,33 @@
 
 package logic.unit.size;
 
+import java.util.function.BiFunction;
 import java.util.function.ObjIntConsumer;
 
 /**
- * Contains convenience methods that are based on the methods of the interface.
+ * A decorator containing convenience methods that are based on the methods of
+ * the interface.
  * @since 15.3.0
  */
-public abstract class ConvenientSize implements Size {
+public class ConvenientSize implements Size {
+    /**
+     * The size to delegate the calls to.
+     */
+    private final Size size;
+
+    /**
+     * Ctor.
+     * @param size The size to delegate the calls to.
+     */
+    public ConvenientSize(final Size size) {
+        this.size = size;
+    }
+
+    @Override
+    public final <R> R result(final BiFunction<Integer, Integer, R> target) {
+        return this.size.result(target);
+    }
+
     /**
      * Gives the given consumer the width and height that define this size.
      * @param target Target that gets the width and height.

@@ -21,9 +21,9 @@
 
 package logic.unit.size;
 
-import java.util.function.ObjIntConsumer;
+import java.util.function.BiFunction;
+import logic.matcher.CorrectSizeResult;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -42,25 +42,22 @@ public class DiffTest {
     /**
      * Tests for:
      * <p>size1 - Size(0, 0) = size1</p>
-     * This test depends on {@link SizeCalculation#applyOn(ObjIntConsumer)}.
+     * This test depends on {@link SizeCalculation#result(BiFunction)}.
      */
     @Test
     public void sizeMinusZeroEqualsSize() {
         final var width = 54;
         final var height = 325;
-        new Diff(new Size2D(width, height), new Size2D()).applyOn(
-            // @checkstyle ParameterName (1 line)
-            (diffWidth, diffHeight) -> {
-                MatcherAssert.assertThat(diffWidth, Matchers.equalTo(width));
-                MatcherAssert.assertThat(diffHeight, Matchers.equalTo(height));
-            }
+        MatcherAssert.assertThat(
+            new Diff(new Size2D(width, height), new Size2D()),
+            new CorrectSizeResult(width, height)
         );
     }
 
     /**
      * Test for:
      * <p>size1 - size2 = size3</p>
-     * This test depends on {@link SizeCalculation#applyOn(ObjIntConsumer)}.
+     * This test depends on {@link SizeCalculation#result(BiFunction)}.
      */
     @Test
     public void sizeMinusSizeResult() {
@@ -69,21 +66,12 @@ public class DiffTest {
         final var height1 = 215;
         final var width2 = 1534;
         final var height2 = 123;
-        new Diff(
-            new Size2D(width1, height1),
-            new Size2D(width2, height2)
-        ).applyOn(
-            // @checkstyle ParameterName (1 line)
-            (diffWidth, diffHeight) -> {
-                MatcherAssert.assertThat(
-                    diffWidth,
-                    Matchers.equalTo(width1 - width2)
-                );
-                MatcherAssert.assertThat(
-                    diffHeight,
-                    Matchers.equalTo(height1 - height2)
-                );
-            }
+        MatcherAssert.assertThat(
+            new Diff(
+                new Size2D(width1, height1),
+                new Size2D(width2, height2)
+            ),
+            new CorrectSizeResult(width1 - width2, height1 - height2)
         );
     }
 }
