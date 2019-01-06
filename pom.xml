@@ -6,7 +6,7 @@
 
     <groupId>com.goop</groupId>
     <artifactId>goop</artifactId>
-    <version>17.0.0</version>
+    <version>18</version>
 
     <properties>
         <sonar.sources>src/main/java</sonar.sources>
@@ -31,6 +31,8 @@
                         <exclude>findbugs:.*</exclude>
                         <exclude>duplicatefinder:.*</exclude>
                         <exclude>dependencies:.*</exclude>
+                        <exclude>checkstyle:/src/main/java/test/.*</exclude>
+                        <exclude>pmd:/src/main/java/test/.*</exclude>
                     </excludes>
                     <license>file:${basedir}/LICENSE.md</license>
                 </configuration>
@@ -159,7 +161,7 @@
         <dependency>
             <groupId>org.lwjgl</groupId>
             <artifactId>lwjgl</artifactId>
-            <version>${lwjgl.version}</version>
+            <version>3.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.lwjgl</groupId>
