@@ -21,22 +21,30 @@
 
 package graphic.lwjgl.shape;
 
+import java.nio.ByteBuffer;
+import logic.functional.Lazy;
+import logic.functional.Value;
 import logic.unit.pos.Pos;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.stb.STBEasyFont;
+import static org.lwjgl.opengl.GL11.GL_FLOAT;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.GL_VERTEX_ARRAY;
+import static org.lwjgl.opengl.GL11.glColor3f;
+import static org.lwjgl.opengl.GL11.glDrawArrays;
+import static org.lwjgl.opengl.GL11.glEnableClientState;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glVertexPointer;
 
 /**
  * A lwjgl based text.
  * @since 18.0
  */
 public class LwjText implements LwjShape {
-    /**
-     * The string of the text.
-     */
-    private final String content;
+    private final Value<ByteBuffer> buffer;
 
-    /**
-     * The position of the text.
-     */
-    private final Pos pos;
+    private final Value<Integer> quads;
 
     /**
      * Ctor.
@@ -44,12 +52,44 @@ public class LwjText implements LwjShape {
      * @param pos The position of the text.
      */
     public LwjText(final String content, final Pos pos) {
-        this.content = content;
-        this.pos = pos;
+        this(
+            content,
+            new Lazy<>(
+                () -> BufferUtils.createByteBuffer(content.length() * 270)
+            )
+        );
+    }
+
+    private LwjText(final String content, final Value<ByteBuffer> buffer) {
+        this(
+            buffer,
+            new Lazy<>(
+                () -> STBEasyFont.stb_easy_font_print(
+                    0F,
+                    0F,
+                    content,
+                    null,
+                    buffer.content()
+                )
+            )
+        );
+    }
+
+    private LwjText(
+        final Value<ByteBuffer> buffer,
+        final Value<Integer> quads
+    ) {
+        this.buffer = buffer;
+        this.quads = quads;
     }
 
     @Override
     public final void draw() {
-        throw new UnsupportedOperationException("#draw()");
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glVertexPointer(2, GL_FLOAT, 16, buffer.content());
+        glColor3f(169f / 255f, 183f / 255f, 198f / 255f); // Text color
+        glPushMatrix();
+        glDrawArrays(GL_QUADS, 0, quads.content() * 4);
+        glPopMatrix();
     }
 }
