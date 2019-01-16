@@ -21,6 +21,7 @@
 
 package logic.unit.area;
 
+import graphic.j2d.shape.Redrawable;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import logic.functional.QuadConsumer;
@@ -102,6 +103,12 @@ public class Area2D implements Area {
     @Override
     public final <R> R result(final BiFunction<Pos, Size, R> target) {
         return target.apply(this.pos, this.size);
+    }
+
+    @Override
+    public final void register(final Redrawable redrawable) {
+        this.pos.register(redrawable);
+        this.size.register(redrawable);
     }
 
     @Override

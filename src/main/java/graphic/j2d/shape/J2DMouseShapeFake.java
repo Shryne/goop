@@ -76,6 +76,9 @@ public class J2DMouseShapeFake implements J2DMouseShape {
         return this.successor;
     }
 
+    @Override
+    public final void register(final Redrawable redrawable) { }
+
     /**
      * Whether it was drawn.
      * @return Whether it was drawn.

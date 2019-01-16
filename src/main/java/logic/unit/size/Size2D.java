@@ -21,6 +21,7 @@
 
 package logic.unit.size;
 
+import graphic.j2d.shape.Redrawable;
 import java.util.function.BiFunction;
 
 /*
@@ -66,6 +67,9 @@ public class Size2D implements Size {
     public final <R> R result(final BiFunction<Integer, Integer, R> target) {
         return target.apply(this.width, this.height);
     }
+
+    @Override
+    public final void register(final Redrawable redrawable) { }
 
     @Override
     public final String toString() {

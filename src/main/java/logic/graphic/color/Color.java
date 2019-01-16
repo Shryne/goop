@@ -21,6 +21,7 @@
 
 package logic.graphic.color;
 
+import logic.Changeable;
 import logic.functional.QuadConsumer;
 
 /**
@@ -28,7 +29,7 @@ import logic.functional.QuadConsumer;
  *
  * @since 2.1.0
  */
-public interface Color {
+public interface Color extends Changeable {
     /**
      * Gives the given consumer the red, green, blue and alpha values.
      * @param target Target that gets the rgba values.

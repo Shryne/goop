@@ -21,6 +21,7 @@
 
 package graphic.j2d.window.information;
 
+import graphic.j2d.shape.Redrawable;
 import graphic.j2d.window.J2DWindow;
 import javax.swing.JFrame;
 import logic.functional.Lazy;
@@ -63,4 +64,7 @@ public class BarSize extends SizeEnvelope {
             )
         );
     }
+
+    @Override
+    public final void register(final Redrawable redrawable) { }
 }

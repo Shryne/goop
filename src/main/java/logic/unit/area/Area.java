@@ -23,6 +23,7 @@ package logic.unit.area;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import logic.Changeable;
 import logic.functional.QuadConsumer;
 import logic.functional.QuadFunction;
 import logic.unit.pos.Pos;
@@ -37,7 +38,7 @@ alone) because some implementations need both like an overlappable area
  *
  * @since 2.1.0
  */
-public interface Area {
+public interface Area extends Changeable {
     /**
      * Gives the given function the pos and the size which define this
      * area and returns the result of that. This can be handy if for example

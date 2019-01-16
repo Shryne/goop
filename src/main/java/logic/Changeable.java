@@ -19,30 +19,19 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.unit.size;
+package logic;
 
-import java.util.function.BiFunction;
-import logic.Changeable;
+import graphic.j2d.shape.Redrawable;
 
-/*
-This interface is necessary (compared to using width and height each time)
-because this library depends on the possibility to implement own
-implementations like a scaling size
-*/
 /**
- * The two dimensional cartesian based size of a rectangular area.
- *
- * @since 2.1.0
+ * Something that is able change itself to trigger a redraw.
+ * @see Redrawable
+ * @since 19
  */
-public interface Size extends Changeable {
+public interface Changeable {
     /**
-     * Gives the given function the width and height that define this size and
-     * returns the result of this function. This can be handy if for example one
-     * wants to calculate something with these values and wants the result of
-     * this.
-     * @param target The target who gets the width and the height.
-     * @param <R> The type of the result.
-     * @return The result of the applied function.
+     * Registers a redrawable eventually to update him.
+     * @param redrawable The redrawable to be redrawn.
      */
-    <R> R result(BiFunction<Integer, Integer, R> target);
+    void register(Redrawable redrawable);
 }

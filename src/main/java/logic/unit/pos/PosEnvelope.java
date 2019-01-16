@@ -21,6 +21,7 @@
 
 package logic.unit.pos;
 
+import graphic.j2d.shape.Redrawable;
 import java.util.function.BiFunction;
 import java.util.function.ObjIntConsumer;
 import logic.functional.Value;
@@ -51,6 +52,10 @@ public abstract class PosEnvelope implements Pos {
     @Override
     public final void applyOn(final ObjIntConsumer<Integer> target) {
         this.pos.content().applyOn(target);
+    }
+    @Override
+    public final void register(final Redrawable redrawable) {
+        this.pos.content().register(redrawable);
     }
 
     @Override

@@ -21,6 +21,7 @@
 
 package logic.unit.size;
 
+import graphic.j2d.shape.Redrawable;
 import java.util.function.BiFunction;
 import java.util.function.ObjIntConsumer;
 
@@ -60,4 +61,7 @@ public class ConvenientSize implements Size {
             }
         );
     }
+
+    @Override
+    public final void register(final Redrawable redrawable) { }
 }

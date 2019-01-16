@@ -71,4 +71,10 @@ public class J2DRect implements J2DShape {
         this.area.applyOn(graphics::fillRect);
         return this.successor;
     }
+
+    @Override
+    public final void register(final Redrawable redrawable) {
+        this.area.register(redrawable);
+        this.color.register(redrawable);
+    }
 }

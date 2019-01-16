@@ -21,6 +21,7 @@
 
 package logic.unit.pos;
 
+import graphic.j2d.shape.Redrawable;
 import java.util.function.BiFunction;
 
 /*
@@ -69,6 +70,9 @@ public class Pos2D implements Pos {
     public final <R> R result(final BiFunction<Integer, Integer, R> target) {
         return target.apply(this.x, this.y);
     }
+
+    @Override
+    public final void register(final Redrawable redrawable) { }
 
     @Override
     public final String toString() {

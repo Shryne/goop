@@ -23,6 +23,7 @@ package logic.unit.pos;
 
 import java.util.function.BiFunction;
 import java.util.function.ObjIntConsumer;
+import logic.Changeable;
 
 /*
 This interface is necessary (compared to using x and y each time) because this
@@ -37,7 +38,7 @@ sacrificing readability
  * A cartesian two dimensional pos.
  * @since 2.1.0
  */
-public interface Pos {
+public interface Pos extends Changeable {
     /**
      * Gives the given function the x and y coordinates of this pos and
      * returns the result of the function. This can be handy if you want to

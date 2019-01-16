@@ -21,6 +21,7 @@
 
 package graphic.lwjgl.window.information;
 
+import graphic.j2d.shape.Redrawable;
 import graphic.lwjgl.window.WindowPointer;
 import java.nio.IntBuffer;
 import logic.functional.Lazy;
@@ -60,4 +61,7 @@ public class SizeOfWindow extends SizeEnvelope {
             )
         );
     }
+
+    @Override
+    public final void register(final Redrawable redrawable) { }
 }

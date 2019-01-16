@@ -21,6 +21,7 @@
 
 package logic.graphic.color;
 
+import graphic.j2d.shape.Redrawable;
 import logic.functional.QuadConsumer;
 
 // @todo #7 Swing is byte based and lwjgl is integer based / can be integer
@@ -82,4 +83,7 @@ public class RGBA implements Color {
     ) {
         target.accept(this.red, this.green, this.blue, this.alpha);
     }
+
+    @Override
+    public final void register(final Redrawable redrawable) { }
 }

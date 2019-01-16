@@ -21,6 +21,7 @@
 
 package logic.unit.area;
 
+import graphic.j2d.shape.Redrawable;
 import java.util.function.BiFunction;
 import logic.unit.pos.Pos;
 import logic.unit.pos.Pos2D;
@@ -86,5 +87,10 @@ public class PosOverlap2D implements PosOverlap {
     @Override
     public final <R> R result(final BiFunction<Pos, Size, R> target) {
         return this.area.result(target);
+    }
+
+    @Override
+    public final void register(final Redrawable redrawable) {
+        this.area.register(redrawable);
     }
 }

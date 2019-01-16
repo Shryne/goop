@@ -24,6 +24,7 @@ package graphic.j2d.shape.event;
 import graphic.j2d.event.mouse.J2DMouse;
 import graphic.j2d.shape.J2DMouseShape;
 import graphic.j2d.shape.J2DShapeTarget;
+import graphic.j2d.shape.Redrawable;
 import java.awt.Graphics;
 import java.util.List;
 import java.util.Optional;
@@ -164,5 +165,11 @@ public class J2DEventRect implements J2DMouseShape {
     @Override
     public final void registerFor(final J2DMouse source) {
         this.targets.forEach(target -> target.registerFor(source, this.area));
+    }
+
+    @Override
+    public final void register(final Redrawable redrawable) {
+        this.area.register(redrawable);
+        this.color.register(redrawable);
     }
 }

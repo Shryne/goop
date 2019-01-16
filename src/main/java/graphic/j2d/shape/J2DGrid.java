@@ -23,7 +23,6 @@ package graphic.j2d.shape;
 
 import graphic.j2d.event.mouse.J2DMouse;
 import java.awt.Graphics;
-import java.awt.Shape;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +34,7 @@ public class J2DGrid implements J2DMouseShape {
     /**
      * The shapes that are on the grid.
      */
-    private final List<List<Shape>> shapes;
+    private final List<List<J2DMouseShape>> shapes;
 
     /**
      * The number of rows.
@@ -54,7 +53,9 @@ public class J2DGrid implements J2DMouseShape {
      * @param columns The number of columns.
      */
     public J2DGrid(
-        final List<List<Shape>> shapes, final int rows, final int columns
+        final List<List<J2DMouseShape>> shapes,
+        final int rows,
+        final int columns
     ) {
         this.shapes = shapes;
         this.rows = rows;
@@ -83,4 +84,13 @@ public class J2DGrid implements J2DMouseShape {
         }
     }
     */
+
+    @Override
+    public final void register(final Redrawable redrawable) {
+        this.shapes.forEach(it -> it
+            .forEach(
+                shape -> shape.register(redrawable)
+            )
+        );
+    }
 }

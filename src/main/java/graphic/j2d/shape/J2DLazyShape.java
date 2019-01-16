@@ -65,4 +65,9 @@ public class J2DLazyShape implements J2DShape {
     public final Optional<J2DShape> draw(final Graphics graphics) {
         return this.shape.content().draw(graphics);
     }
+
+    @Override
+    public final void register(final Redrawable redrawable) {
+        this.shape.content().register(redrawable);
+    }
 }

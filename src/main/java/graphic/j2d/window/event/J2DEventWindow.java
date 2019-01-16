@@ -125,7 +125,12 @@ public class J2DEventWindow extends J2DWindow {
                         final J2DMouse mouse = new J2DBaseMouse(
                             frame.getContentPane()
                         );
-                        shapes.forEach(it -> it.registerFor(mouse));
+                        shapes.forEach(it -> {
+                            it.registerFor(mouse);
+                            it.register(
+                                condition -> frame.repaint()
+                            );
+                        });
                     }
                 ),
                 features

@@ -21,6 +21,8 @@
 
 package logic.unit.size;
 
+import com.google.common.math.DoubleMath;
+import graphic.j2d.shape.Redrawable;
 import logic.functional.Lazy;
 import logic.functional.Value;
 import logic.time.Elapsable;
@@ -37,6 +39,11 @@ public class Scaling extends SizeEnvelope implements Animation {
      * The watch used to get the scaling progress.
      */
     private final Elapsable watch;
+
+    /**
+     * The redrawable to notify about the change.
+     */
+    private Redrawable redrawable;
 
     /**
      * Ctor.
@@ -86,7 +93,19 @@ public class Scaling extends SizeEnvelope implements Animation {
     }
 
     @Override
+    public final void register(final Redrawable redrawable) {
+        this.redrawable = redrawable;
+    }
+
+    @Override
     public final void start() {
         this.watch.start();
+        final double done = 1.0;
+        final double epsilon = 0.00001;
+        this.redrawable.redraw(
+            () -> DoubleMath.fuzzyEquals(
+                this.watch.elapsedPercent(), done, epsilon
+            )
+        );
     }
 }

@@ -21,6 +21,7 @@
 
 package logic.unit.pos;
 
+import graphic.j2d.shape.Redrawable;
 import java.util.function.BiFunction;
 import java.util.function.IntFunction;
 
@@ -72,4 +73,7 @@ public class Adjusted implements Pos {
             )
         );
     }
+
+    @Override
+    public final void register(final Redrawable redrawable) { }
 }

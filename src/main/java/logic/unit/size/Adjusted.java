@@ -21,6 +21,7 @@
 
 package logic.unit.size;
 
+import graphic.j2d.shape.Redrawable;
 import java.util.function.BiFunction;
 import java.util.function.IntFunction;
 
@@ -68,5 +69,10 @@ public class Adjusted implements Size {
                 this.height.apply(second)
             )
         );
+    }
+
+    @Override
+    public final void register(final Redrawable redrawable) {
+        this.size.register(redrawable);
     }
 }

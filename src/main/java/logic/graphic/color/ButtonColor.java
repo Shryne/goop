@@ -21,6 +21,7 @@
 
 package logic.graphic.color;
 
+import graphic.j2d.shape.Redrawable;
 import logic.functional.QuadConsumer;
 
 /**
@@ -43,6 +44,11 @@ public class ButtonColor implements DualColor {
      */
     private Color current;
 
+    /**
+     * The redrawable to notify about the change.
+     */
+    private Redrawable redrawable;
+
     public ButtonColor() {
         this.release = new RGBA(100, 100, 100, 255);
         this.press = new RGBA(200, 200, 200, 255);
@@ -56,12 +62,21 @@ public class ButtonColor implements DualColor {
         } else {
             this.current = this.release;
         }
+        this.redrawable.redraw(() -> false);
     }
 
     @Override
     public final void applyOn(
         final QuadConsumer<Integer, Integer, Integer, Integer> target
     ) {
+        this.current.applyOn(
+            (r, g, b, a) -> System.out.println(r)
+        );
         this.current.applyOn(target);
+    }
+
+    @Override
+    public final void register(final Redrawable redrawable) {
+        this.redrawable = redrawable;
     }
 }

@@ -80,4 +80,9 @@ public class J2DMouseShapes implements J2DMouseShape {
         this.shapes = next;
         return result;
     }
+
+    @Override
+    public final void register(final Redrawable redrawable) {
+        this.shapes.forEach(it -> it.register(redrawable));
+    }
 }
