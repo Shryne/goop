@@ -21,12 +21,12 @@
 
 package logic.unit.size;
 
-import java.util.function.ObjIntConsumer;
+import java.util.function.BiFunction;
+import logic.matcher.CorrectSizeResult;
 import logic.time.Expiration;
 import logic.time.FakeClock;
 import logic.time.SystemClock;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -37,7 +37,7 @@ public class ScalingTest {
     /**
      * Tests whether the scaling object stays at the start value when
      * {@link Scaling#start()} hasn't been called. The values come from
-     * {@link Scaling#applyOn(ObjIntConsumer)}.
+     * {@link Scaling#result(BiFunction)}.
      */
     @Test
     public void noStartSameValue() {
@@ -47,21 +47,19 @@ public class ScalingTest {
         final var width2 = 428;
         final var height2 = 2348;
         final var time = 43L;
-        new Scaling(
-            new Size2D(width1, height1),
-            new Size2D(width2, height2),
-            new Expiration(new SystemClock(), time)
-        ).applyOn(
-            (width, height) -> {
-                MatcherAssert.assertThat(width, Matchers.equalTo(width1));
-                MatcherAssert.assertThat(height, Matchers.equalTo(height1));
-            }
+        MatcherAssert.assertThat(
+            new Scaling(
+                new Size2D(width1, height1),
+                new Size2D(width2, height2),
+                new Expiration(new SystemClock(), time)
+            ),
+            new CorrectSizeResult(width1, height1)
         );
     }
 
     /**
      * Tests whether the scaling actually happens. This method uses
-     * {@link Scaling#applyOn(ObjIntConsumer)}. The values are division friendly
+     * {@link Scaling#result(BiFunction)}. The values are division friendly
      * to reduce test failures just because of rounding differences.
      */
     @Test
@@ -80,23 +78,18 @@ public class ScalingTest {
             )
         );
         scaling.start();
-        scaling.applyOn(
-            (width, height) -> {
-                MatcherAssert.assertThat(
-                    width,
-                    Matchers.equalTo(width1 + (width2 - width1) / 2)
-                );
-                MatcherAssert.assertThat(
-                    height,
-                    Matchers.equalTo(height1 + (height2 - height1) / 2)
-                );
-            }
+        MatcherAssert.assertThat(
+            scaling,
+            new CorrectSizeResult(
+                width1 + (width2 - width1) / 2,
+                height1 + (height2 - height1) / 2
+            )
         );
     }
 
     /**
      * Tests whether the scaling ends at a certain point so that the size stays
-     * there. This method uses {@link Scaling#applyOn(ObjIntConsumer)}.
+     * there. This method uses {@link Scaling#result(BiFunction)}.
      */
     @Test
     public void reachesEndAndStays() {
@@ -114,17 +107,13 @@ public class ScalingTest {
             )
         );
         scaling.start();
-        scaling.applyOn(
-            (width, height) -> {
-                MatcherAssert.assertThat(width, Matchers.equalTo(width2));
-                MatcherAssert.assertThat(height, Matchers.equalTo(height2));
-            }
+        MatcherAssert.assertThat(
+            scaling,
+            new CorrectSizeResult(width2, height2)
         );
-        scaling.applyOn(
-            (width, height) -> {
-                MatcherAssert.assertThat(width, Matchers.equalTo(width2));
-                MatcherAssert.assertThat(height, Matchers.equalTo(height2));
-            }
+        MatcherAssert.assertThat(
+            scaling,
+            new CorrectSizeResult(width2, height2)
         );
     }
 }

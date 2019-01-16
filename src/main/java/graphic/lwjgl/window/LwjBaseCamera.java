@@ -61,15 +61,18 @@ public class LwjBaseCamera implements LwjCamera {
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glLoadIdentity();
         this.area.applyOn(
-            (pos, size) -> size.applyOn(
-                (width, height) -> GL11.glOrtho(
-                    0.0,
-                    width,
-                    height,
-                    0.0,
-                    0.0,
-                    1.0
-                )
+            (pos, size) -> size.result(
+                (width, height) -> {
+                    GL11.glOrtho(
+                        0.0,
+                        width,
+                        height,
+                        0.0,
+                        0.0,
+                        1.0
+                    );
+                    return null;
+                }
             )
         );
     }

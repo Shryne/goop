@@ -19,46 +19,8 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.unit.size;
-
-import java.util.function.BiFunction;
-import logic.functional.Value;
-
 /**
- * An envelope that delegates everything to the given size instance.
- * @since 6.1.1
+ * Tests regarding the matchers for the logic components.
+ * @since 15.2.0
  */
-public abstract class SizeEnvelope implements Size {
-    /**
-     * The size to delegate the calls to.
-     */
-    private final Value<Size> size;
-
-    /**
-     * Ctor.
-     * @param size The size to delegate the calls to.
-     */
-    public SizeEnvelope(final Value<Size> size) {
-        this.size = size;
-    }
-
-    @Override
-    public final <R> R result(final BiFunction<Integer, Integer, R> target) {
-        return this.size.content().result(target);
-    }
-
-    @Override
-    public final int hashCode() {
-        return this.size.content().hashCode();
-    }
-
-    @Override
-    public final boolean equals(final Object obj) {
-        return this.size.content().equals(obj);
-    }
-
-    @Override
-    public final String toString() {
-        return this.size.content().toString();
-    }
-}
+package logic.matcher;

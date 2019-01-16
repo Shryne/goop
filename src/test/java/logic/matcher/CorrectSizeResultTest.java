@@ -19,65 +19,61 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package logic.unit.size;
+package logic.matcher;
 
-import java.util.function.IntUnaryOperator;
-import logic.matcher.CorrectSizeResult;
+import logic.unit.size.Size2D;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Tests for {@link ScalarSizeCalculation}.
- * @since 10.0.1
+ * Tests for {@link CorrectSizeResult}.
+ * @since 15.2.0
  */
-public class ScalarSizeCalculationTest {
+public class CorrectSizeResultTest {
     /**
-     * Tests whether a size addition with 0 will result in the given size.
+     * Tests whether the matcher matches on a simple Size2D instance. Size2D is
+     * chosen because it is the simplest implementation of the Size interface.
      */
     @Test
-    public void identityMultiplication() {
-        final var width = 234;
-        final var height = 3243;
+    public void matchesCorrectSize() {
+        final int width = 142;
+        final int height = 123;
         MatcherAssert.assertThat(
-            new ScalarSizeCalculation(
-                new Size2D(width, height),
-                IntUnaryOperator.identity()
-            ),
+            new Size2D(width, height),
             new CorrectSizeResult(width, height)
         );
     }
 
     /**
-     * Tests whether a size multiplied with 0 will result in size(0|0).
+     * Tests whether the matcher fails when the expected width isn't met by the
+     * given size instance.
      */
     @Test
-    public void sizeMultipliedWithZero() {
-        final var width = 45;
-        final var height = 4324;
+    public void notMatchWrongWidth() {
+        final int width = 534;
+        final int height = 32;
         MatcherAssert.assertThat(
-            new ScalarSizeCalculation(
-                new Size2D(width, height),
-                value -> 0
-            ),
-            new CorrectSizeResult(0, 0)
+            new Size2D(width + 1, height),
+            Matchers.not(
+                new CorrectSizeResult(width, height)
+            )
         );
     }
 
     /**
-     * Tests whether a size multiplied with some value will result in
-     * size(width * value|height * value).
+     * Tests whether the matcher fails when the expected height isn't met by the
+     * given size instance.
      */
     @Test
-    public void normalMultiplication() {
-        final var width = 564;
-        final var height = 342;
-        final var multiplier = 44;
+    public void notMatchWrongHeight() {
+        final int width = 6732;
+        final int height = 125;
         MatcherAssert.assertThat(
-            new ScalarSizeCalculation(
-                new Size2D(width, height),
-                value -> value * multiplier
-            ),
-            new CorrectSizeResult(width * multiplier, height * multiplier)
+            new Size2D(width, height + 1),
+            Matchers.not(
+                new CorrectSizeResult(width, height)
+            )
         );
     }
 }

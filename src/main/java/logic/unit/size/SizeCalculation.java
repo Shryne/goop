@@ -23,7 +23,6 @@ package logic.unit.size;
 
 import java.util.function.BiFunction;
 import java.util.function.IntBinaryOperator;
-import java.util.function.ObjIntConsumer;
 
 /**
  * Defines a size that is calculated from two other sizes based on a given
@@ -69,6 +68,8 @@ public class SizeCalculation implements Size {
 
     @Override
     public final <R> R result(final BiFunction<Integer, Integer, R> target) {
+        // @checkstyle MethodBodyComments (1 line)
+        //noinspection SuspiciousNameCombination
         return this.first.result(
             // @checkstyle ParameterName (2 lines)
             (firstWidth, firstHeight) -> this.second.result(
@@ -78,11 +79,6 @@ public class SizeCalculation implements Size {
                 )
             )
         );
-    }
-
-    @Override
-    public final void applyOn(final ObjIntConsumer<Integer> target) {
-        Size.super.applyOn(target);
     }
 
     @Override

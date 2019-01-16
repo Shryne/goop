@@ -21,10 +21,10 @@
 
 package logic.unit.size;
 
-import java.util.function.ObjIntConsumer;
+import java.util.function.BiFunction;
+import logic.matcher.CorrectSizeResult;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -35,9 +35,8 @@ public class SizeCalculationTest {
     /**
      * Tests for:
      * <p>Size(a, b) * Size(c, d) = Size(a * c, c * d)</p>
-     * This test depends on {@link SizeCalculation#applyOn(ObjIntConsumer)}.
+     * This test depends on {@link SizeCalculation#result(BiFunction)}.
      */
-    @Ignore
     @Test
     public void sizeMultipliedEquals() {
         // @checkstyle LocalFinalVariableName (4 lines)
@@ -45,19 +44,13 @@ public class SizeCalculationTest {
         final var height1 = 544;
         final var width2 = 352;
         final var height2 = 6543;
-        new SizeCalculation(
-            new Size2D(width1, height1),
-            new Size2D(width2, height2),
-            (first, second) -> first * second
-        ).applyOn(
-            (width, height) -> {
-                MatcherAssert.assertThat(
-                    width, Matchers.equalTo(width1 * width2)
-                );
-                MatcherAssert.assertThat(
-                    height, Matchers.equalTo(height1 * height2)
-                );
-            }
+        MatcherAssert.assertThat(
+            new SizeCalculation(
+                new Size2D(width1, height1),
+                new Size2D(width2, height2),
+                (first, second) -> first * second
+            ),
+            new CorrectSizeResult(width1 * width2, height1 * height2)
         );
     }
 
@@ -73,8 +66,8 @@ public class SizeCalculationTest {
                 new Size2D(width, height),
                 new Size2D(),
                 Integer::sum
-            ).toString(),
-            Matchers.equalTo(
+            ),
+            Matchers.hasToString(
                 String.format(
                     "Size(width=%d, height=%d)", width, height
                 )

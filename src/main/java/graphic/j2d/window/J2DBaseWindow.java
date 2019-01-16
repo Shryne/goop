@@ -94,10 +94,13 @@ public class J2DBaseWindow implements Showable {
                     area.applyOn(
                         (pos, size) -> {
                             pos.applyOn(frame::setLocation);
-                            size.applyOn(
-                                (width, height) -> panel.setPreferredSize(
-                                    new Dimension(width, height)
-                                )
+                            size.result(
+                                (width, height) -> {
+                                    panel.setPreferredSize(
+                                        new Dimension(width, height)
+                                    );
+                                    return null;
+                                }
                             );
                         }
                     );

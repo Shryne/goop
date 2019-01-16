@@ -22,57 +22,42 @@
 package logic.unit.size;
 
 import java.util.function.BiFunction;
+import java.util.function.ObjIntConsumer;
 
-/*
-I am not happy about this naming, but my other idea's regarding the interface
-name and the basic implementation weren't good either (impl or simple for
-example). So I took the more annoying name for the implementation to lower the
-chance that a user might use the class name as a parameter type
-*/
 /**
- * Basic concrete implementation of {@link Size}.
- * <p>This class is immutable and thread-safe.</p>
- * @since 3.4.0
+ * A decorator containing convenience methods that are based on the methods of
+ * the interface.
+ * @since 15.3.0
  */
-public class Size2D implements Size {
+public class ConvenientSize implements Size {
     /**
-     * The width of the size.
+     * The size to delegate the calls to.
      */
-    private final int width;
-
-    /**
-     * The height of the size.
-     */
-    private final int height;
-
-    /**
-     * Ctor. Creates a size with width = 0 and height = 0.
-     */
-    public Size2D() {
-        this(0, 0);
-    }
+    private final Size size;
 
     /**
      * Ctor.
-     * @param width The width for the size.
-     * @param height The height for the size.
+     * @param size The size to delegate the calls to.
      */
-    public Size2D(final int width, final int height) {
-        this.width = width;
-        this.height = height;
+    public ConvenientSize(final Size size) {
+        this.size = size;
     }
 
     @Override
     public final <R> R result(final BiFunction<Integer, Integer, R> target) {
-        return target.apply(this.width, this.height);
+        return this.size.result(target);
     }
 
-    @Override
-    public final String toString() {
-        return new StringBuilder("Size")
-            .append("(width=").append(this.width)
-            .append(", height=").append(this.height)
-            .append(')')
-        .toString();
+    /**
+     * Gives the given consumer the width and height that define this size.
+     * @param target Target that gets the width and height.
+     */
+    public final void applyOn(final ObjIntConsumer<Integer> target) {
+        this.result(
+            (width, height) -> {
+                target.accept(width, height);
+                return null;
+            }
+        );
     }
 }

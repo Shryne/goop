@@ -36,11 +36,6 @@ import org.lwjgl.glfw.GLFW;
  */
 public final class GlfwBaseInit implements GlfwInit {
     /**
-     * Used for synchronization of {@link #instance()}.
-     */
-    private static final Object LOCK = new Object();
-
-    /**
      * The private instance of GlfwBaseInit. This is necessary, because the
      * glfw initialization is global and it's not possible to do the right
      * release of resources without a global overview of that.
@@ -71,12 +66,10 @@ public final class GlfwBaseInit implements GlfwInit {
      */
     @SuppressWarnings("PMD.PublicStaticMethods")
     public static GlfwInit instance() {
-        synchronized (GlfwBaseInit.LOCK) {
-            if (GlfwBaseInit.glfwInit == null) {
-                GlfwBaseInit.glfwInit = new GlfwBaseInit();
-            }
-            return GlfwBaseInit.glfwInit;
+        if (GlfwBaseInit.glfwInit == null) {
+            GlfwBaseInit.glfwInit = new GlfwBaseInit();
         }
+        return GlfwBaseInit.glfwInit;
     }
 
     @Override
