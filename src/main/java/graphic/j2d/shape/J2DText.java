@@ -22,12 +22,17 @@
 package graphic.j2d.shape;
 
 import graphic.j2d.event.mouse.J2DMouse;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.util.Optional;
 import logic.graphic.color.Black;
 import logic.graphic.color.Color;
+import logic.unit.area.Area;
+import logic.unit.area.Area2D;
 import logic.unit.pos.Pos;
 import logic.unit.pos.Pos2D;
+import logic.unit.size.Size2D;
 
 /**
  * Java 2d based text.
@@ -40,14 +45,24 @@ public class J2DText implements J2DMouseShape {
     private final String text;
 
     /**
-     * The position of the text.
+     * The max area of the text.
      */
-    private final Pos pos;
+    private final Area area;
 
     /**
      * The color of the text.
      */
     private final Color color;
+
+    /**
+     * The font of the text.
+     */
+    private Font font;
+
+    /**
+     * The height of the font.
+     */
+    private int height;
 
     /**
      * The successor of this text.
@@ -76,12 +91,45 @@ public class J2DText implements J2DMouseShape {
     /**
      * Ctor.
      * @param text The text to show.
+     * @param area The area of the text.
+     */
+    public J2DText(final String text, final Area area) {
+        this(text, area, new Black());
+    }
+
+    /**
+     * Ctor.
+     * @param text The text to show.
      * @param pos The position of the text.
      * @param color The color of the text.
      */
     public J2DText(final String text, final Pos pos, final Color color) {
+        this(
+            text,
+            new Area2D(
+                pos,
+                new Size2D(
+                    text.length()
+                        * Toolkit.getDefaultToolkit().getScreenSize().width
+                        / 150,
+                    Toolkit.getDefaultToolkit().getScreenSize().height / 100
+                )
+            ),
+            color
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param text The text to show.
+     * @param area The area of the text.
+     * @param color The color of the text.
+     */
+    public J2DText(
+        final String text, final Area area, final Color color
+    ) {
         this.text = text;
-        this.pos = pos;
+        this.area = area;
         this.color = color;
         this.successor = Optional.of(this);
     }
@@ -94,12 +142,35 @@ public class J2DText implements J2DMouseShape {
         this.color.applyOn(
             (r, g, b, a) -> graphics.setColor(new java.awt.Color(r, g, b, a))
         );
-        this.pos.applyOn((x, y) -> graphics.drawString(this.text, x, y));
+        if (this.font == null) {
+            int fontSize = 10;
+            do {
+                this.font = new Font("Arial", Font.PLAIN, fontSize);
+                var metrics = graphics.getFontMetrics(this.font);
+                int width = metrics.stringWidth(this.text);
+                this.height = metrics.getMaxAscent();
+                if (this.area.result(
+                    (pos, size) -> size.result(
+                        (w, h) -> w < width || h < this.height
+                    )
+                )) {
+                    break;
+                }
+                ++fontSize;
+            } while(true);
+            this.font = new Font("Arial", Font.PLAIN, fontSize - 1);
+        }
+        graphics.setFont(this.font);
+        this.area.applyOn((x, y, w, h) -> graphics.drawString(
+            this.text,
+            x,
+            y + this.height
+        ));
         return this.successor;
     }
 
     @Override
     public final void register(final Redrawable redrawable) {
-        this.pos.register(redrawable);
+        this.area.register(redrawable);
     }
 }
