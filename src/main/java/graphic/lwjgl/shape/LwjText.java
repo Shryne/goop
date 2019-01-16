@@ -24,27 +24,48 @@ package graphic.lwjgl.shape;
 import java.nio.ByteBuffer;
 import logic.functional.Lazy;
 import logic.functional.Value;
+import logic.graphic.color.Black;
+import logic.graphic.color.Color;
 import logic.unit.pos.Pos;
 import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.stb.STBEasyFont;
-import static org.lwjgl.opengl.GL11.GL_FLOAT;
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.GL_VERTEX_ARRAY;
-import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.opengl.GL11.glDrawArrays;
-import static org.lwjgl.opengl.GL11.glEnableClientState;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glVertexPointer;
 
 /**
  * A lwjgl based text.
  * @since 18.0
  */
 public class LwjText implements LwjShape {
+    /**
+     * Some number for the quads. Should find that out.
+     */
+    private static final int QUAD_NUMBER = 4;
+
+    /**
+     * Probably the amount of characters in the used char set, or at least a
+     * number that is high enough to initialize the correct buffer.
+     */
+    private static final int CHAR_NUMBER = 270;
+
+    /**
+     * No idea what that is. Should find that out.
+     */
+    private static final int STRIDE = 16;
+
+    /**
+     * The buffer for the text.
+     */
     private final Value<ByteBuffer> buffer;
 
+    /**
+     * The quads of the text.
+     */
     private final Value<Integer> quads;
+
+    /**
+     * The color of the text.
+     */
+    private final Color color;
 
     /**
      * Ctor.
@@ -55,12 +76,35 @@ public class LwjText implements LwjShape {
         this(
             content,
             new Lazy<>(
-                () -> BufferUtils.createByteBuffer(content.length() * 270)
+                () -> BufferUtils.createByteBuffer(
+                    content.length() * LwjText.CHAR_NUMBER
+                )
             )
         );
     }
 
+    /**
+     * Ctor.
+     * @param content The actual text.
+     * @param buffer The buffer for the text.
+     */
     private LwjText(final String content, final Value<ByteBuffer> buffer) {
+        this(
+            content,
+            buffer,
+            new Black()
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param content The actual text.
+     * @param buffer The buffer for the text.
+     * @param color The color of the text.
+     */
+    private LwjText(
+        final String content, final Value<ByteBuffer> buffer, final Color color
+    ) {
         this(
             buffer,
             new Lazy<>(
@@ -71,25 +115,38 @@ public class LwjText implements LwjShape {
                     null,
                     buffer.content()
                 )
-            )
+            ),
+            color
         );
     }
 
+    /**
+     * Ctor.
+     * @param buffer The buffer for the text.
+     * @param quads The quads of the text.
+     * @param color The color of the text.
+     */
     private LwjText(
         final Value<ByteBuffer> buffer,
-        final Value<Integer> quads
+        final Value<Integer> quads,
+        final Color color
     ) {
         this.buffer = buffer;
         this.quads = quads;
+        this.color = color;
     }
 
     @Override
     public final void draw() {
-        glEnableClientState(GL_VERTEX_ARRAY);
-        glVertexPointer(2, GL_FLOAT, 16, buffer.content());
-        glColor3f(169f / 255f, 183f / 255f, 198f / 255f); // Text color
-        glPushMatrix();
-        glDrawArrays(GL_QUADS, 0, quads.content() * 4);
-        glPopMatrix();
+        GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
+        GL11.glVertexPointer(
+            2, GL11.GL_FLOAT, LwjText.STRIDE, this.buffer.content()
+        );
+        this.color.applyOn(GL11::glColor4i);
+        GL11.glPushMatrix();
+        GL11.glDrawArrays(
+            GL11.GL_QUADS, 0, this.quads.content() * LwjText.QUAD_NUMBER
+        );
+        GL11.glPopMatrix();
     }
 }

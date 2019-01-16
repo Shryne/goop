@@ -22,6 +22,7 @@
 package graphic.j2d.shape;
 
 import java.awt.Graphics;
+import java.util.Optional;
 import logic.graphic.color.Color;
 import logic.unit.area.Area;
 
@@ -45,6 +46,11 @@ public class J2DRect implements J2DShape {
     private final Color color;
 
     /**
+     * The next shape to be drawn.
+     */
+    private final Optional<J2DShape> successor;
+
+    /**
      * Ctor.
      * @param area The area of this rect.
      * @param color The color of this rect.
@@ -52,15 +58,17 @@ public class J2DRect implements J2DShape {
     public J2DRect(final Area area, final Color color) {
         this.area = area;
         this.color = color;
+        this.successor = Optional.of(this);
     }
 
     @Override
-    public final void draw(final Graphics graphics) {
+    public final Optional<J2DShape> draw(final Graphics graphics) {
         this.color.applyOn(
             (red, green, blue, alpha) -> graphics.setColor(
                 new java.awt.Color(red, green, blue, alpha)
             )
         );
         this.area.applyOn(graphics::fillRect);
+        return this.successor;
     }
 }

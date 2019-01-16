@@ -23,9 +23,11 @@ package graphic.j2d.shape.event;
 
 import graphic.j2d.event.mouse.J2DMouse;
 import graphic.j2d.shape.J2DMouseShape;
+import graphic.j2d.shape.J2DShape;
 import graphic.j2d.shape.J2DShapeTarget;
 import java.awt.Graphics;
 import java.util.List;
+import java.util.Optional;
 import logic.graphic.color.Black;
 import logic.graphic.color.Color;
 import logic.unit.area.PosOverlap;
@@ -55,6 +57,11 @@ public class J2DEventRect implements J2DMouseShape {
      * The targets for the mouse events.
      */
     private final List<J2DShapeTarget> targets;
+
+    /**
+     * The next shape to be drawn.
+     */
+    private final Optional<J2DShape> successor;
 
     /**
      * Ctor.
@@ -123,16 +130,18 @@ public class J2DEventRect implements J2DMouseShape {
         this.area = area;
         this.color = color;
         this.targets = targets;
+        this.successor = Optional.of(this);
     }
 
     @Override
-    public final void draw(final Graphics graphics) {
+    public final Optional<J2DShape> draw(final Graphics graphics) {
         this.color.applyOn(
             (red, green, blue, alpha) -> graphics.setColor(
                 new java.awt.Color(red, green, blue, alpha)
             )
         );
         this.area.applyOn(graphics::fillRect);
+        return this.successor;
     }
 
     @Override

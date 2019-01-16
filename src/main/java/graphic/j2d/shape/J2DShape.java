@@ -22,6 +22,7 @@
 package graphic.j2d.shape;
 
 import java.awt.Graphics;
+import java.util.Optional;
 
 /**
  * A shape that is using java2d to draw itself.
@@ -29,8 +30,11 @@ import java.awt.Graphics;
  */
 public interface J2DShape {
     /**
-     * Draws the shape.
+     * Draws the shape and returns the next shape to take the place of this
+     * shape. This is used to register and unregister shapes from the
+     * parent/window.
      * @param graphics The Graphics object to draw the shape.
+     * @return The successor of this shape.
      */
-    void draw(Graphics graphics);
+    Optional<J2DShape> draw(Graphics graphics);
 }
