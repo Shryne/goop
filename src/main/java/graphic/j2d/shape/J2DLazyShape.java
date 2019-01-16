@@ -22,6 +22,7 @@
 package graphic.j2d.shape;
 
 import java.awt.Graphics;
+import java.util.Optional;
 import logic.functional.Lazy;
 import logic.functional.Value;
 import logic.graphic.GraphicsChoice;
@@ -61,7 +62,7 @@ public class J2DLazyShape implements J2DShape {
     }
 
     @Override
-    public final void draw(final Graphics graphics) {
-        this.shape.content().draw(graphics);
+    public final Optional<J2DShape> draw(final Graphics graphics) {
+        return this.shape.content().draw(graphics);
     }
 }

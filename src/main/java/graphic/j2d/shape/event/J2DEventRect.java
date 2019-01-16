@@ -23,7 +23,6 @@ package graphic.j2d.shape.event;
 
 import graphic.j2d.event.mouse.J2DMouse;
 import graphic.j2d.shape.J2DMouseShape;
-import graphic.j2d.shape.J2DShape;
 import graphic.j2d.shape.J2DShapeTarget;
 import java.awt.Graphics;
 import java.util.List;
@@ -61,7 +60,7 @@ public class J2DEventRect implements J2DMouseShape {
     /**
      * The next shape to be drawn.
      */
-    private final Optional<J2DShape> successor;
+    private final Optional<J2DMouseShape> successor;
 
     /**
      * Ctor.
@@ -134,7 +133,7 @@ public class J2DEventRect implements J2DMouseShape {
     }
 
     @Override
-    public final Optional<J2DShape> draw(final Graphics graphics) {
+    public final Optional<J2DMouseShape> draw(final Graphics graphics) {
         this.color.applyOn(
             (red, green, blue, alpha) -> graphics.setColor(
                 new java.awt.Color(red, green, blue, alpha)

@@ -27,4 +27,5 @@ import graphic.j2d.event.J2DMouseTarget;
  * A shape that can register itself for a certain event.
  * @since 12.4.0
  */
-public interface J2DMouseShape extends J2DShape, J2DMouseTarget { }
+public interface J2DMouseShape extends J2DShape<J2DMouseShape>,
+    J2DMouseTarget { }

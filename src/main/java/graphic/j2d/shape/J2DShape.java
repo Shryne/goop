@@ -26,9 +26,10 @@ import java.util.Optional;
 
 /**
  * A shape that is using java2d to draw itself.
+ * @param <T> The type of the successor of this shape.
  * @since 2.1.0
  */
-public interface J2DShape {
+public interface J2DShape<T> {
     /**
      * Draws the shape and returns the next shape to take the place of this
      * shape. This is used to register and unregister shapes from the
@@ -36,5 +37,5 @@ public interface J2DShape {
      * @param graphics The Graphics object to draw the shape.
      * @return The successor of this shape.
      */
-    Optional<J2DShape> draw(Graphics graphics);
+    Optional<T> draw(Graphics graphics);
 }
