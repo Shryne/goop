@@ -148,7 +148,7 @@ public class J2DText implements J2DMouseShape {
                 this.font = new Font("Arial", Font.PLAIN, fontSize);
                 var metrics = graphics.getFontMetrics(this.font);
                 int width = metrics.stringWidth(this.text);
-                this.height = metrics.getMaxAscent();
+                this.height = metrics.getAscent();
                 if (this.area.result(
                     (pos, size) -> size.result(
                         (w, h) -> w < width || h < this.height

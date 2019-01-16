@@ -30,7 +30,9 @@ import java.util.List;
 import java.util.Optional;
 import logic.graphic.color.Black;
 import logic.graphic.color.Color;
+import logic.unit.area.Area;
 import logic.unit.area.PosOverlap;
+import logic.unit.area.PosOverlap2D;
 import org.cactoos.list.ListOf;
 
 /**
@@ -84,6 +86,24 @@ public class J2DEventRect implements J2DMouseShape {
     ) {
         this(
             area,
+            List.of(targets)
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param area The area of this rect.
+     * @param color The color of this rect.
+     * @param targets The targets for the mouse events.
+     */
+    public J2DEventRect(
+        final Area area,
+        final Color color,
+        final J2DShapeTarget... targets
+    ) {
+        this(
+            new PosOverlap2D(area),
+            color,
             List.of(targets)
         );
     }

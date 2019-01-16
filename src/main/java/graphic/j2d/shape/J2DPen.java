@@ -22,19 +22,18 @@
 package graphic.j2d.shape;
 
 import logic.graphic.color.Color;
-import logic.unit.PosOverlap;
 
 /**
  * Creates instances of Shapes.
  * @since 18.6
  */
-public interface J2DPen<T extends PosOverlap> {
+public interface J2DPen<T> {
     /**
      * Returns a shape.
      * @param area The area of the shape.
      * @param color The color of the shape.
-     * @param target An event target of the shape.
+     * @param targets The event targets of the shape.
      * @return The shape with the given properties.
      */
-    J2DMouseShape shape(T area, Color color, J2DShapeTarget target);
+    J2DMouseShape shape(T area, Color color, J2DShapeTarget... targets);
 }
