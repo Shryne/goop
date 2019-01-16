@@ -19,25 +19,15 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package graphic.j2d.shape;
-
-import graphic.j2d.event.mouse.J2DMouse;
-import java.awt.Graphics;
-import java.util.Optional;
+package logic.graphic.color;
 
 /**
- * A grid.
- * @since 18.3
+ * A color that consists of two color an that can be switched.
+ * @since 18.6
  */
-public class Grid implements J2DMouseShape {
-
-    @Override
-    public final void registerFor(final J2DMouse source) {
-        throw new UnsupportedOperationException("#registerFor()");
-    }
-
-    @Override
-    public final Optional<J2DMouseShape> draw(final Graphics graphics) {
-        throw new UnsupportedOperationException("#draw()");
-    }
+public interface DualColor extends Color {
+    /**
+     * Swaps the visible color.
+     */
+    void swap();
 }

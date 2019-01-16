@@ -21,6 +21,7 @@
 
 package logic.unit.area;
 
+import java.util.function.BiFunction;
 import logic.unit.pos.Pos;
 import logic.unit.pos.Pos2D;
 import logic.unit.size.Size;
@@ -30,7 +31,12 @@ import logic.unit.size.Size2D;
  * An area that knows when a point overlaps with itself.
  * @since 12.5.0
  */
-public class PosOverlap2D extends Area2D implements PosOverlap {
+public class PosOverlap2D implements PosOverlap {
+    /**
+     * The area to delegate the calls to.
+     */
+    private final Area area;
+
     /**
      * Ctor. Uses (0|0) as its position.
      * @param width The width of the area.
@@ -45,7 +51,7 @@ public class PosOverlap2D extends Area2D implements PosOverlap {
      * @param size The size of the area.
      */
     public PosOverlap2D(final Size size) {
-        super(new Pos2D(), size);
+        this(new Pos2D(), size);
     }
 
     /**
@@ -54,7 +60,15 @@ public class PosOverlap2D extends Area2D implements PosOverlap {
      * @param size The size of the area.
      */
     public PosOverlap2D(final Pos pos, final Size size) {
-        super(pos, size);
+        this(new Area2D(pos, size));
+    }
+
+    /**
+     * Ctor.
+     * @param area The area to delegate the calls to.
+     */
+    public PosOverlap2D(final Area area) {
+        this.area = area;
     }
 
     @Override
@@ -67,5 +81,10 @@ public class PosOverlap2D extends Area2D implements PosOverlap {
                     && posX <= x + width && posY <= y + height
                 )
         );
+    }
+
+    @Override
+    public final <R> R result(final BiFunction<Pos, Size, R> target) {
+        return this.area.result(target);
     }
 }
