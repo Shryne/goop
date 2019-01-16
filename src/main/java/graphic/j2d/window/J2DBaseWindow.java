@@ -27,6 +27,7 @@ import java.awt.Graphics;
 import java.util.Collections;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import logic.functional.Lazy;
 import logic.functional.Value;
 import logic.graphic.window.Showable;
@@ -108,6 +109,9 @@ public class J2DBaseWindow implements Showable {
                     frame.pack();
                     frame.setVisible(true);
                     features.forEach(it -> it.accept(frame));
+                    final var timer = new Timer(25, e -> frame.repaint());
+                    timer.setRepeats(true);
+                    timer.start();
                     return frame;
                 }
             )

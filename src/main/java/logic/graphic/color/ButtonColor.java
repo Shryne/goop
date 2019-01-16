@@ -69,9 +69,6 @@ public class ButtonColor implements DualColor {
     public final void applyOn(
         final QuadConsumer<Integer, Integer, Integer, Integer> target
     ) {
-        this.current.applyOn(
-            (r, g, b, a) -> System.out.println(r)
-        );
         this.current.applyOn(target);
     }
 

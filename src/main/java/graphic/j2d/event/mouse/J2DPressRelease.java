@@ -22,11 +22,13 @@
 package graphic.j2d.event.mouse;
 
 import graphic.j2d.shape.J2DShapeTarget;
+import java.util.concurrent.atomic.AtomicBoolean;
 import logic.functional.Action;
 import logic.unit.PosOverlap;
 
 /**
- * A combination of a press and a release.
+ * A combination of a press and a release. Note that a release may only happen
+ * after the press on the same shape.
  * @see J2DPress
  * @see J2DRelease
  * @since 18.6
@@ -47,10 +49,42 @@ public class J2DPressRelease implements J2DShapeTarget {
      * @param press The action that shall be applied on press.
      * @param release The action that shall be applied on release.
      */
-    public J2DPressRelease(final Action press, final Action release) {
+    public J2DPressRelease(
+        final Action press,
+        final Action release
+    ) {
         this(
-            new J2DPress(press),
-            new J2DRelease(release)
+            press,
+            new AtomicBoolean(false),
+            release
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param press The action that shall be applied on press.
+     * @param release The action that shall be applied on release.
+     */
+    private J2DPressRelease(
+        final Action press,
+        final AtomicBoolean pressed,
+        final Action release
+    ) {
+        this(
+            new J2DPress(
+                () -> {
+                    press.run();
+                    pressed.set(true);
+                }
+            ),
+            new J2DRelease(
+                () -> {
+                    if (pressed.get()) {
+                        release.run();
+                        pressed.set(false);
+                    }
+                }
+            )
         );
     }
 

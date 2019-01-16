@@ -96,7 +96,6 @@ public class J2DButton implements J2DMouseShape {
 
     @Override
     public final Optional<J2DMouseShape> draw(final Graphics graphics) {
-        System.out.println("BUTTON");
         return this.shape.draw(graphics);
     }
 
