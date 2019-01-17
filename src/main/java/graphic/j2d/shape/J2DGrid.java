@@ -79,11 +79,13 @@ public class J2DGrid implements J2DMouseShape {
         for (int y = 0; y < this.shapes.size(); ++y) {
             final var row = this.shapes.get(y);
             for (int x = 0; x < row.size(); ++x) {
-                row.size()
+                this.shapes.get(y).get(x).draw(
+                    graphics,
+                    (area) -> adjusted(area)
+                );
             }
         }
-    }
-    */
+    }*/
 
     @Override
     public final void register(final Redrawable redrawable) {
