@@ -25,8 +25,10 @@ import graphic.j2d.shape.J2DShapeTarget;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.function.Consumer;
 import logic.functional.Action;
 import logic.unit.PosOverlap;
+import logic.unit.pos.Pos;
 import logic.unit.pos.Pos2D;
 
 /**
@@ -40,13 +42,21 @@ public class J2DClick implements J2DShapeTarget {
     /**
      * The action to be applied when the click occurs.
      */
-    private final Action action;
+    private final Consumer<Pos> action;
 
     /**
      * Ctor.
      * @param action The action to be applied when the click occurs.
      */
     public J2DClick(final Action action) {
+        this(pos -> action.run());
+    }
+
+    /**
+     * Ctor.
+     * @param action The action that gets the coordinates of the click.
+     */
+    public J2DClick(final Consumer<Pos> action) {
         this.action = action;
     }
 
@@ -59,13 +69,9 @@ public class J2DClick implements J2DShapeTarget {
             (MouseListener) new MouseAdapter() {
                 @Override
                 public void mouseClicked(final MouseEvent event) {
-                    if (overlap.contains(
-                        new Pos2D(
-                            event.getX(),
-                            event.getY()
-                        )
-                    )) {
-                        J2DClick.this.action.run();
+                    final Pos pos = new Pos2D(event.getX(), event.getY());
+                    if (overlap.contains(pos)) {
+                        J2DClick.this.action.accept(pos);
                     }
                 }
             }

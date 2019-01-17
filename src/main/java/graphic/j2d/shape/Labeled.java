@@ -44,6 +44,11 @@ public class Labeled implements J2DMouseShape {
     private final J2DMouseShape text;
 
     /**
+     * Instance of this to return this as the successor.
+     */
+    private final Optional<J2DMouseShape> self;
+
+    /**
      * Ctor.
      * @param text The text to be add.
      * @param area The area of the shape.
@@ -52,7 +57,7 @@ public class Labeled implements J2DMouseShape {
     public Labeled(final String text, final Area area, final J2DPen<Area> pen) {
         this(
             pen.shape(area, new RGBA(200, 150, 150, 255)),
-        new J2DText(text, area)
+            new J2DText(text, area)
         );
     }
 
@@ -83,6 +88,7 @@ public class Labeled implements J2DMouseShape {
     private Labeled(final J2DMouseShape shape, final J2DMouseShape text) {
         this.shape = shape;
         this.text = text;
+        this.self = Optional.of(this);
     }
 
     @Override
@@ -92,9 +98,9 @@ public class Labeled implements J2DMouseShape {
 
     @Override
     public final Optional<J2DMouseShape> draw(final Graphics graphics) {
-        final var result = this.shape.draw(graphics);
+        this.shape.draw(graphics);
         this.text.draw(graphics);
-        return result;
+        return this.self;
     }
 
     @Override
