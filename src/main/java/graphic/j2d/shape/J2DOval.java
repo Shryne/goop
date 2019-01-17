@@ -101,7 +101,7 @@ public class J2DOval implements J2DMouseShape {
     }
 
     @Override
-    public void register(final Redrawable redrawable) {
+    public final void register(final Redrawable redrawable) {
         this.area.register(redrawable);
         this.color.register(redrawable);
     }

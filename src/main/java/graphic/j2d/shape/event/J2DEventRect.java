@@ -24,6 +24,7 @@ package graphic.j2d.shape.event;
 import graphic.j2d.event.mouse.J2DMouse;
 import graphic.j2d.shape.J2DMouseShape;
 import graphic.j2d.shape.J2DShapeTarget;
+import graphic.j2d.shape.J2DSuccessor;
 import graphic.j2d.shape.Redrawable;
 import java.awt.Graphics;
 import java.util.List;
@@ -61,9 +62,14 @@ public class J2DEventRect implements J2DMouseShape {
     private final List<J2DShapeTarget> targets;
 
     /**
+     * Self to success.
+     */
+    private final Optional<J2DMouseShape> self;
+
+    /**
      * The next shape to be drawn.
      */
-    private final Optional<J2DMouseShape> successor;
+    private final J2DSuccessor successor;
 
     /**
      * Ctor.
@@ -165,10 +171,27 @@ public class J2DEventRect implements J2DMouseShape {
         final Color color,
         final List<J2DShapeTarget> targets
     ) {
+        this(area, color, succ -> succ, targets);
+    }
+
+    /**
+     * Ctor.
+     * @param area The area of this rect.
+     * @param color The color of this rect.
+     * @param successor The successor of the rect.
+     * @param targets The targets for the mouse events.
+     */
+    public J2DEventRect(
+        final PosOverlap area,
+        final Color color,
+        final J2DSuccessor successor,
+        final List<J2DShapeTarget> targets
+    ) {
         this.area = area;
         this.color = color;
         this.targets = targets;
-        this.successor = Optional.of(this);
+        this.self = Optional.of(this);
+        this.successor = successor;
     }
 
     @Override
@@ -179,7 +202,7 @@ public class J2DEventRect implements J2DMouseShape {
             )
         );
         this.area.applyOn(graphics::fillRect);
-        return this.successor;
+        return this.successor.apply(this.self);
     }
 
     @Override

@@ -85,6 +85,35 @@ public class J2DButton implements J2DMouseShape {
         );
     }
 
+    /**
+     * Ctor.
+     * @param pen The pen to create the shape of the button.
+     * @param overlap The area of the button.
+     * @param color The colors of the button.
+     * @param action The action to be applied when the button is released.
+     */
+    public <T extends PosOverlap> J2DButton(
+        final J2DPen<T> pen,
+        final T overlap,
+        final DualColor color,
+        final Action action,
+        final J2DSuccessor successor
+    ) {
+        this(
+            pen.shape(
+                overlap,
+                color,
+                new J2DPressRelease(
+                    color::swap,
+                    () -> {
+                        action.run();
+                        color.swap();
+                    }
+                )
+            )
+        );
+    }
+
     private J2DButton(final J2DMouseShape shape) {
         this.shape = shape;
     }
