@@ -96,7 +96,7 @@ public class J2DOval implements J2DMouseShape {
         this.color.applyOn(
             (r, g, b, a) -> graphics.setColor(new java.awt.Color(r, g, b, a))
         );
-        this.area.applyOn(graphics::drawOval);
+        this.area.applyOn(graphics::fillOval);
         return this.successor;
     }
 

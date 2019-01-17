@@ -25,9 +25,10 @@ import graphic.j2d.shape.J2DShapeTarget;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.function.ObjIntConsumer;
+import java.util.function.Consumer;
 import logic.functional.Action;
 import logic.unit.PosOverlap;
+import logic.unit.pos.Pos;
 import logic.unit.pos.Pos2D;
 
 /**
@@ -40,7 +41,7 @@ public class J2DPress implements J2DShapeTarget {
      * The target action to be applied with the x and y coordinates of the
      * press.
      */
-    private final ObjIntConsumer<Integer> target;
+    private final Consumer<Pos> target;
 
     /**
      * Ctor.
@@ -49,7 +50,7 @@ public class J2DPress implements J2DShapeTarget {
     public J2DPress(final Action action) {
         this(
             // @checkstyle ParameterName (1 line)
-            (x, y) -> action.run()
+            pos -> action.run()
         );
     }
 
@@ -58,7 +59,7 @@ public class J2DPress implements J2DShapeTarget {
      * @param target The target with the action, who gets the x and y
      *  coordinates of the press.
      */
-    public J2DPress(final ObjIntConsumer<Integer> target) {
+    public J2DPress(final Consumer<Pos> target) {
         this.target = target;
     }
 
@@ -71,11 +72,9 @@ public class J2DPress implements J2DShapeTarget {
             (MouseListener) new MouseAdapter() {
                 @Override
                 public void mousePressed(final MouseEvent event) {
-                    // @checkstyle LocalFinalVariableName (2 lines)
-                    final var x = event.getX();
-                    final var y = event.getY();
-                    if (overlap.contains(new Pos2D(x, y))) {
-                        J2DPress.this.target.accept(x, y);
+                    final var pos = new Pos2D(event.getX(), event.getY());
+                    if (overlap.contains(pos)) {
+                        J2DPress.this.target.accept(pos);
                     }
                 }
             }

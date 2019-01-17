@@ -72,6 +72,6 @@ public class J2DDot extends J2DOval {
         final Color color,
         final Collection<J2DMouseTarget> events
     ) {
-        super(new Area2D(pos, new Size2D(10, 10)), color, events);
+        super(new Area2D(pos, new Size2D(5, 5)), color, events);
     }
 }
