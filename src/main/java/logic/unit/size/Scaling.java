@@ -27,14 +27,13 @@ import logic.functional.Lazy;
 import logic.functional.Value;
 import logic.time.Elapsable;
 import logic.time.Expiration;
-import logic.unit.Animation;
 
 /**
  * Represents a changing size.
  * <p>This class is mutable and not thread-safe.</p>
  * @since 8.3.0
  */
-public class Scaling extends SizeEnvelope implements Animation {
+public class Scaling extends SizeEnvelope implements AnimatedSize {
     /**
      * The watch used to get the scaling progress.
      */
