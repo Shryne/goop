@@ -19,48 +19,28 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package graphic.shape;
+package graphic.shape
 
-import java.awt.Graphics;
-import logic.graphic.color.Color;
-import logic.unit.area.Area;
+import logic.graphic.color.Color
+import logic.unit.area.Area
+import java.awt.Graphics
 
 /**
- * A rectangle using java2d.
- * <p>This class doesn't change its own state. Whether it is immutable or not,
- * depends on the given constructor arguments. Additionally whether this
+ * A rectangle.
+ *
+ * This class doesn't change its own state. Whether it is immutable or not,
+ * depends on the given constructor arguments. Additionally, whether this
  * class is thread-safe or not, depends on the given graphics instance for
- * {@link this#draw(Graphics)}.</p>
- * @since 2.1.0
+ * [Rect.draw].
+ *
+ * @param area The area of this rect.
+ * @param color The color of this rect.
  */
-public class J2DRect implements J2DShape {
-    /**
-     * The area of this rect.
-     */
-    private final Area area;
-
-    /**
-     * The color of this rect.
-     */
-    private final Color color;
-
-    /**
-     * Ctor.
-     * @param area The area of this rect.
-     * @param color The color of this rect.
-     */
-    public J2DRect(final Area area, final Color color) {
-        this.area = area;
-        this.color = color;
-    }
-
-    @Override
-    public final void draw(final Graphics graphics) {
-        this.color.applyOn(
-            (red, green, blue, alpha) -> graphics.setColor(
-                new java.awt.Color(red, green, blue, alpha)
-            )
-        );
-        this.area.applyOn(graphics::fillRect);
+class Rect(private val area: Area, private val color: Color) : J2DShape {
+    override fun draw(graphics: Graphics) {
+        color.applyOn { r, g, b, a ->
+            graphics.color = java.awt.Color(r, g, b, a)
+        }
+        area.applyOn(graphics::fillRect)
     }
 }

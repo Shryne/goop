@@ -21,11 +21,9 @@
 
 package sample
 
-import graphic.shape.J2DRect
-import graphic.window.J2DWindow
+import graphic.shape.Rect
 import graphic.window.Window
 import logic.graphic.color.Black
-import logic.graphic.color.Color
 import logic.unit.area.Area2D
 
 
@@ -33,7 +31,7 @@ fun main() {
     Window(
         "I am a window",
         Area2D(500, 500),
-        J2DRect(
+        Rect(
             Area2D(200, 200),
             Black()
         )
