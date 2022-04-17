@@ -19,9 +19,19 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+package graphic.event;
+
+import graphic.event.mouse.J2DMouse;
+
 /**
- * Contains the visual components that are using java 2d to visualize
- * themselves.
- * @since 2.1.0
+ * The observer of a certain event.
+ * @since 12.4.0
  */
-package graphic;
+public interface J2DMouseTarget {
+    /**
+     * Can register itself for an event source. Whether the object actually
+     * registers itself depends on whether it needs an event.
+     * @param source The source of the event.
+     */
+    void registerFor(J2DMouse source);
+}

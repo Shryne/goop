@@ -19,9 +19,12 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+package graphic.shape;
+
+import graphic.event.J2DMouseTarget;
+
 /**
- * Contains the visual components that are using java 2d to visualize
- * themselves.
- * @since 2.1.0
+ * A shape that can register itself for a certain event.
+ * @since 12.4.0
  */
-package graphic;
+public interface J2DMouseShape extends J2DShape, J2DMouseTarget { }

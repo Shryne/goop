@@ -19,9 +19,35 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+package graphic.shape;
+
+import java.awt.Graphics;
+import logic.functional.Lazy;
+import logic.functional.Value;
+
 /**
- * Contains the visual components that are using java 2d to visualize
- * themselves.
- * @since 2.1.0
+ * Represents a java 2d shape that will be constructed lazily from a
+ * {@link Shape}.
+ * <p>This class is mutable and not thread-safe, because it uses a
+ * {@link Lazy} to initialize itself.</p>
+ * @since 7.2.0
  */
-package graphic;
+public class J2DLazyShape implements J2DShape {
+    /**
+     * The construction of the j2d shape.
+     */
+    private final Value<J2DShape> shape;
+
+    /**
+     * Ctor.
+     * @param shape The construction of the j2d based shape.
+     */
+    public J2DLazyShape(final Value<J2DShape> shape) {
+        this.shape = shape;
+    }
+
+    @Override
+    public final void draw(final Graphics graphics) {
+        this.shape.content().draw(graphics);
+    }
+}

@@ -19,9 +19,18 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+package graphic.shape;
+
+import java.awt.Graphics;
+
 /**
- * Contains the visual components that are using java 2d to visualize
- * themselves.
+ * A shape that is using java2d to draw itself.
  * @since 2.1.0
  */
-package graphic;
+public interface J2DShape {
+    /**
+     * Draws the shape.
+     * @param graphics The Graphics object to draw the shape.
+     */
+    void draw(Graphics graphics);
+}

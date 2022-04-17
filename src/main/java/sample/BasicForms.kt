@@ -19,9 +19,23 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-/**
- * Contains the visual components that are using java 2d to visualize
- * themselves.
- * @since 2.1.0
- */
-package graphic;
+package sample
+
+import graphic.shape.J2DRect
+import graphic.window.J2DWindow
+import graphic.window.Window
+import logic.graphic.color.Black
+import logic.graphic.color.Color
+import logic.unit.area.Area2D
+
+
+fun main() {
+    Window(
+        "I am a window",
+        Area2D(500, 500),
+        J2DRect(
+            Area2D(200, 200),
+            Black()
+        )
+    ).show()
+}

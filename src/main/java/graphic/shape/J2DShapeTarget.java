@@ -19,9 +19,21 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+package graphic.shape;
+
+import graphic.event.mouse.J2DMouse;
+import logic.unit.PosOverlap;
+
 /**
- * Contains the visual components that are using java 2d to visualize
- * themselves.
- * @since 2.1.0
+ * The target for the shape events.
+ * @since 12.5.0
  */
-package graphic;
+public interface J2DShapeTarget {
+    /**
+     * The target registers itself for the event (if he wants to).
+     * @param source The source of the event.
+     * @param overlap The object to check whether the event occurred on the
+     *  shape.
+     */
+    void registerFor(J2DMouse source, PosOverlap overlap);
+}

@@ -19,9 +19,16 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+package graphic.window;
+
+import java.util.function.Consumer;
+import javax.swing.JFrame;
+
 /**
- * Contains the visual components that are using java 2d to visualize
- * themselves.
- * @since 2.1.0
+ * A feature that can be applied on a java 2d based window. It's basically just
+ * an object that will get the {@link JFrame} instance to apply some settings
+ * on it or to get information from it.
+ * @since 13.0.1
  */
-package graphic;
+@FunctionalInterface
+public interface J2DWindowFeature extends Consumer<JFrame> { }

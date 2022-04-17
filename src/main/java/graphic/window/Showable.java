@@ -19,9 +19,19 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+package graphic.window;
+
 /**
- * Contains the visual components that are using java 2d to visualize
- * themselves.
- * @since 2.1.0
+ * A component that can show itself - mainly windows.
+ * @since 3.2.0
  */
-package graphic;
+public interface Showable {
+    /**
+     * Shows the component, if it's not visible. This method is a no-op if
+     * the component is already visible. Note that this operation will probably
+     * have some more operations behind it, because a window needs more steps
+     * than a simple "make me visible". So because of this, this method applies
+     * all operations necessary to make a window visible.
+     */
+    void show();
+}

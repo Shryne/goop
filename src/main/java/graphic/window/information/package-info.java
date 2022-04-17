@@ -20,8 +20,8 @@
  */
 
 /**
- * Contains the visual components that are using java 2d to visualize
- * themselves.
- * @since 2.1.0
+ * Contains all components needed to get information of the window. Example:
+ * position, size, area
+ * @since 13.0.1
  */
-package graphic;
+package graphic.window.information;

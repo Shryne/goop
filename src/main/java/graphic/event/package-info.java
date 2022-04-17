@@ -20,8 +20,8 @@
  */
 
 /**
- * Contains the visual components that are using java 2d to visualize
- * themselves.
- * @since 2.1.0
+ * This package shall contain all java 2d event components, including mouse and
+ * keyboard events.
+ * @since 12.2.0
  */
-package graphic;
+package graphic.event;

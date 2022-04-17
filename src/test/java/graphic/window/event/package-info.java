@@ -20,8 +20,7 @@
  */
 
 /**
- * Contains the visual components that are using java 2d to visualize
- * themselves.
- * @since 2.1.0
+ * Tests for the j2d event window package.
+ * @since 13.0.1
  */
-package graphic;
+package graphic.window.event;

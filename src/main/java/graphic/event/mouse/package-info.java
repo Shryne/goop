@@ -20,8 +20,7 @@
  */
 
 /**
- * Contains the visual components that are using java 2d to visualize
- * themselves.
- * @since 2.1.0
+ * Contains the mouse event components.
+ * @since 12.2.0
  */
-package graphic;
+package graphic.event.mouse;
