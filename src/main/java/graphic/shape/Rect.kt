@@ -23,6 +23,8 @@ package graphic.shape
 
 import logic.graphic.color.Color
 import logic.unit.area.Area
+import logic.unit.area.Area2D
+import logic.unit.size.Size
 import java.awt.Graphics
 
 /**
@@ -36,7 +38,13 @@ import java.awt.Graphics
  * @param area The area of this rect.
  * @param color The color of this rect.
  */
-class Rect(private val area: Area, private val color: Color) : J2DShape {
+class Rect(private val area: Area, private val color: Color) : Shape {
+    /**
+     * @param size The size of this rect.
+     * @param color The color of this rect.
+     */
+    constructor(size: Size, color: Color) : this(Area2D(size), color)
+
     override fun draw(graphics: Graphics) {
         color.applyOn { r, g, b, a ->
             graphics.color = java.awt.Color(r, g, b, a)

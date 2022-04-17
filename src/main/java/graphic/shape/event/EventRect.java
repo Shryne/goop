@@ -22,8 +22,8 @@
 package graphic.shape.event;
 
 import graphic.event.mouse.J2DMouse;
-import graphic.shape.J2DMouseShape;
-import graphic.shape.J2DShapeTarget;
+import graphic.shape.MouseShape;
+import graphic.shape.ShapeTarget;
 import java.awt.Graphics;
 import java.util.List;
 import logic.graphic.color.Black;
@@ -39,7 +39,7 @@ import org.cactoos.list.ListOf;
  * {@link this#draw(Graphics)}.</p>
  * @since 13.0.0
  */
-public class J2DEventRect implements J2DMouseShape {
+public class EventRect implements MouseShape {
     /**
      * The area of this rect. It needs to be a PosOverlap area to check whether
      * a mouse event occurred on itself.
@@ -54,13 +54,13 @@ public class J2DEventRect implements J2DMouseShape {
     /**
      * The targets for the mouse events.
      */
-    private final List<J2DShapeTarget> targets;
+    private final List<ShapeTarget> targets;
 
     /**
      * Ctor.
      * @param area The area of the rect.
      */
-    public J2DEventRect(final PosOverlap area) {
+    public EventRect(final PosOverlap area) {
         this(
             area,
             new Black()
@@ -72,8 +72,8 @@ public class J2DEventRect implements J2DMouseShape {
      * @param area The area of this rect.
      * @param targets The targets for the mouse events.
      */
-    public J2DEventRect(
-        final PosOverlap area, final J2DShapeTarget... targets
+    public EventRect(
+        final PosOverlap area, final ShapeTarget... targets
     ) {
         this(
             area,
@@ -86,8 +86,8 @@ public class J2DEventRect implements J2DMouseShape {
      * @param area The area of this rect.
      * @param targets The targets for the mouse events.
      */
-    public J2DEventRect(
-        final PosOverlap area, final List<J2DShapeTarget> targets
+    public EventRect(
+        final PosOverlap area, final List<ShapeTarget> targets
     ) {
         this(
             area,
@@ -101,7 +101,7 @@ public class J2DEventRect implements J2DMouseShape {
      * @param area The area of this rect.
      * @param color The color of this rect.
      */
-    public J2DEventRect(final PosOverlap area, final Color color) {
+    public EventRect(final PosOverlap area, final Color color) {
         this(
             area,
             color,
@@ -115,10 +115,10 @@ public class J2DEventRect implements J2DMouseShape {
      * @param color The color of this rect.
      * @param targets The targets for the mouse events.
      */
-    public J2DEventRect(
+    public EventRect(
         final PosOverlap area,
         final Color color,
-        final List<J2DShapeTarget> targets
+        final List<ShapeTarget> targets
     ) {
         this.area = area;
         this.color = color;

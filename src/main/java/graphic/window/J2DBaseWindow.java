@@ -21,7 +21,7 @@
 
 package graphic.window;
 
-import graphic.shape.J2DShape;
+import graphic.shape.Shape;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.Collections;
@@ -61,7 +61,7 @@ public class J2DBaseWindow implements Showable {
      */
     public J2DBaseWindow(
         final Area area,
-        final Iterable<? extends J2DShape> shapes
+        final Iterable<? extends Shape> shapes
     ) {
         this(area, Collections.emptyList(), shapes);
     }
@@ -75,7 +75,7 @@ public class J2DBaseWindow implements Showable {
     public J2DBaseWindow(
         final Area area,
         final Iterable<J2DWindowFeature> features,
-        final Iterable<? extends J2DShape> shapes
+        final Iterable<? extends Shape> shapes
     ) {
         this(
             new Lazy<>(

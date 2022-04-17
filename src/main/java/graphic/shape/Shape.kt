@@ -18,19 +18,18 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.shape
 
-package graphic.shape;
-
-import java.awt.Graphics;
+import java.awt.Graphics
 
 /**
- * A shape that is using java2d to draw itself.
- * @since 2.1.0
+ * A shape that can draw itself.
  */
-public interface J2DShape {
+interface Shape {
     /**
      * Draws the shape.
+     *
      * @param graphics The Graphics object to draw the shape.
      */
-    void draw(Graphics graphics);
+    fun draw(graphics: Graphics)
 }

@@ -25,15 +25,18 @@ import graphic.shape.Rect
 import graphic.window.Window
 import logic.graphic.color.Black
 import logic.unit.area.Area2D
+import logic.unit.size.Size2D
 
-
+/**
+ * Draws a rectangle onto a window.
+ */
 fun main() {
     Window(
         "I am a window",
         Area2D(500, 500),
         Rect(
-            Area2D(200, 200),
+            Size2D(200, 200),
             Black()
-        )
+        ),
     ).show()
 }

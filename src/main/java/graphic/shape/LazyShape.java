@@ -32,17 +32,17 @@ import logic.functional.Value;
  * {@link Lazy} to initialize itself.</p>
  * @since 7.2.0
  */
-public class J2DLazyShape implements J2DShape {
+public class LazyShape implements Shape {
     /**
      * The construction of the j2d shape.
      */
-    private final Value<J2DShape> shape;
+    private final Value<Shape> shape;
 
     /**
      * Ctor.
      * @param shape The construction of the j2d based shape.
      */
-    public J2DLazyShape(final Value<J2DShape> shape) {
+    public LazyShape(final Value<Shape> shape) {
         this.shape = shape;
     }
 

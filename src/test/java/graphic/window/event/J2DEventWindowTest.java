@@ -22,8 +22,8 @@
 package graphic.window.event;
 
 import graphic.J2DContainerInsets;
-import graphic.event.mouse.J2DClick;
-import graphic.shape.event.J2DEventRect;
+import graphic.event.mouse.Click;
+import graphic.shape.event.EventRect;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.util.List;
@@ -40,7 +40,7 @@ import org.junit.Test;
 public class J2DEventWindowTest {
     /**
      * Tests if the full specified rectangular area is clickable. This tests the
-     * {@link J2DEventWindow} and {@link J2DEventRect}. Additionally, them
+     * {@link J2DEventWindow} and {@link EventRect}. Additionally, them
      * {@link Robot}  is used. The robot will click somewhere at the top of the
      * area so this test will probably succeed even if the insets of the window
      * aren't taken into account.
@@ -74,9 +74,9 @@ public class J2DEventWindowTest {
                 )
             ),
             List.of(
-                new J2DEventRect(
+                new EventRect(
                     new PosOverlap2D(width, height),
-                    new J2DClick(() -> clicked.set(true))
+                    new Click(() -> clicked.set(true))
                 )
             )
         ).show();
@@ -90,7 +90,7 @@ public class J2DEventWindowTest {
 
     /**
      * Tests if the full specified rectangular area is clickable. This tests the
-     * {@link J2DEventWindow} and {@link J2DEventRect}. Additionally, the
+     * {@link J2DEventWindow} and {@link EventRect}. Additionally, the
      * {@link Robot} is used. The robot will click somewhere near the bottom to
      * ensure that the bar size of the window is taken into account.
      * @throws Exception Thanks to the used {@link Robot} and to
@@ -127,9 +127,9 @@ public class J2DEventWindowTest {
                 )
             ),
             List.of(
-                new J2DEventRect(
+                new EventRect(
                     new PosOverlap2D(width, height),
-                    new J2DClick(() -> clicked.set(true))
+                    new Click(() -> clicked.set(true))
                 )
             )
         ).show();

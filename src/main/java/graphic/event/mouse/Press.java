@@ -21,7 +21,7 @@
 
 package graphic.event.mouse;
 
-import graphic.shape.J2DShapeTarget;
+import graphic.shape.ShapeTarget;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -36,7 +36,7 @@ import logic.unit.pos.Pos2D;
  * <p>This class is immutable, but does mutate the state of the mouse.</p>
  * @since 13.1.2
  */
-public class J2DPress implements J2DShapeTarget {
+public class Press implements ShapeTarget {
     /**
      * The target action to be applied with the x and y coordinates of the
      * press.
@@ -47,7 +47,7 @@ public class J2DPress implements J2DShapeTarget {
      * Ctor.
      * @param action The action to be applied when the press occurs.
      */
-    public J2DPress(final Action action) {
+    public Press(final Action action) {
         this(
             // @checkstyle ParameterName (1 line)
             (x, y) -> action.run()
@@ -59,7 +59,7 @@ public class J2DPress implements J2DShapeTarget {
      * @param target The target with the action, who gets the x and y
      *  coordinates of the press.
      */
-    public J2DPress(final ObjIntConsumer<Integer> target) {
+    public Press(final ObjIntConsumer<Integer> target) {
         this.target = target;
     }
 
@@ -76,7 +76,7 @@ public class J2DPress implements J2DShapeTarget {
                     final var x = event.getX();
                     final var y = event.getY();
                     if (overlap.contains(new Pos2D(x, y))) {
-                        J2DPress.this.target.accept(x, y);
+                        Press.this.target.accept(x, y);
                     }
                 }
             }

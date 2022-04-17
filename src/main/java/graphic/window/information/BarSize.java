@@ -21,7 +21,7 @@
 
 package graphic.window.information;
 
-import graphic.window.J2DWindow;
+import graphic.window.Window;
 import javax.swing.JFrame;
 import logic.functional.Lazy;
 import logic.unit.size.Size2D;
@@ -40,7 +40,7 @@ import logic.unit.size.SizeEnvelope;
  *          );
  *     );}
  * </pre>
- * In this case, the action will be applied when {@link J2DWindow#show()} is
+ * In this case, the action will be applied when {@link Window#show()} is
  * called.
  * <p>This class is immutable and thread-safe.</p>
  * @since 13.0.1

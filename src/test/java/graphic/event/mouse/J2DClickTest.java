@@ -32,7 +32,7 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Tests for {@link J2DClick}.
+ * Tests for {@link Click}.
  * @since 13.0.2
  */
 public class J2DClickTest {
@@ -55,7 +55,7 @@ public class J2DClickTest {
         final var robot = new Robot();
         final var frame = new JFrame();
         frame.setSize(width, height);
-        new J2DClick(
+        new Click(
             () -> clicked.set(true)
         ).registerFor(
             new J2DBaseMouse(frame),

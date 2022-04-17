@@ -21,7 +21,7 @@
 
 package graphic.event.mouse;
 
-import graphic.shape.J2DShapeTarget;
+import graphic.shape.ShapeTarget;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -31,22 +31,23 @@ import logic.unit.PosOverlap;
 import logic.unit.pos.Pos2D;
 
 /**
- * A mouse button release bound on a component to apply some action on
- * activation.
+ * A mouse click bound on a component to apply some action on activation. The
+ * action (thus the click) will only be applied when the mouse has been pressed
+ * and released.
  * <p>This class is immutable, but does mutate the state of the mouse.</p>
- * @since 13.1.2
+ * @since 12.5.0
  */
-public class J2DRelease implements J2DShapeTarget {
+public class Click implements ShapeTarget {
     /**
-     * The action to be applied when the release occurs.
+     * The action to be applied when the click occurs.
      */
     private final Action action;
 
     /**
      * Ctor.
-     * @param action The action to be applied when the mouse release occurred.
+     * @param action The action to be applied when the click occurs.
      */
-    public J2DRelease(final Action action) {
+    public Click(final Action action) {
         this.action = action;
     }
 
@@ -58,14 +59,14 @@ public class J2DRelease implements J2DShapeTarget {
         source.register(
             (MouseListener) new MouseAdapter() {
                 @Override
-                public void mouseReleased(final MouseEvent event) {
+                public void mouseClicked(final MouseEvent event) {
                     if (overlap.contains(
                         new Pos2D(
                             event.getX(),
                             event.getY()
                         )
                     )) {
-                        J2DRelease.this.action.run();
+                        Click.this.action.run();
                     }
                 }
             }

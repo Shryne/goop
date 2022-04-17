@@ -21,12 +21,11 @@
 
 package graphic.window
 
-import graphic.shape.J2DShape
+import graphic.shape.Shape
 import logic.unit.area.Area
 import logic.unit.area.Area2D
 import org.cactoos.iterable.IterableOf
 import org.cactoos.iterable.Joined
-import org.cactoos.list.ListOf
 import javax.swing.WindowConstants
 
 /**
@@ -44,11 +43,11 @@ import javax.swing.WindowConstants
  * @param features Certain features regarding the window.
  * @param shapes The shapes that are drawn on the window.
  */
-class Window(
+open class Window(
     title: String,
     area: Area,
     features: Iterable<J2DWindowFeature>,
-    shapes: Iterable<J2DShape>
+    shapes: Iterable<Shape>
 ) : J2DBaseWindow(
     area,
     Joined(
@@ -71,7 +70,7 @@ class Window(
     constructor(
         title: String = "",
         area: Area,
-        shapes: Iterable<J2DShape>,
+        shapes: Iterable<Shape>,
         vararg features: J2DWindowFeature
     ) : this(title, area, listOf(*features), shapes)
 
@@ -83,7 +82,7 @@ class Window(
     constructor(
         title: String = "",
         area: Area,
-        vararg shapes: J2DShape,
+        vararg shapes: Shape,
     ) : this(title, area, listOf(*shapes))
 
     /**
@@ -91,6 +90,6 @@ class Window(
      * @param height The height of the window.
      * @param shapes The shapes that are drawn on the window.
      */
-    constructor(width: Int, height: Int, vararg shapes: J2DShape) :
+    constructor(width: Int, height: Int, vararg shapes: Shape) :
         this("", Area2D(width, height), listOf(*shapes))
 }

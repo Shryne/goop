@@ -23,12 +23,13 @@ package graphic.window.event;
 
 import graphic.event.mouse.J2DBaseMouse;
 import graphic.event.mouse.J2DMouse;
-import graphic.shape.J2DMouseShape;
-import graphic.shape.J2DShape;
+import graphic.shape.MouseShape;
+import graphic.shape.Shape;
 import graphic.window.J2DBaseWindow;
-import graphic.window.J2DWindow;
 import graphic.window.J2DWindowFeature;
 import java.util.Collections;
+
+import graphic.window.Window;
 import logic.unit.area.Area;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
@@ -40,14 +41,14 @@ import org.cactoos.iterable.Joined;
  *     <li>sets the title</li>
  *     <li>sets the default close operation (end application on close)</li>
  * </ul>
- * Additionally, it uses {@link J2DMouseShape} instead of
- * {@link J2DShape}.
+ * Additionally, it uses {@link MouseShape} instead of
+ * {@link Shape}.
  * <p>This class mutates its state when {@link J2DBaseWindow#show()} is called.
  * Since show isn't synchronized, this class isn't thread-safe. Additionally,
  * the features can change its state.</p>
  * @since 13.0.0
  */
-public class J2DEventWindow extends J2DWindow {
+public class J2DEventWindow extends Window {
     /**
      * Ctor.
      * @param area The area of the window.
@@ -56,7 +57,7 @@ public class J2DEventWindow extends J2DWindow {
      */
     public J2DEventWindow(
         final Area area,
-        final J2DMouseShape... shapes
+        final MouseShape... shapes
     ) {
         this(
             "",
@@ -73,7 +74,7 @@ public class J2DEventWindow extends J2DWindow {
      */
     public J2DEventWindow(
         final Area area,
-        final Iterable<J2DMouseShape> shapes
+        final Iterable<MouseShape> shapes
     ) {
         this(
             "",
@@ -93,7 +94,7 @@ public class J2DEventWindow extends J2DWindow {
     public J2DEventWindow(
         final String title,
         final Area area,
-        final J2DMouseShape... shapes
+        final MouseShape... shapes
     ) {
         this(
             title,
@@ -115,7 +116,7 @@ public class J2DEventWindow extends J2DWindow {
         final String title,
         final Area area,
         final Iterable<J2DWindowFeature> features,
-        final Iterable<J2DMouseShape> shapes
+        final Iterable<MouseShape> shapes
     ) {
         super(
             title,
