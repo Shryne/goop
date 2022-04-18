@@ -18,50 +18,31 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.unit.size
 
-package logic.unit.size;
-
-import graphic.j2d.shape.Redrawable;
-import java.util.function.BiFunction;
-import java.util.function.ObjIntConsumer;
+import graphic.j2d.shape.Redrawable
+import java.util.function.BiFunction
+import java.util.function.ObjIntConsumer
 
 /**
  * A decorator containing convenience methods that are based on the methods of
  * the interface.
- * @since 15.3.0
+ *
+ * @param size The size to delegate the calls to.
  */
-public class ConvenientSize implements Size {
-    /**
-     * The size to delegate the calls to.
-     */
-    private final Size size;
-
-    /**
-     * Ctor.
-     * @param size The size to delegate the calls to.
-     */
-    public ConvenientSize(final Size size) {
-        this.size = size;
-    }
-
-    @Override
-    public final <R> R result(final BiFunction<Integer, Integer, R> target) {
-        return this.size.result(target);
+open class ConvenientSize(private val size: Size) : Size {
+    override fun <R> result(target: BiFunction<Int, Int, R>): R {
+        return size.result(target)
     }
 
     /**
      * Gives the given consumer the width and height that define this size.
+     *
      * @param target Target that gets the width and height.
      */
-    public final void applyOn(final ObjIntConsumer<Integer> target) {
-        this.result(
-            (width, height) -> {
-                target.accept(width, height);
-                return null;
-            }
-        );
+    fun applyOn(target: ObjIntConsumer<Int>) {
+        result<Any> { w, h -> target.accept(w, h) }
     }
 
-    @Override
-    public final void register(final Redrawable redrawable) { }
+    override fun register(redrawable: Redrawable) {}
 }

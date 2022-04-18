@@ -22,6 +22,5 @@
 /**
  * Provides the {@link logic.unit.size.Size} interface and the classes and
  * decorators around it.
- * @since 3.4.0
  */
 package logic.unit.size;

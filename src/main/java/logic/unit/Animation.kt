@@ -18,17 +18,15 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-
-package logic.unit;
+package logic.unit
 
 /**
  * Defines an animation - a unit that transitions from one state to another in
  * a certain time.
- * @since 8.3.0
  */
-public interface Animation {
+interface Animation {
     /**
      * Starts the animation.
      */
-    void start();
+    fun start()
 }

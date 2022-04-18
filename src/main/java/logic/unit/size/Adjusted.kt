@@ -18,61 +18,34 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.unit.size
 
-package logic.unit.size;
-
-import graphic.j2d.shape.Redrawable;
-import java.util.function.BiFunction;
-import java.util.function.IntFunction;
+import graphic.j2d.shape.Redrawable
+import java.util.function.BiFunction
+import java.util.function.IntFunction
 
 /**
  * An adjusted size.
- * @since 18.5
+ *
+ * @param size The size to adjust.
+ * @param width The adjustment of the width.
+ * @param height The adjustment of the height.
  */
-public class Adjusted implements Size {
-    /**
-     * The size to adjust.
-     */
-    private final Size size;
-
-    /**
-     * The adjustment of the width.
-     */
-    private final IntFunction<Integer> width;
-
-    /**
-     * The adjustment of the height.
-     */
-    private final IntFunction<Integer> height;
-
-    /**
-     * Ctor.
-     * @param size The size to adjust.
-     * @param width The adjustment of the width.
-     * @param height The adjustment of the height.
-     */
-    public Adjusted(
-        final Size size,
-        final IntFunction<Integer> width,
-        final IntFunction<Integer> height
-    ) {
-        this.size = size;
-        this.width = width;
-        this.height = height;
-    }
-
-    @Override
-    public final <R> R result(final BiFunction<Integer, Integer, R> target) {
-        return this.size.result(
-            (first, second) -> target.apply(
-                this.width.apply(first),
-                this.height.apply(second)
+open class Adjusted(
+    private val size: Size,
+    private val width: IntFunction<Int>,
+    private val height: IntFunction<Int>
+) : Size {
+    override fun <R> result(target: BiFunction<Int, Int, R>): R {
+        return size.result { a, b ->
+            target.apply(
+                width.apply(a),
+                height.apply(b)
             )
-        );
+        }
     }
 
-    @Override
-    public final void register(final Redrawable redrawable) {
-        this.size.register(redrawable);
+    override fun register(redrawable: Redrawable) {
+        size.register(redrawable)
     }
 }

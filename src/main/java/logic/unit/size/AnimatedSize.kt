@@ -18,10 +18,8 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.unit.size
 
-package logic.unit.size;
+import logic.unit.Animation
 
-import logic.unit.Animation;
-
-public interface AnimatedSize extends Size, Animation {
-}
+interface AnimatedSize : Size, Animation

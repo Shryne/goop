@@ -18,32 +18,28 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.unit.size
 
-package logic.unit.size;
-
-import java.util.function.IntUnaryOperator;
+import java.util.function.IntBinaryOperator
+import java.util.function.IntUnaryOperator
 
 /**
  * Defines a calculation of a size object with a scalar value by using a given
  * operation:
- * <pre>{@code Size(10, 20) + 15 = Size(25, 35)}</pre>
- * <p>This class is immutable and thread-safe.</p>
- * @since 9.0.0
+ * ```
+ * Size(10, 20) + 15 = Size(25, 35)
+ * ```
+ *
+ * This class is immutable and thread-safe.
+ *
+ * @param size The size of the calculation.
+ * @param operation The operation to be applied.
  */
-public class ScalarSizeCalculation extends SizeCalculation {
-    /**
-     * Ctor.
-     * @param size The size of the calculation.
-     * @param operation The operation to be applied.
-     */
-    public ScalarSizeCalculation(
-        final Size size,
-        final IntUnaryOperator operation
-    ) {
-        super(
-            size,
-            new Size2D(0, 0),
-            (first, second) -> operation.applyAsInt(first)
-        );
-    }
-}
+open class ScalarSizeCalculation(
+    size: Size,
+    operation: IntUnaryOperator
+) : SizeCalculation(
+    size,
+    Size2D(0, 0),
+    IntBinaryOperator { a, _ -> operation.applyAsInt(a) }
+)

@@ -18,25 +18,26 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.unit.size
 
-package logic.unit.size;
+import java.util.function.IntBinaryOperator
 
 /**
  * Represents the difference between two sizes:
- * <pre>{@code Size(
+ * ```
+ * Size(
  *      firstSize.width - secondSize.width,
  *      firstSize.height - secondSize.height
- * )}</pre>
- * <p>This class is immutable and thread-safe.</p>
- * @since 8.3.0
+ * )
+ * ```
+ *
+ * This class is immutable and thread-safe.
+ *
+ * @param first The first size.
+ * @param second The second size.
  */
-public class Diff extends SizeCalculation {
-    /**
-     * Ctor.
-     * @param first The first size.
-     * @param second The second size.
-     */
-    public Diff(final Size first, final Size second) {
-        super(first, second, (firsts, seconds) -> firsts - seconds);
-    }
-}
+class Diff(first: Size, second: Size) : SizeCalculation(
+    first,
+    second,
+    IntBinaryOperator { a, b -> a - b }
+)
