@@ -18,35 +18,51 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package sample
 
-package sample;
+import graphic.j2d.event.mouse.J2DPressRelease
+import logic.functional.Action
+import logic.graphic.color.ButtonColor
+import logic.graphic.color.DualColor
+import logic.unit.area.Area
+import logic.unit.area.Area2D
+import logic.unit.size.Size
 
-import graphic.j2d.event.mouse.J2DPressRelease;
-import logic.functional.Action;
-import logic.graphic.color.ButtonColor;
-import logic.graphic.color.DualColor;
-import logic.unit.area.Area;
-
-public class Button extends J2DCircle {
-    public Button(final Area area, final Action action) {
-        this(
-            area,
-            action,
-            new ButtonColor()
-        );
+/**
+ * A clickable form that does some action when clicked and released. Note that
+ * the action won't be applied if the release happens outside of the button.
+ *
+ * @param area The area of the button.
+ * @param action The action to be applied.
+ * @param color The color of the button.
+ */
+class Button private constructor(
+    area: Area,
+    action: Action,
+    color: DualColor
+) : J2DCircle(
+    area,
+    color,
+    J2DPressRelease({ color.swap() }) {
+        color.swap()
+        action.run()
     }
+) {
+    /**
+     * Creates a button using the [ButtonColor].
+     * @param area The area of the button.
+     * @param action The action to be applied.
+     */
+    constructor(area: Area, action: Action) : this(
+        area,
+        action,
+        ButtonColor()
+    )
 
-    private Button(final Area area, final Action action, final DualColor color) {
-        super(
-            area,
-            color, // optional
-            new J2DPressRelease(
-                color::swap,
-                () -> {
-                    color.swap();
-                    action.run();
-                }
-            )
-        );
-    }
+    /**
+     * Creates a button using the [ButtonColor] and with a position of (0,0).
+     * @param size The size of the button.
+     * @param action The action to be applied.
+     */
+    constructor(size: Size, action: Action) : this(Area2D(size), action)
 }

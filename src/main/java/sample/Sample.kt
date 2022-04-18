@@ -18,32 +18,25 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package sample
 
-package sample;
+import graphic.j2d.window.event.J2DEventWindow
+import logic.unit.area.Area2D
+import logic.unit.pos.Pos2D
+import logic.unit.size.Scaling
+import logic.unit.size.Size2D
 
-import graphic.j2d.window.event.J2DEventWindow;
-import logic.unit.area.Area2D;
-import logic.unit.pos.Pos2D;
-import logic.unit.size.Scaling;
-import logic.unit.size.Size2D;
-
-public class Sample {
-    public static void main(final String[] args) {
-        new J2DEventWindow(
-            new Area2D(100, 100, 300, 300),
-            new Button(
-                new Area2D(
-                    new Pos2D(0, 0),
-                    new Immediate(
-                        new Scaling(
-                            new Size2D(0, 0),
-                            new Size2D(300, 300),
-                            10_000
-                        )
-                    )
-                ),
-                () -> System.out.println("released")
+fun main() {
+    J2DEventWindow(
+        Area2D(100, 100, 300, 300),
+        Button(
+            Immediate(
+                Scaling(
+                    Size2D(0, 0),
+                    Size2D(300, 300),
+                    10_000
+                )
             )
-        ).show();
-    }
+        ) { println("released") }
+    ).show()
 }
