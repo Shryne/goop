@@ -18,24 +18,24 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.unit
 
-package logic.unit;
-
-import logic.unit.pos.Pos;
+import logic.unit.pos.Pos
 
 /**
  * Can determine whether a given position is inside itself.
- * @since 12.5.0
  */
-public interface PosOverlap {
+interface PosOverlap {
     /**
      * Tells whether the given pos is inside itself. Example:
-     * <p>Area(0, 0, 100, 100).contains(0, 0) => true</p>
-     * <p>Area(0, 0, 100, 100).contains(50, 50) => true</p>
-     * <p>Area(0, 0, 100, 100).contains(100, 100) => true</p>
-     * <p>Area(0, 0, 100, 100).contains(101, 101) => false</p>
+     * ```
+     * Area(0, 0, 100, 100).contains(0, 0) => true
+     * Area(0, 0, 100, 100).contains(50, 50) => true
+     * Area(0, 0, 100, 100).contains(100, 100) => true
+     * Area(0, 0, 100, 100).contains(101, 101) => false
+     * ```
      * @param pos The position to check for.
      * @return True if the position is inside, otherwise false.
      */
-    boolean contains(Pos pos);
+    operator fun contains(pos: Pos): Boolean
 }

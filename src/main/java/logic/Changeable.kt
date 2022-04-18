@@ -18,20 +18,19 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic
 
-package logic;
-
-import graphic.j2d.shape.Redrawable;
+import graphic.j2d.shape.Redrawable
 
 /**
- * Something that is able change itself to trigger a redraw.
+ * Something that is able to change itself to trigger a redraw.
  * @see Redrawable
- * @since 19
+ *
  */
-public interface Changeable {
+interface Changeable {
     /**
-     * Registers a redrawable eventually to update him.
+     * Registers a Redrawable to update him.
      * @param redrawable The redrawable to be redrawn.
      */
-    void register(Redrawable redrawable);
+    fun register(redrawable: Redrawable)
 }
