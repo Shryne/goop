@@ -19,8 +19,27 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-/**
- * Contains the windows that are using lwjgl to show themselves.
- * @since 3.9.0
- */
-package graphic.lwjgl.window;
+package sample
+
+import graphic.j2d.shape.J2DGrid
+import graphic.j2d.shape.J2DMouseShape
+import graphic.j2d.shape.J2DRect
+import graphic.j2d.shape.event.J2DEventRect
+import graphic.j2d.window.J2DWindow
+import graphic.j2d.window.event.J2DEventWindow
+import logic.unit.area.Area2D
+import logic.unit.area.PosOverlap2D
+import logic.unit.size.Size2D
+
+fun main() {
+    J2DEventWindow(
+        Area2D(500, 500),
+        J2DGrid(
+            listOf(
+                listOf(J2DEventRect(PosOverlap2D(Area2D(100, 100)))),
+                listOf(J2DEventRect(PosOverlap2D(Area2D(100, 100))))
+            ),
+            1, 1
+        )
+    ).show()
+}
