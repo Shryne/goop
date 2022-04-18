@@ -18,11 +18,10 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.unit.size
 
-package logic.unit.size;
-
-import java.util.function.BiFunction;
-import logic.Changeable;
+import logic.Changeable
+import java.util.function.BiFunction
 
 /*
 This interface is necessary (compared to using width and height each time)
@@ -30,11 +29,10 @@ because this library depends on the possibility to implement own
 implementations like a scaling size
 */
 /**
- * The two dimensional cartesian based size of a rectangular area.
- *
- * @since 2.1.0
+ * The two-dimensional cartesian based size of a rectangular area.
+
  */
-public interface Size extends Changeable {
+interface Size : Changeable {
     /**
      * Gives the given function the width and height that define this size and
      * returns the result of this function. This can be handy if for example one
@@ -43,6 +41,6 @@ public interface Size extends Changeable {
      * @param target The target who gets the width and the height.
      * @param <R> The type of the result.
      * @return The result of the applied function.
-     */
-    <R> R result(BiFunction<Integer, Integer, R> target);
+    */
+    fun <R> result(target: BiFunction<Int, Int, R>): R
 }

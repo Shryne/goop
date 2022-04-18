@@ -18,83 +18,48 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.unit.size
 
-package logic.unit.size;
-
-import graphic.j2d.shape.Redrawable;
-import java.util.function.BiFunction;
-import java.util.function.IntBinaryOperator;
+import graphic.j2d.shape.Redrawable
+import java.util.function.BiFunction
+import java.util.function.IntBinaryOperator
 
 /**
  * Defines a size that is calculated from two other sizes based on a given
  * operation. The order of the given sizes will be hold when the given operation
  * is called on them.
- * <p>This class reuses the objects and doesn't create new ones when the
- * calculation is applied.</p>
- * <p>This class is immutable and thread-safe.</p>
- * @since 8.3.0
+ *
+ * This class reuses the objects and doesn't create new ones when the
+ * calculation is applied.
+ *
+ * This class is immutable and thread-safe.
+ *
+ * @param first The first size for the calculation.
+ * @param second The second size for the calculation.
+ * @param operation The operation to be applied on the widths and heights of
+ * the given sizes.
  */
-public class SizeCalculation implements Size {
-    /**
-     * The first size for the calculation.
-     */
-    private final Size first;
-
-    /**
-     * The second size for the calculation.
-     */
-    private final Size second;
-
-    /**
-     * The operation to be applied on the widths and heights of the given sizes.
-     */
-    private final IntBinaryOperator operation;
-
-    /**
-     * Ctor.
-     * @param first The first size for the calculation.
-     * @param second The second size for the calculation.
-     * @param operation The operation to be applied on the widths and heights of
-     *  the given sizes.
-     */
-    public SizeCalculation(
-        final Size first,
-        final Size second,
-        final IntBinaryOperator operation
-    ) {
-        this.first = first;
-        this.second = second;
-        this.operation = operation;
-    }
-
-    @Override
-    public final <R> R result(final BiFunction<Integer, Integer, R> target) {
+open class SizeCalculation(
+    private val first: Size,
+    private val second: Size,
+    private val operation: IntBinaryOperator
+) : Size {
+    override fun <R> result(target: BiFunction<Int, Int, R>): R {
         // @checkstyle MethodBodyComments (1 line)
-        //noinspection SuspiciousNameCombination
-        return this.first.result(
-            // @checkstyle ParameterName (2 lines)
-            (firstWidth, firstHeight) -> this.second.result(
-                (secondWidth, secondHeight) -> target.apply(
-                    this.operation.applyAsInt(firstWidth, secondWidth),
-                    this.operation.applyAsInt(firstHeight, secondHeight)
+        return first.result { firstW: Int, firstH: Int ->
+            second.result { secondW, secondH ->
+                target.apply(
+                    operation.applyAsInt(firstW, secondH),
+                    operation.applyAsInt(firstH, secondH)
                 )
-            )
-        );
+            }
+        }
     }
 
-    @Override
-    public final void register(final Redrawable redrawable) {
-        this.first.register(redrawable);
-        this.second.register(redrawable);
+    override fun register(redrawable: Redrawable) {
+        first.register(redrawable)
+        second.register(redrawable)
     }
 
-    @Override
-    public final String toString() {
-        return this.result(
-            (width, height) -> new StringBuilder("Size")
-                .append("(width=").append(width)
-                .append(", height=").append(height)
-                .append(')')
-        ).toString();
-    }
+    override fun toString() = result { w, h -> "Size(width=$w, height=$h)" }
 }

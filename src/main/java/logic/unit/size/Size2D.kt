@@ -18,11 +18,10 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.unit.size
 
-package logic.unit.size;
-
-import graphic.j2d.shape.Redrawable;
-import java.util.function.BiFunction;
+import graphic.j2d.shape.Redrawable
+import java.util.function.BiFunction
 
 /*
 I am not happy about this naming, but my other idea's regarding the interface
@@ -31,52 +30,30 @@ example). So I took the more annoying name for the implementation to lower the
 chance that a user might use the class name as a parameter type
 */
 /**
- * Basic concrete implementation of {@link Size}.
- * <p>This class is immutable and thread-safe.</p>
- * @since 3.4.0
+ * Basic concrete implementation of [Size].
+ *
+ * This class is immutable and thread-safe.
+ *
+ * @constructor Creates a size with width = 0 and height = 0.
+ * @param w The width of the size.
+ * @param h The height of the size.
  */
-public class Size2D implements Size {
+open class Size2D(private val w: Int = 0, private val h: Int = 0) : Size {
     /**
-     * The width of the size.
-     */
-    private final int width;
-
-    /**
-     * The height of the size.
-     */
-    private final int height;
-
-    /**
-     * Ctor. Creates a size with width = 0 and height = 0.
-     */
-    public Size2D() {
-        this(0, 0);
-    }
-
-    /**
-     * Ctor.
      * @param width The width for the size.
      * @param height The height for the size.
      */
-    public Size2D(final int width, final int height) {
-        this.width = width;
-        this.height = height;
+    override fun <R> result(target: BiFunction<Int, Int, R>): R {
+        return target.apply(w, h)
     }
 
-    @Override
-    public final <R> R result(final BiFunction<Integer, Integer, R> target) {
-        return target.apply(this.width, this.height);
-    }
+    override fun register(redrawable: Redrawable) {}
 
-    @Override
-    public final void register(final Redrawable redrawable) { }
-
-    @Override
-    public final String toString() {
-        return new StringBuilder("Size")
-            .append("(width=").append(this.width)
-            .append(", height=").append(this.height)
+    override fun toString(): String {
+        return StringBuilder("Size")
+            .append("(width=").append(w)
+            .append(", height=").append(h)
             .append(')')
-        .toString();
+            .toString()
     }
 }

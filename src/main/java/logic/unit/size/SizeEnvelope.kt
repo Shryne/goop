@@ -18,47 +18,28 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.unit.size
 
-package logic.unit.size;
-
-import java.util.function.BiFunction;
-import logic.functional.Value;
+import logic.functional.Value
+import java.util.function.BiFunction
 
 /**
  * An envelope that delegates everything to the given size instance.
- * @since 6.1.1
+ *
+ * @param size The size to delegate the calls to.
  */
-public abstract class SizeEnvelope implements Size {
-    /**
-     * The size to delegate the calls to.
-     */
-    private final Value<Size> size;
-
-    /**
-     * Ctor.
-     * @param size The size to delegate the calls to.
-     */
-    public SizeEnvelope(final Value<Size> size) {
-        this.size = size;
+abstract class SizeEnvelope(private val size: Value<Size>) : Size {
+    override fun <R> result(target: BiFunction<Int, Int, R>): R {
+        return size.content().result(target)
     }
 
-    @Override
-    public final <R> R result(final BiFunction<Integer, Integer, R> target) {
-        return this.size.content().result(target);
+    override fun hashCode(): Int {
+        return size.content().hashCode()
     }
 
-    @Override
-    public final int hashCode() {
-        return this.size.content().hashCode();
+    override fun equals(other: Any?): Boolean {
+        return size.content() == other
     }
 
-    @Override
-    public final boolean equals(final Object obj) {
-        return this.size.content().equals(obj);
-    }
-
-    @Override
-    public final String toString() {
-        return this.size.content().toString();
-    }
+    override fun toString() = size.content().toString()
 }
