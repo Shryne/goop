@@ -18,21 +18,18 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.graphic.color
 
-package logic.graphic.color;
-
-import logic.Changeable;
-import logic.functional.QuadConsumer;
+import logic.Changeable
+import logic.functional.QuadConsumer
 
 /**
  * Defines a rgba based color.
- *
- * @since 2.1.0
  */
-public interface Color extends Changeable {
+interface Color : Changeable {
     /**
      * Gives the given consumer the red, green, blue and alpha values.
      * @param target Target that gets the rgba values.
      */
-    void applyOn(QuadConsumer<Integer, Integer, Integer, Integer> target);
+    fun applyOn(target: QuadConsumer<Int, Int, Int, Int>)
 }

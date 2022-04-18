@@ -36,7 +36,7 @@ import logic.unit.size.Size
  * @param action The action to be applied.
  * @param color The color of the button.
  */
-class Button private constructor(
+open class Button private constructor(
     area: Area,
     action: Action,
     color: DualColor

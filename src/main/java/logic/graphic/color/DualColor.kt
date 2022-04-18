@@ -18,16 +18,14 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-
-package logic.graphic.color;
+package logic.graphic.color
 
 /**
- * A color that consists of two color an that can be switched.
- * @since 18.6
+ * A color that consists of two colors that can be switched.
  */
-public interface DualColor extends Color {
+interface DualColor : Color {
     /**
      * Swaps the visible color.
      */
-    void swap();
+    fun swap()
 }

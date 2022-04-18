@@ -18,31 +18,18 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-
-package logic.graphic.color;
+package logic.graphic.color
 
 /**
  * Represents the black color.
- * @since 8.4.0
+ *
+ * @param alpha The alpha value of this color.
  */
-public class Black extends RGBA {
-    /**
-     * The highest value in java 2d.
-     */
-    private static final int ALPHA = 255;
-
-    /**
-     * Ctor.
-     */
-    public Black() {
-        this(Black.ALPHA);
-    }
-
-    /**
-     * Ctor.
-     * @param alpha The alpha value of this color.
-     */
-    public Black(final int alpha) {
-        super(0, 0, 0, alpha);
+open class Black(alpha: Int = ALPHA) : RGBA(0, 0, 0, alpha) {
+    companion object {
+        /**
+         * The highest value in java 2d.
+         */
+        private const val ALPHA = 255
     }
 }

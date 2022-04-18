@@ -18,14 +18,12 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-
-package logic.graphic.window;
+package logic.graphic.window
 
 /**
  * A component that can show itself - mainly windows.
- * @since 3.2.0
  */
-public interface Showable {
+interface Showable {
     /**
      * Shows the component, if it's not visible. This method is a no-op if
      * the component is already visible. Note that this operation will probably
@@ -33,5 +31,5 @@ public interface Showable {
      * than a simple "make me visible". So because of this, this method applies
      * all operations necessary to make a window visible.
      */
-    void show();
+    fun show()
 }

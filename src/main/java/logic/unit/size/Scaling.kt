@@ -18,93 +18,69 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.unit.size
 
-package logic.unit.size;
-
-import com.google.common.math.DoubleMath;
-import graphic.j2d.shape.Redrawable;
-import logic.functional.Lazy;
-import logic.functional.Value;
-import logic.time.Elapsable;
-import logic.time.Expiration;
+import com.google.common.math.DoubleMath
+import graphic.j2d.shape.Redrawable
+import logic.functional.Lazy
+import logic.functional.Value
+import logic.time.Elapsable
+import logic.time.Expiration
+import kotlin.math.roundToInt
 
 /**
  * Represents a changing size.
- * <p>This class is mutable and not thread-safe.</p>
- * @since 8.3.0
+ * This class is mutable and not thread-safe.
+ *
+ * @param size The size of scaling.
+ * @param watch The watch used to get the scaling progress.
  */
-public class Scaling extends SizeEnvelope implements AnimatedSize {
-    /**
-     * The watch used to get the scaling progress.
-     */
-    private final Elapsable watch;
-
+open class Scaling private constructor(
+    size: Value<Size>,
+    private val watch: Elapsable
+) : SizeEnvelope(size), AnimatedSize {
     /**
      * The redrawable to notify about the change.
      */
-    private Redrawable redrawable;
+    private lateinit var redrawable: Redrawable
 
     /**
-     * Ctor.
      * @param origin The starting size of this object.
      * @param ending The end size of this object.
      * @param milliseconds Amount of milliseconds needed to fulfill the scaling.
      */
-    public Scaling(
-        final Size origin, final Size ending, final long milliseconds
-    ) {
-        this(origin, ending, new Expiration(milliseconds));
-    }
+    constructor(origin: Size, ending: Size, milliseconds: Long) :
+        this(origin, ending, Expiration(milliseconds))
 
     /**
-     * Ctor.
      * @param origin The starting size of this object.
      * @param ending The end size of this object.
      * @param watch The watch used to get the scaling progress.
      */
-    public Scaling(
-        final Size origin, final Size ending, final Elapsable watch
-    ) {
-        this(
-            new Lazy<>(
-                () -> new Sum(
-                    origin,
-                    new ScalarSizeCalculation(
-                        new Diff(ending, origin),
-                        value -> (int) Math.round(
-                            value * watch.elapsedPercent()
-                        )
-                    )
-                )
-            ),
-            watch
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param size The size of scaling.
-     * @param watch The watch used to get the scaling progress.
-     */
-    private Scaling(final Value<Size> size, final Elapsable watch) {
-        super(size);
-        this.watch = watch;
-    }
-
-    @Override
-    public final void register(final Redrawable redrawable) {
-        this.redrawable = redrawable;
-    }
-
-    @Override
-    public final void start() {
-        this.watch.start();
-        final double done = 1.0;
-        final double epsilon = 0.00001;
-        this.redrawable.redraw(
-            () -> DoubleMath.fuzzyEquals(
-                this.watch.elapsedPercent(), done, epsilon
+    constructor(origin: Size, ending: Size, watch: Elapsable) : this(
+        Lazy<Size> {
+            Sum(
+                origin,
+                ScalarSizeCalculation(Diff(ending, origin)) {
+                    (it * watch.elapsedPercent()).roundToInt()
+                }
             )
-        );
+        },
+        watch
+    )
+
+    override fun register(redrawable: Redrawable) {
+        this.redrawable = redrawable
+    }
+
+    override fun start() {
+        watch.start()
+        val done = 1.0
+        val epsilon = 0.00001
+        redrawable.redraw {
+            DoubleMath.fuzzyEquals(
+                watch.elapsedPercent(), done, epsilon
+            )
+        }
     }
 }

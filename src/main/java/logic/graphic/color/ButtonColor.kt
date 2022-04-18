@@ -18,62 +18,49 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.graphic.color
 
-package logic.graphic.color;
-
-import graphic.j2d.shape.Redrawable;
-import logic.functional.QuadConsumer;
+import graphic.j2d.shape.Redrawable
+import logic.functional.QuadConsumer
 
 /**
  * The default color of a button.
- * @since 18.6
  */
-public class ButtonColor implements DualColor {
+open class ButtonColor : DualColor {
     /**
-     * The color of a released button;
+     * The color of a released button.
      */
-    private final Color release;
+    private val release: Color = RGBA(100, 100, 100, 255)
 
     /**
      * The color of a pressed button.
      */
-    private final Color press;
+    private val press: Color = RGBA(200, 200, 200, 255)
 
     /**
      * The current color of the button.
      */
-    private Color current;
+    private var current: Color = release
 
     /**
      * The redrawable to notify about the change.
      */
-    private Redrawable redrawable;
+    private lateinit var redrawable: Redrawable
 
-    public ButtonColor() {
-        this.release = new RGBA(100, 100, 100, 255);
-        this.press = new RGBA(200, 200, 200, 255);
-        this.current = this.release;
-    }
-
-    @Override
-    public final void swap() {
-        if (this.current == this.release) {
-            this.current = this.press;
+    override fun swap() {
+        if (current === release) {
+            current = press
         } else {
-            this.current = this.release;
+            current = release
         }
-        this.redrawable.redraw(() -> false);
+        redrawable.redraw { false }
     }
 
-    @Override
-    public final void applyOn(
-        final QuadConsumer<Integer, Integer, Integer, Integer> target
-    ) {
-        this.current.applyOn(target);
+    override fun applyOn(target: QuadConsumer<Int, Int, Int, Int>) {
+        current.applyOn(target)
     }
 
-    @Override
-    public final void register(final Redrawable redrawable) {
-        this.redrawable = redrawable;
+    override fun register(redrawable: Redrawable) {
+        this.redrawable = redrawable
     }
 }
