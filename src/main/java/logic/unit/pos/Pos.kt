@@ -18,12 +18,11 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.unit.pos
 
-package logic.unit.pos;
-
-import java.util.function.BiFunction;
-import java.util.function.ObjIntConsumer;
-import logic.Changeable;
+import logic.Changeable
+import java.util.function.BiFunction
+import java.util.function.ObjIntConsumer
 
 /*
 This interface is necessary (compared to using x and y each time) because this
@@ -36,30 +35,25 @@ sacrificing readability
 */
 /**
  * A cartesian two dimensional pos.
- * @since 2.1.0
  */
-public interface Pos extends Changeable {
+interface Pos : Changeable {
     /**
      * Gives the given function the x and y coordinates of this pos and
      * returns the result of the function. This can be handy if you want to
      * calculate something with the pos and want to have the result.
+     *
      * @param target The target who gets the coordinates.
      * @param <R> The type of the result of the applied function.
      * @return The result of the applied function.
      */
-    <R> R result(BiFunction<Integer, Integer, R> target);
+    fun <R> result(target: BiFunction<Int, Int, R>): R
+}
 
-    /**
-     * Gives the given consumer the x and y coordinates of this pos.
-     * @param target Target that gets the Coordinates.
-     */
-    default void applyOn(final ObjIntConsumer<Integer> target) {
-        this.result(
-            // @checkstyle ParameterName (1 line)
-            (x, y) -> {
-                target.accept(x, y);
-                return Void.TYPE;
-            }
-        );
-    }
+/**
+ * Gives the given consumer the x and y coordinates of this [Pos].
+ *
+ * @param target Target that gets the Coordinates.
+ */
+fun Pos.applyOn(target: ObjIntConsumer<Int>) {
+    result { x: Int, y: Int -> target.accept(x, y) }
 }

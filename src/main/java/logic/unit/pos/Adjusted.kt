@@ -18,62 +18,32 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.unit.pos
 
-package logic.unit.pos;
-
-import graphic.j2d.shape.Redrawable;
-import java.util.function.BiFunction;
-import java.util.function.IntFunction;
+import graphic.j2d.shape.Redrawable
+import java.util.function.BiFunction
+import java.util.function.IntFunction
 
 /**
  * An adjusted pos.
- * @since 18.4
+ *
+ * @param pos The position to adjust.
+ * @param x The adjustment of x.
+ * @param y The adjustment of y.
  */
-public class Adjusted implements Pos {
-    /**
-     * The pos to adjust.
-     */
-    private final Pos pos;
-
-    /**
-     * The adjustment of x.
-     * @checkstyle MemberName (2 lines)
-     */
-    private final IntFunction<Integer> x;
-
-    /**
-     * The adjustment of y.
-     * @checkstyle MemberName (2 lines)
-     */
-    private final IntFunction<Integer> y;
-
-    /**
-     * Ctor.
-     * @param pos The position to adjust.
-     * @param x The adjustment of x.
-     * @param y The adjustment of y.
-     * @checkstyle ParameterName (5 lines)
-     */
-    public Adjusted(
-        final Pos pos,
-        final IntFunction<Integer> x,
-        final IntFunction<Integer> y
-    ) {
-        this.pos = pos;
-        this.x = x;
-        this.y = y;
-    }
-
-    @Override
-    public final <R> R result(final BiFunction<Integer, Integer, R> target) {
-        return this.pos.result(
-            (first, second) -> target.apply(
-                this.x.apply(first),
-                this.y.apply(second)
+open class Adjusted(
+    private val pos: Pos,
+    private val x: IntFunction<Int>,
+    private val y: IntFunction<Int>
+) : Pos {
+    override fun <R> result(target: BiFunction<Int, Int, R>): R {
+        return pos.result { a, b ->
+            target.apply(
+                x.apply(a),
+                y.apply(b)
             )
-        );
+        }
     }
 
-    @Override
-    public final void register(final Redrawable redrawable) { }
+    override fun register(redrawable: Redrawable) {}
 }

@@ -18,11 +18,11 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.unit.area
 
-package logic.unit.area;
+import logic.unit.PosOverlap
 
 /**
  * An area that knows than a given pos overlaps with it.
- * @since 13.0.0
  */
-public interface PosOverlap extends logic.unit.PosOverlap, Area { }
+interface PosOverlap : PosOverlap, Area

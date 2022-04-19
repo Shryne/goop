@@ -18,27 +18,24 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.unit.area
 
-package logic.unit.area;
-
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
-import logic.Changeable;
-import logic.functional.QuadConsumer;
-import logic.functional.QuadFunction;
-import logic.unit.pos.Pos;
-import logic.unit.size.Size;
+import logic.Changeable
+import logic.functional.QuadConsumer
+import logic.functional.QuadFunction
+import logic.unit.pos.Pos
+import logic.unit.size.Size
+import java.util.function.BiConsumer
+import java.util.function.BiFunction
 
 /*
 This interface is needed (compared to using the pos and the size classes
 alone) because some implementations need both like an overlappable area
 */
 /**
- * Defines a cartesian two dimensional rectangular area of a shape.
- *
- * @since 2.1.0
+ * Defines a cartesian two-dimensional rectangular area of a shape.
  */
-public interface Area extends Changeable {
+interface Area : Changeable {
     /**
      * Gives the given function the pos and the size which define this
      * area and returns the result of that. This can be handy if for example
@@ -48,79 +45,64 @@ public interface Area extends Changeable {
      * @param <R> The type of the result.
      * @return The result.
      */
-    <R> R result(BiFunction<Pos, Size, R> target);
+    fun <R> result(target: BiFunction<Pos, Size, R>): R
+}
 
-    /*
-    The apply(BiConsumer<Position, Size>) method is not enough, because the
-    concrete graphic libraries are based on single values (x, y), instead of
-    the classes of this library. Without this method, one would've to use
-    two lambdas in multiple places. Additionally I don't want to use this method
-    alone, because my classes depend on Position, Size and the others and I
-    would've to convert them back and forth there
-    */
-    /**
-     * Gives the given function the pos and the size which define this
-     * area. This method shall offer a more convenient way to use the area
-     * classes compared to {@link this#result(BiFunction)}.
-     * <p>This method uses {@link this#result(BiFunction)} to gets it's values
-     * and it doesn't mutate the state by itself.</p>
-     * @param target Target that gets the pos and the size as four integer
-     *  values.
-     * @param <R> The type of the result.
-     * @return The result.
-     */
-    default <R> R result(
-        final QuadFunction<Integer, Integer, Integer, Integer, R> target
-    ) {
-        return this.result(
-            (pos, size) -> pos.result(
-                // @checkstyle ParameterName (1 line)
-                (x, y) -> size.result(
-                    (width, height) -> target.apply(x, y, width, height)
-                )
-            )
-        );
-    }
-
-    /**
-     * Gives the given consumer the pos and the size which define this
-     * area.
-     * @param target Target that gets the pos and the size.
-     */
-    default void applyOn(final BiConsumer<Pos, Size> target) {
-        this.result(
-            (pos, size) -> {
-                target.accept(pos, size);
-                return Void.TYPE;
+/*
+The apply(BiConsumer<Position, Size>) method is not enough, because the
+concrete graphic libraries are based on single values (x, y), instead of
+the classes of this library. Without this method, one would've to use
+two lambdas in multiple places. Additionally I don't want to use this method
+alone, because my classes depend on Position, Size and the others and I
+would've to convert them back and forth there
+*/
+/**
+ * Gives the given function the pos and the size which define this
+ * area. This method shall offer a more convenient way to use the area
+ * classes compared to [this.result].
+ *
+ * This method uses [this.result] to gets it's values
+ * and it doesn't mutate the state by itself.
+ * @param target Target that gets the pos and the size as four integer
+ * values.
+ * @param <R> The type of the result.
+ * @return The result.
+</R> */
+fun <R> Area.result(target: QuadFunction<Int, Int, Int, Int, R>): R  =
+    result { pos, size ->
+        pos.result { x, y ->
+            size.result { w, h ->
+                target.apply(x, y, w, h)
             }
-        );
+        }
     }
 
-    /*
-    The apply(BiConsumer<Position, Size>) method is not enough, because the
-    concrete graphic libraries are based on single values (x, y), instead of
-    the classes of this library. Without this method, one would've to use
-    two lambdas in multiple places. Additionally I don't want to use this method
-    alone, because my classes depend on Position, Size and the others and I
-    would've to convert them back and forth there
-    */
-    /**
-     * Gives the given consumer the pos and the size which define this
-     * area. This method shall offer a more convenient way to use the area
-     * classes compared to {@link this#applyOn(BiConsumer)}.
-     * <p>This method uses {@link this#applyOn(BiConsumer)} to gets it's values
-     * and it doesn't mutate the state by itself.</p>
-     * @param target Target that gets the pos and the size as four integer
-     *  values.
-     */
-    default void applyOn(
-        final QuadConsumer<Integer, Integer, Integer, Integer> target) {
-        // @checkstyle ParameterName (2 lines)
-        this.result(
-            (x, y, width, height) -> {
-                target.accept(x, y, width, height);
-                return Void.TYPE;
-            }
-        );
-    }
+/**
+ * Gives the given consumer the pos and the size which define this
+ * area.
+ * @param target Target that gets the pos and the size.
+ */
+fun Area.applyOn(target: BiConsumer<Pos, Size>) {
+    result { pos, size -> target.accept(pos, size) }
+}
+/*
+The apply(BiConsumer<Position, Size>) method is not enough, because the
+concrete graphic libraries are based on single values (x, y), instead of
+the classes of this library. Without this method, one would've to use
+two lambdas in multiple places. Additionally I don't want to use this method
+alone, because my classes depend on Position, Size and the others and I
+would've to convert them back and forth there
+*/
+/**
+ * Gives the given consumer the pos and the size which define this
+ * area. This method shall offer a more convenient way to use the area
+ * classes compared to [this.applyOn].
+ *
+ * This method uses [this.applyOn] to gets it's values
+ * and it doesn't mutate the state by itself.
+ * @param target Target that gets the pos and the size as four integer
+ * values.
+ */
+fun Area.applyOn(target: QuadConsumer<Int, Int, Int, Int>) {
+    result { x, y, width, height -> target.accept(x, y, width, height) }
 }

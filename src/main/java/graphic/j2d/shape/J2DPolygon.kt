@@ -18,87 +18,68 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.shape
 
-package graphic.j2d.shape;
-
-import graphic.j2d.event.J2DMouseTarget;
-import graphic.j2d.event.mouse.J2DMouse;
-import java.awt.Graphics;
-import java.awt.Polygon;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import logic.graphic.color.Color;
-import logic.unit.area.Area;
-import logic.unit.pos.Pos;
+import graphic.j2d.event.mouse.J2DMouse
+import logic.graphic.color.Color
+import logic.unit.pos.Pos
+import logic.unit.pos.applyOn
+import java.awt.Graphics
+import java.awt.Polygon
+import java.util.*
 
 /**
- * A j2d polygon.
- * @since 19.10
+ * A polygon.
+ *
+ * @param color The color of the circle.
+ * @param positions The positions of this polygon's edges.
  */
-public class J2DPolygon implements J2DMouseShape {
+open class J2DPolygon(
+    private val color: Color,
+    positions: List<Pos>
+) : J2DMouseShape {
     /**
-     * The positions of the polygon.
+     * The positions of this polygon's edges.
      */
-    private final Polygon positions;
-
-    /**
-     * The color of the circle.
-     */
-    private final Color color;
+    private val positions: Polygon = positions.run {
+        val x = IntArray(positions.size)
+        val y = IntArray(positions.size)
+        for (i in positions.indices) {
+            positions[i].applyOn { posX, posY ->
+                x[i] = posX
+                y[i] = posY
+            }
+        }
+        Polygon(x, y, positions.size)
+    }
 
     /**
      * The successor of this shape.
      */
-    private final Optional<J2DMouseShape> successor;
+    private val successor: Optional<J2DMouseShape> = Optional.of(this)
 
     /**
-     * Ctor.
-     * @param area The area of the circle.
      * @param color The color of the circle.
-     * @param events The events of the circle.
+     * @param positions The positions of this polygon's edges.
      */
-    public J2DPolygon(final Color color, final Pos... positions) {
-        this(color, List.of(positions));
-    }
+    constructor(color: Color, vararg positions: Pos) : this(
+        color,
+        listOf<Pos>(*positions)
+    )
 
-    /**
-     * Ctor.
-     * @param area The area of the circle.
-     * @param color The color of the circle.
-     * @param events The events of the circle.
-     */
-    public J2DPolygon(final Color color, final List<Pos> positions) {
-        this.color = color;
-        final int[] x = new int[positions.size()];
-        final int[] y = new int[positions.size()];
-        for (int i = 0; i < positions.size(); ++i) {
-            final int index = i;
-            positions.get(i).applyOn(
-                (posx, posy) -> {
-                    x[index] = posx;
-                    y[index] = posy;
-                }
-            );
+    override fun registerFor(source: J2DMouse) {}
+
+    override fun draw(graphics: Graphics): Optional<J2DMouseShape> {
+        color.applyOn { r: Int, g: Int, b: Int, a: Int ->
+            graphics.color = java.awt.Color(
+                r, g, b, a
+            )
         }
-        this.positions = new Polygon(x, y, positions.size());
-        this.successor = Optional.of(this);
+        graphics.fillPolygon(positions)
+        return successor
     }
 
-    @Override
-    public final void registerFor(final J2DMouse source) { }
-
-    @Override
-    public final Optional<J2DMouseShape> draw(final Graphics graphics) {
-        this.color.applyOn(
-            (r, g, b, a) -> graphics.setColor(new java.awt.Color(r, g, b, a))
-        );
-        graphics.fillPolygon(this.positions);
-        return this.successor;
-    }
-
-    @Override
-    public final void register(final Redrawable redrawable) {
-        this.color.register(redrawable);
+    override fun register(redrawable: Redrawable) {
+        color.register(redrawable)
     }
 }

@@ -18,79 +18,51 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.unit.area
 
-package logic.unit.area;
-
-import graphic.j2d.shape.Redrawable;
-import java.util.function.BiFunction;
-import logic.unit.pos.Pos;
-import logic.unit.pos.Pos2D;
-import logic.unit.size.Size;
-import logic.unit.size.Size2D;
+import graphic.j2d.shape.Redrawable
+import logic.unit.pos.Pos
+import logic.unit.pos.Pos2D
+import logic.unit.size.Size
+import logic.unit.size.Size2D
+import java.util.function.BiFunction
 
 /**
  * An area that knows when a point overlaps with itself.
- * @since 12.5.0
+ *
+ * @param area The area to delegate the calls to.
  */
-public class PosOverlap2D implements PosOverlap {
+open class PosOverlap2D(private val area: Area) : PosOverlap {
     /**
-     * The area to delegate the calls to.
-     */
-    private final Area area;
-
-    /**
-     * Ctor. Uses (0|0) as its position.
+     * Uses (0|0) as its position.
      * @param width The width of the area.
      * @param height The height of the area.
      */
-    public PosOverlap2D(final int width, final int height) {
-        this(new Size2D(width, height));
-    }
+    constructor(width: Int, height: Int) : this(Size2D(width, height))
 
     /**
-     * Ctor. Uses (0|0) as its position.
+     * Uses (0|0) as its position.
      * @param size The size of the area.
      */
-    public PosOverlap2D(final Size size) {
-        this(new Pos2D(), size);
-    }
+    constructor(size: Size) : this(Pos2D(), size)
 
     /**
-     * Ctor.
      * @param pos The position of the area.
      * @param size The size of the area.
      */
-    public PosOverlap2D(final Pos pos, final Size size) {
-        this(new Area2D(pos, size));
-    }
+    constructor(pos: Pos, size: Size) : this(Area2D(pos, size))
 
-    /**
-     * Ctor.
-     * @param area The area to delegate the calls to.
-     */
-    public PosOverlap2D(final Area area) {
-        this.area = area;
-    }
+    override fun contains(pos: Pos): Boolean =
+        result { x, y, w, h ->
+            pos.result { posX, posY ->
+                x <= posX && y <= posY && posX <= x + w && posY <= y + h
+            }
+        }
 
-    @Override
-    public final boolean contains(final Pos pos) {
-        return this.result(
-            // @checkstyle ParameterName (1 line)
-            (x, y, width, height) -> pos.result(
-                // @checkstyle ParameterName (1 line)
-                (posX, posY) -> x <= posX && y <= posY
-                    && posX <= x + width && posY <= y + height
-                )
-        );
-    }
+    override fun <R> result(target: BiFunction<Pos, Size, R>): R =
+        area.result(target)
 
-    @Override
-    public final <R> R result(final BiFunction<Pos, Size, R> target) {
-        return this.area.result(target);
-    }
-
-    @Override
-    public final void register(final Redrawable redrawable) {
-        this.area.register(redrawable);
+    override fun register(redrawable: Redrawable) {
+        area.register(redrawable)
     }
 }

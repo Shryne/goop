@@ -18,65 +18,60 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package sample
 
-package sample;
+import graphic.j2d.event.mouse.J2DMouse
+import graphic.j2d.shape.J2DMouseShape
+import graphic.j2d.shape.J2DShapeTarget
+import graphic.j2d.shape.Redrawable
+import logic.graphic.color.Black
+import logic.graphic.color.Color
+import logic.unit.area.Area
+import logic.unit.area.PosOverlap
+import logic.unit.area.PosOverlap2D
+import logic.unit.area.applyOn
+import java.awt.Graphics
+import java.util.*
+import java.util.List
+import java.util.function.Consumer
+import kotlin.collections.Collection
 
-import graphic.j2d.event.mouse.J2DMouse;
-import graphic.j2d.shape.J2DMouseShape;
-import graphic.j2d.shape.J2DShapeTarget;
-import graphic.j2d.shape.Redrawable;
-import java.awt.Graphics;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import logic.graphic.color.Black;
-import logic.graphic.color.Color;
-import logic.unit.area.Area;
-import logic.unit.area.PosOverlap;
-import logic.unit.area.PosOverlap2D;
+/**
+ * A circle.
+ *
+ * @param area The area of the circle.
+ * @param color The color of the circle.
+ * @param targets The targets that shall receive events that may happen to them.
+ */
+open class J2DCircle(
+    private val area: PosOverlap,
+    private val color: Color = Black(),
+    private val targets: Collection<J2DShapeTarget> = emptyList()
+) : J2DMouseShape {
+    /**
+     * @param area The area of the circle.
+     * @param color The color of the circle.
+     * @param targets The targets that shall receive events that may happen to them.
+     */
+    constructor(area: Area, color: Color, vararg targets: J2DShapeTarget) :
+        this(PosOverlap2D(area), color, listOf<J2DShapeTarget>(*targets))
 
-public class J2DCircle implements J2DMouseShape {
-    private final PosOverlap area;
-    private final Color color;
-    private final Collection<J2DShapeTarget> targets;
-
-    public J2DCircle(final Area area) {
-        this(area, new Black());
+    override fun draw(graphics: Graphics): Optional<J2DMouseShape> {
+        color.applyOn { r, g, b, a ->
+            graphics.color = java.awt.Color(r, g, b, a)
+        }
+        area.applyOn { x, y, w, h -> graphics.fillOval(x, y, w, h) }
+        return Optional.of(this)
     }
 
-    public J2DCircle(
-        final Area area, final Color color, J2DShapeTarget... targets
-    ) {
-        this(new PosOverlap2D(area), color, List.of(targets));
+    override fun registerFor(source: J2DMouse) {
+        targets.forEach(
+            Consumer { target -> target.registerFor(source, area) }
+        )
     }
 
-    public J2DCircle(
-        final PosOverlap area,
-        final Color color,
-        final Collection<J2DShapeTarget> targets
-    ) {
-        this.area = area;
-        this.color = color;
-        this.targets = targets;
-    }
-
-    @Override
-    public final Optional<J2DMouseShape> draw(final Graphics graphics) {
-        this.color.applyOn(
-            (r, g, b, a) -> graphics.setColor(new java.awt.Color(r, g, b, a))
-        );
-        this.area.applyOn(graphics::fillOval);
-        return Optional.of(this);
-    }
-
-    @Override
-    public final void registerFor(final J2DMouse source) {
-        this.targets.forEach(target -> target.registerFor(source, this.area));
-    }
-
-    @Override
-    public final void register(final Redrawable redrawable) {
-        this.area.register(redrawable);
-        this.color.register(redrawable);
+    override fun register(redrawable: Redrawable) {
+        area.register(redrawable)
+        color.register(redrawable)
     }
 }

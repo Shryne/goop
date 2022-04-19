@@ -18,58 +18,32 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.unit.pos
 
-package logic.unit.pos;
-
-import graphic.j2d.shape.Redrawable;
-import java.util.function.BiFunction;
-import java.util.function.ObjIntConsumer;
-import logic.functional.Value;
+import graphic.j2d.shape.Redrawable
+import logic.functional.Value
+import java.util.function.BiFunction
+import java.util.function.ObjIntConsumer
 
 /**
  * An envelope that delegates everything to the given pos instance.
- * @since 5.13.3
+ *
+ * @param pos The pos to delegate the calls to.
  */
-public abstract class PosEnvelope implements Pos {
-    /**
-     * The pos to delegate the calls to.
-     */
-    private final Value<Pos> pos;
-
-    /**
-     * Ctor.
-     * @param pos The pos to delegate the calls to.
-     */
-    public PosEnvelope(final Value<Pos> pos) {
-        this.pos = pos;
+abstract class PosEnvelope(private val pos: Value<Pos>) : Pos {
+    override fun <R> result(target: BiFunction<Int, Int, R>): R {
+        return pos.content().result(target)
     }
 
-    @Override
-    public final <R> R result(final BiFunction<Integer, Integer, R> target) {
-        return this.pos.content().result(target);
+    fun applyOn(target: ObjIntConsumer<Int>) {
+        pos.content().applyOn(target)
     }
 
-    @Override
-    public final void applyOn(final ObjIntConsumer<Integer> target) {
-        this.pos.content().applyOn(target);
-    }
-    @Override
-    public final void register(final Redrawable redrawable) {
-        this.pos.content().register(redrawable);
+    override fun register(redrawable: Redrawable) {
+        pos.content().register(redrawable)
     }
 
-    @Override
-    public final int hashCode() {
-        return this.pos.content().hashCode();
-    }
-
-    @Override
-    public final boolean equals(final Object obj) {
-        return this.pos.content().equals(obj);
-    }
-
-    @Override
-    public final String toString() {
-        return this.pos.content().toString();
-    }
+    override fun hashCode() = pos.content().hashCode()
+    override fun equals(obj: Any?) = (pos.content() == obj)
+    override fun toString() = pos.content().toString()
 }

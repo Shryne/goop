@@ -18,18 +18,14 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.unit.area
 
-package logic.unit.area;
-
-import graphic.j2d.shape.Redrawable;
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
-import logic.functional.QuadConsumer;
-import logic.functional.QuadFunction;
-import logic.unit.pos.Pos;
-import logic.unit.pos.Pos2D;
-import logic.unit.size.Size;
-import logic.unit.size.Size2D;
+import graphic.j2d.shape.Redrawable
+import logic.unit.pos.Pos
+import logic.unit.pos.Pos2D
+import logic.unit.size.Size
+import logic.unit.size.Size2D
+import java.util.function.BiFunction
 
 /*
 I am not happy about this naming, but my other idea's regarding the interface
@@ -38,95 +34,47 @@ example). So I took the more annoying name for the implementation to lower the
 chance that a user might use the class name as a parameter type
 */
 /**
- * Basic concrete implementation of {@link Area}.
- * <p>Whether this class is immutable or thread-safe, depends on the given
- * {@link Pos} and {@link Size}. This class
+ * Basic concrete implementation of [Area].
+ *
+ * Whether this class is immutable or thread-safe, depends on the given
+ * [Pos] and [Size]. This class
  * doesn't mutate state by itself. Additionally note that the methods provide
  * the actual objects without any
- * safe-copies for performance reasons.</p>
- * @since 3.3.0
+ * safe-copies for performance reasons.
+ *
+ * @param pos The pos of the area.
+ * @param size The size of the area.
  */
-public class Area2D implements Area {
+open class Area2D(private val pos: Pos, private val size: Size) : Area {
     /**
-     * The pos of this area.
-     */
-    private final Pos pos;
-
-    /**
-     * The size of this area.
-     */
-    private final Size size;
-
-    /**
-     * Ctor. Uses (0|0) as its pos.
+     * Uses (0|0) as its pos.
      * @param width The width for the size.
      * @param height The height for the size.
      */
-    public Area2D(final int width, final int height) {
-        this(0, 0, width, height);
-    }
+    constructor(width: Int, height: Int) : this(0, 0, width, height)
 
     /**
-     * Ctor.
      * @param x The x coordinate for the pos.
      * @param y The y coordinate for the pos.
      * @param width The width for the size.
      * @param height The height for the size.
-     * @checkstyle ParameterNumber (3 lines)
-     * @checkstyle ParameterName (2 lines)
      */
-    public Area2D(final int x, final int y, final int width, final int height) {
-        this(
-            new Pos2D(x, y),
-            new Size2D(width, height)
-        );
-    }
+    constructor(x: Int, y: Int, width: Int, height: Int) : this(
+        Pos2D(x, y),
+        Size2D(width, height)
+    )
 
     /**
-     * Ctor. Uses (0|0) as its pos.
+     * Uses (0|0) as its pos.
      * @param size The size of the area.
      */
-    public Area2D(final Size size) {
-        this(new Pos2D(0, 0), size);
-    }
+    constructor(size: Size) : this(Pos2D(0, 0), size)
 
-    /**
-     * Ctor.
-     * @param pos The pos of the area.
-     * @param size The size of the area.
-     */
-    public Area2D(final Pos pos, final Size size) {
-        this.pos = pos;
-        this.size = size;
-    }
+    override fun <R> result(target: BiFunction<Pos, Size, R>): R =
+        target.apply(pos, size)
 
-    @Override
-    public final <R> R result(final BiFunction<Pos, Size, R> target) {
-        return target.apply(this.pos, this.size);
-    }
-
-    @Override
-    public final void register(final Redrawable redrawable) {
-        this.pos.register(redrawable);
-        this.size.register(redrawable);
-    }
-
-    @Override
-    public final <R> R result(
-        final QuadFunction<Integer, Integer, Integer, Integer, R> target
-    ) {
-        return Area.super.result(target);
-    }
-
-    @Override
-    public final void applyOn(final BiConsumer<Pos, Size> target) {
-        Area.super.applyOn(target);
-    }
-
-    @Override
-    public final void applyOn(
-        final QuadConsumer<Integer, Integer, Integer, Integer> target
-    ) {
-        Area.super.applyOn(target);
+    override fun register(redrawable: Redrawable) {
+        pos.register(redrawable)
+        size.register(redrawable)
     }
 }

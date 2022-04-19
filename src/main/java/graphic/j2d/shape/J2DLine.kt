@@ -18,82 +18,49 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.shape
 
-package graphic.j2d.shape;
-
-import graphic.j2d.event.mouse.J2DMouse;
-import java.awt.Graphics;
-import java.util.Optional;
-import logic.graphic.color.Black;
-import logic.graphic.color.Color;
-import logic.unit.pos.Pos;
+import graphic.j2d.event.mouse.J2DMouse
+import logic.graphic.color.Black
+import logic.graphic.color.Color
+import logic.unit.pos.Pos
+import logic.unit.pos.applyOn
+import java.awt.Graphics
+import java.util.*
 
 /**
- * A j2d line.
- * @since 19.9
+ * A line.
+ *
+ * @param first The first pos.
+ * @param second The second pos.
+ * @param color The color of the line.
  */
-public class J2DLine implements J2DMouseShape {
-    /**
-     * The first pos.
-     */
-    private final Pos first;
-
-    /**
-     * The second pos.
-     */
-    private final Pos second;
-
-    /**
-     * The color of the line.
-     */
-    private final Color color;
-
+open class J2DLine constructor(
+    private val first: Pos,
+    private val second: Pos,
+    private val color: Color = Black()
+) : J2DMouseShape {
     /**
      * The successor of this shape.
      */
-    private final Optional<J2DMouseShape> successor;
+    private val successor: Optional<J2DMouseShape> = Optional.of(this)
 
-    /**
-     * Ctor.
-     * @param first The first position of the line.
-     * @param second The second position of the line.
-     */
-    public J2DLine(final Pos first, final Pos second) {
-        this(first, second, new Black());
+    override fun registerFor(source: J2DMouse) {}
+
+    override fun draw(graphics: Graphics): Optional<J2DMouseShape> {
+        color.applyOn { r, g, b, a ->
+            graphics.color = java.awt.Color(r, g, b, a)
+        }
+        first.applyOn { fx, fy ->
+            second.applyOn { sx, sy ->
+                graphics.drawLine(fx, fy, sx, sy)
+            }
+        }
+        return successor
     }
 
-    /**
-     * Ctor.
-     * @param first The first position of the line.
-     * @param second The second position of the line.
-     * @param color The color of the line.
-     */
-    public J2DLine(final Pos first, final Pos second, final Color color) {
-        this.first = first;
-        this.second = second;
-        this.color = color;
-        this.successor = Optional.of(this);
-    }
-
-    @Override
-    public final void registerFor(final J2DMouse source) { }
-
-    @Override
-    public final Optional<J2DMouseShape> draw(final Graphics graphics) {
-        this.color.applyOn(
-            (r, g, b, a) -> graphics.setColor(new java.awt.Color(r, g, b, a))
-        );
-        this.first.applyOn(
-            (fx, fy) -> this.second.applyOn(
-                (sx, sy) -> graphics.drawLine(fx, fy, sx, sy)
-            )
-        );
-        return this.successor;
-    }
-
-    @Override
-    public final void register(final Redrawable redrawable) {
-        this.first.register(redrawable);
-        this.second.register(redrawable);
+    override fun register(redrawable: Redrawable) {
+        first.register(redrawable)
+        second.register(redrawable)
     }
 }

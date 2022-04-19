@@ -18,11 +18,10 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.unit.pos
 
-package logic.unit.pos;
-
-import graphic.j2d.shape.Redrawable;
-import java.util.function.BiFunction;
+import graphic.j2d.shape.Redrawable
+import java.util.function.BiFunction
 
 /*
 I am not happy about this naming, but my other idea's regarding the interface
@@ -31,55 +30,18 @@ example). So I took the more annoying name for the implementation to lower the
 chance that a user might use the class name as a parameter type
 */
 /**
- * Basic concrete implementation of {@link Pos}.
- * <p>This class is immutable and thread-safe.</p>
- * @since 3.4.0
+ * Basic concrete implementation of [Pos].
+ * This class is immutable and thread-safe.
+ *
+ * @constructor Sets x = 0 and y = 0 as its values.
+ * @param x The x coordinate.
+ * @param y The y coordinate.
  */
-public class Pos2D implements Pos {
-    /**
-     * The x coordinate.
-     * @checkstyle MemberName (2 lines)
-     */
-    private final int x;
-
-    /**
-     * The y coordinate.
-     * @checkstyle MemberName (2 lines)
-     */
-    private final int y;
-
-    /**
-     * Ctor. Sets x = 0 and y = 0 as its values.
-     */
-    public Pos2D() {
-        this(0, 0);
+open class Pos2D(private val x: Int = 0, private val y: Int = 0) : Pos {
+    override fun <R> result(target: BiFunction<Int, Int, R>): R {
+        return target.apply(x, y)
     }
 
-    /**
-     * Ctor.
-     * @param x The x coordinate.
-     * @param y The y coordinate.
-     * @checkstyle ParameterName (2 lines)
-     */
-    public Pos2D(final int x, final int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    @Override
-    public final <R> R result(final BiFunction<Integer, Integer, R> target) {
-        return target.apply(this.x, this.y);
-    }
-
-    @Override
-    public final void register(final Redrawable redrawable) { }
-
-    @Override
-    public final String toString() {
-        return new StringBuilder("Pos")
-            .append("(x=").append(this.x)
-            .append(", y=").append(this.y)
-            .append(')')
-            .toString();
-    }
+    override fun register(redrawable: Redrawable) {}
+    override fun toString() = "Pos(x=$x, y=$y)"
 }
