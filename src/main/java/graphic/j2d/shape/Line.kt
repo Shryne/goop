@@ -35,7 +35,7 @@ import java.util.*
  * @param second The second pos.
  * @param color The color of the line.
  */
-open class J2DLine constructor(
+open class Line constructor(
     private val first: Pos,
     private val second: Pos,
     private val color: Color = Black()

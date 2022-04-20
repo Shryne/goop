@@ -23,12 +23,11 @@ package graphic.j2d.shape
 import graphic.j2d.event.mouse.J2DMouse
 import logic.graphic.color.Black
 import logic.graphic.color.Color
-import logic.graphic.color.Color.applyOn
 import logic.unit.area.Area
 import logic.unit.area.Area2D
+import logic.unit.area.applyOn
 import logic.unit.pos.Pos
 import logic.unit.pos.Pos2D
-import logic.unit.size.Size
 import logic.unit.size.Size2D
 import java.awt.Font
 import java.awt.Graphics
@@ -36,21 +35,15 @@ import java.awt.Toolkit
 import java.util.*
 
 /**
- * Java 2d based text.
- * @since 19.2
+ * A text.
+ *
+ * @param text The text to show.
+ * @param area The maximum area of the text.
+ * @param color The color of the text. The default is [Black].
  */
-class J2DText @JvmOverloads constructor(
-    /**
-     * The text to show.
-     */
+class Text constructor(
     private val text: String,
-    /**
-     * The max area of the text.
-     */
     private val area: Area,
-    /**
-     * The color of the text.
-     */
     private val color: Color = Black()
 ) : J2DMouseShape {
     /**
@@ -66,31 +59,25 @@ class J2DText @JvmOverloads constructor(
     /**
      * The successor of this text.
      */
-    private val successor: Optional<J2DMouseShape>
+    private val successor: Optional<J2DMouseShape> = Optional.of(this)
 
     /**
-     * Ctor.
+     * Creates a black text.
      * @param text The text to show.
      * @param x The x coordinate of the text.
      * @param y The y coordinate of the text.
      */
-    constructor(text: String, x: Int, y: Int) : this(text, Pos2D(x, y)) {}
+    constructor(text: String, x: Int, y: Int) : this(text, Pos2D(x, y))
+
     /**
-     * Ctor.
      * @param text The text to show.
      * @param pos The position of the text.
-     * @param color The color of the text.
+     * @param color The color of the text. The default is [Black].
      */
-    /**
-     * Ctor.
-     * @param text The text to show.
-     * @param pos The position of the text.
-     */
-    @JvmOverloads
-    constructor(text: String, pos: Pos?, color: Color = Black()) : this(
+    constructor(text: String, pos: Pos, color: Color = Black()) : this(
         text,
         Area2D(
-            pos!!,
+            pos,
             Size2D(
                 text.length
                     * Toolkit.getDefaultToolkit().screenSize.width
@@ -99,29 +86,13 @@ class J2DText @JvmOverloads constructor(
             )
         ),
         color
-    ) {
-    }
-    /**
-     * Ctor.
-     * @param text The text to show.
-     * @param area The area of the text.
-     * @param color The color of the text.
-     */
-    /**
-     * Ctor.
-     * @param text The text to show.
-     * @param area The area of the text.
-     */
-    init {
-        successor = Optional.of(this)
-    }
+    )
 
     override fun registerFor(source: J2DMouse) {}
+
     override fun draw(graphics: Graphics): Optional<J2DMouseShape> {
-        color.applyOn { r: Int?, g: Int?, b: Int?, a: Int? ->
-            graphics.color = java.awt.Color(
-                r!!, g!!, b!!, a!!
-            )
+        color.applyOn { r: Int, g: Int, b: Int, a: Int ->
+            graphics.color = java.awt.Color(r, g, b, a)
         }
         if (font == null) {
             var fontSize = 10
@@ -130,7 +101,11 @@ class J2DText @JvmOverloads constructor(
                 val metrics = graphics.getFontMetrics(font)
                 val width = metrics.stringWidth(text)
                 height = metrics.ascent
-                if (area.result { pos: Pos?, size: Size -> size.result { w: Int, h: Int -> w < width || h < height } }) {
+                if (
+                    area.result { _, size ->
+                        size.result { w, h -> w < width || h < height }
+                    }
+                ) {
                     break
                 }
                 ++fontSize
@@ -138,13 +113,7 @@ class J2DText @JvmOverloads constructor(
             font = Font("Arial", Font.PLAIN, fontSize - 1)
         }
         graphics.font = font
-        area.applyOn { x, y, w, h ->
-            graphics.drawString(
-                text,
-                x,
-                y + height
-            )
-        }
+        area.applyOn { x, y, _, _ -> graphics.drawString(text, x, y + height) }
         return successor
     }
 

@@ -18,94 +18,61 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.shape
 
-package graphic.j2d.shape;
-
-import graphic.j2d.event.mouse.J2DMouse;
-import java.awt.Graphics;
-import java.util.Optional;
-import logic.graphic.color.Color;
-import logic.graphic.color.RGBA;
-import logic.unit.area.Area;
+import graphic.j2d.event.mouse.J2DMouse
+import logic.graphic.color.Color
+import logic.graphic.color.RGBA
+import logic.unit.area.Area
+import java.awt.Graphics
+import java.util.*
 
 /**
  * A shape with an attached text.
- * @since 19.4
+ *
+ * @param shape The shape to be labeled.
+ * @param text The text for the shape.
  */
-public class Labeled implements J2DMouseShape {
-    /**
-     * The shape to be labeled.
-     */
-    private final J2DMouseShape shape;
-
-    /**
-     * The text for the shape.
-     */
-    private final J2DMouseShape text;
-
+open class Labeled private constructor(
+    private val shape: J2DMouseShape,
+    private val text: J2DMouseShape
+) : J2DMouseShape {
     /**
      * Instance of this to return this as the successor.
      */
-    private final Optional<J2DMouseShape> self;
+    private val self: Optional<J2DMouseShape> = Optional.of(this)
 
     /**
-     * Ctor.
      * @param text The text to be add.
      * @param area The area of the shape.
      * @param pen The pen to create the shape.
      */
-    public Labeled(final String text, final Area area, final J2DPen<Area> pen) {
-        this(
-            pen.shape(area, new RGBA(200, 150, 150, 255)),
-            new J2DText(text, area)
-        );
-    }
+    constructor(text: String, area: Area, pen: J2DPen<Area>) : this(
+        pen.shape(area, RGBA(200, 150, 150, 255)),
+        Text(text, area)
+    )
 
     /**
-     * Ctor.
-     * @param text The text to be add.
+     * @param text The text to be added.
      * @param area The area of the shape.
      * @param color The color of the shape.
      * @param pen The pen to create the shape.
      */
-    public Labeled(
-        final String text,
-        final Area area,
-        final Color color,
-        final J2DPen<Area> pen
-    ) {
-        this(
-            pen.shape(area, color),
-            new J2DText(text, area)
-        );
+    constructor(text: String, area: Area, color: Color, pen: J2DPen<Area>) :
+        this(pen.shape(area, color), Text(text, area))
+
+    override fun registerFor(source: J2DMouse) {
+        shape.registerFor(source)
     }
 
-    /**
-     * Ctor.
-     * @param shape The shape to be labeled.
-     * @param text The text to be add on the shape.
-     */
-    private Labeled(final J2DMouseShape shape, final J2DMouseShape text) {
-        this.shape = shape;
-        this.text = text;
-        this.self = Optional.of(this);
+    override fun draw(graphics: Graphics): Optional<J2DMouseShape> {
+        shape.draw(graphics)
+        text.draw(graphics)
+        return self
     }
 
-    @Override
-    public final void registerFor(final J2DMouse source) {
-        this.shape.registerFor(source);
-    }
-
-    @Override
-    public final Optional<J2DMouseShape> draw(final Graphics graphics) {
-        this.shape.draw(graphics);
-        this.text.draw(graphics);
-        return this.self;
-    }
-
-    @Override
-    public final void register(final Redrawable redrawable) {
-        this.shape.register(redrawable);
-        this.text.register(redrawable);
+    override fun register(redrawable: Redrawable) {
+        shape.register(redrawable)
+        text.register(redrawable)
     }
 }

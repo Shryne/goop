@@ -40,7 +40,7 @@ open class Button private constructor(
     area: Area,
     action: Action,
     color: DualColor
-) : J2DCircle(
+) : Circle(
     area,
     color,
     J2DPressRelease({ color.swap() }) {

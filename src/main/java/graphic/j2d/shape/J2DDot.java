@@ -34,7 +34,7 @@ import logic.unit.size.Size2D;
  * A small oval.
  * @since 19.8
  */
-public class J2DDot extends J2DOval {
+public class J2DDot extends Oval {
     /**
      * Ctor. Creates a black dot.
      * @param pos The pos of the dot.

@@ -23,7 +23,7 @@ package graphic.j2d.window.event;
 
 import graphic.j2d.J2DContainerInsets;
 import graphic.j2d.event.mouse.J2DClick;
-import graphic.j2d.shape.event.J2DEventRect;
+import graphic.j2d.shape.event.EventRect;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.util.List;
@@ -34,13 +34,13 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Tests for {@link J2DEventWindow}.
+ * Tests for {@link EventWindow}.
  * @since 13.0.1
  */
 public class J2DEventWindowTest {
     /**
      * Tests if the full specified rectangular area is clickable. This tests the
-     * {@link J2DEventWindow} and {@link J2DEventRect}. Additionally, them
+     * {@link EventWindow} and {@link EventRect}. Additionally, them
      * {@link Robot}  is used. The robot will click somewhere at the top of the
      * area so this test will probably succeed even if the insets of the window
      * aren't taken into account.
@@ -49,7 +49,7 @@ public class J2DEventWindowTest {
      *  until I can start the robot and unfortunately I don't know how to let
      *  the window tell me when it's built up.
      * @todo #6 This test belongs to somewhere else because it aims to check
-     *  multiple components and not just {@link J2DEventWindow}.
+     *  multiple components and not just {@link EventWindow}.
      */
     @Test
     public void fullClickableAreaTop() throws Exception {
@@ -60,7 +60,7 @@ public class J2DEventWindowTest {
         final var width = 200;
         final var height = 200;
         final var robot = new Robot();
-        new J2DEventWindow(
+        new EventWindow(
             "",
             new PosOverlap2D(width, height),
             List.of(
@@ -74,7 +74,7 @@ public class J2DEventWindowTest {
                 )
             ),
             List.of(
-                new J2DEventRect(
+                new EventRect(
                     new PosOverlap2D(width, height),
                     new J2DClick(() -> clicked.set(true))
                 )
@@ -90,7 +90,7 @@ public class J2DEventWindowTest {
 
     /**
      * Tests if the full specified rectangular area is clickable. This tests the
-     * {@link J2DEventWindow} and {@link J2DEventRect}. Additionally, the
+     * {@link EventWindow} and {@link EventRect}. Additionally, the
      * {@link Robot} is used. The robot will click somewhere near the bottom to
      * ensure that the bar size of the window is taken into account.
      * @throws Exception Thanks to the used {@link Robot} and to
@@ -98,7 +98,7 @@ public class J2DEventWindowTest {
      *  until I can start the robot and unfortunately I don't know how to let
      *  the window tell me when it's built up.
      * @todo #6 This test belongs to somewhere else because it aims to check
-     *  multiple components and not just {@link J2DEventWindow}.
+     *  multiple components and not just {@link EventWindow}.
      */
     @Test
     public void fullClickableAreaBottom() throws Exception {
@@ -109,7 +109,7 @@ public class J2DEventWindowTest {
         final var width = 150;
         final var height = 300;
         final var robot = new Robot();
-        new J2DEventWindow(
+        new EventWindow(
             "",
             new PosOverlap2D(width, height),
             List.of(
@@ -127,7 +127,7 @@ public class J2DEventWindowTest {
                 )
             ),
             List.of(
-                new J2DEventRect(
+                new EventRect(
                     new PosOverlap2D(width, height),
                     new J2DClick(() -> clicked.set(true))
                 )

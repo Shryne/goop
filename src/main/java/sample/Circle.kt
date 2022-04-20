@@ -32,7 +32,6 @@ import logic.unit.area.PosOverlap2D
 import logic.unit.area.applyOn
 import java.awt.Graphics
 import java.util.*
-import java.util.List
 import java.util.function.Consumer
 import kotlin.collections.Collection
 
@@ -43,7 +42,7 @@ import kotlin.collections.Collection
  * @param color The color of the circle.
  * @param targets The targets that shall receive events that may happen to them.
  */
-open class J2DCircle(
+open class Circle(
     private val area: PosOverlap,
     private val color: Color = Black(),
     private val targets: Collection<J2DShapeTarget> = emptyList()

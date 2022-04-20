@@ -18,96 +18,68 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.window
 
-package graphic.j2d.window;
-
-import graphic.j2d.shape.J2DShape;
-import javax.swing.WindowConstants;
-import logic.unit.area.Area;
-import logic.unit.area.Area2D;
-import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterable.Joined;
-import org.cactoos.list.ListOf;
+import graphic.j2d.shape.J2DShape
+import logic.unit.area.Area
+import logic.unit.area.Area2D
+import org.cactoos.iterable.Joined
+import javax.swing.WindowConstants
 
 /**
  * The default implementation of a java 2d window. It uses a
- * {@link J2DBaseWindow} and adds the following settings to it:
- * <ul>
- *     <li>sets the title</li>
- *     <li>sets the default close operation (end application on close)</li>
- * </ul>
- * <p>This class mutates its state when {@link J2DBaseWindow#show()} is called.
+ * [J2DBaseWindow] and adds the following settings to it:
+ * - sets the title
+ * - sets the default close operation (end application on close)
+ *
+ * This class mutates its state when [J2DBaseWindow.show] is called.
  * Since show isn't synchronized, this class isn't thread-safe. Additionally,
- * the features can change its state.</p>
- * @since 3.2.0
+ * the features can change its state.
+ *
+ * @param title The title that is shown at the top of the window.
+ * @param area The area of the window.
+ * @param features Certain features regarding the window.
+ * @param shapes The shapes that are drawn on the window.
  */
-public class J2DWindow extends J2DBaseWindow {
+open class Window(
+    title: String,
+    area: Area,
+    features: Iterable<J2DWindowFeature>,
+    shapes: Iterable<J2DShape<*>>
+) : J2DBaseWindow(
+    area,
+    Joined(
+        listOf(
+            J2DWindowFeature { it.title = title },
+            J2DWindowFeature {
+                it.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
+            }
+        ),
+        features
+    ),
+    shapes
+) {
     /**
-     * Ctor.
      * @param width The width of the window.
      * @param height The height of the window.
      * @param shapes The shapes that are drawn on the window.
      */
-    public J2DWindow(
-        final int width,
-        final int height,
-        final J2DShape... shapes
-    ) {
-        this(
-            "",
-            new Area2D(width, height),
-            new ListOf<>(shapes)
-        );
-    }
+    constructor(
+        width: Int,
+        height: Int,
+        vararg shapes: J2DShape<*>
+    ) : this("", Area2D(width, height), listOf(*shapes))
 
     /**
-     * Ctor.
      * @param title The title that is shown at the top of the window.
      * @param area The area of the window.
      * @param shapes The shapes that are drawn on the window.
      * @param features Certain features regarding the window.
-     * @checkstyle ParameterNumberCheck (2 lines)
      */
-    public J2DWindow(
-        final String title,
-        final Area area,
-        final Iterable<? extends J2DShape> shapes,
-        final J2DWindowFeature... features
-    ) {
-        this(
-            title,
-            area,
-            new ListOf<>(features),
-            shapes
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param title The title that is shown at the top of the window.
-     * @param area The area of the window.
-     * @param features Certain features regarding the window.
-     * @param shapes The shapes that are drawn on the window.
-     * @checkstyle ParameterNumberCheck (2 lines)
-     */
-    public J2DWindow(
-        final String title,
-        final Area area,
-        final Iterable<J2DWindowFeature> features,
-        final Iterable<? extends J2DShape> shapes
-    ) {
-        super(
-            area,
-            new Joined<>(
-                new IterableOf<>(
-                    frame -> frame.setTitle(title),
-                    frame -> frame.setDefaultCloseOperation(
-                        WindowConstants.EXIT_ON_CLOSE
-                    )
-                ),
-                features
-            ),
-            shapes
-        );
-    }
+    constructor(
+        title: String = "",
+        area: Area,
+        shapes: Iterable<J2DShape<*>>,
+        vararg features: J2DWindowFeature
+    ) : this(title, area, listOf(*features), shapes)
 }

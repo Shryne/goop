@@ -20,14 +20,13 @@
  */
 package sample
 
-import graphic.j2d.window.event.J2DEventWindow
+import graphic.j2d.window.event.EventWindow
 import logic.unit.area.Area2D
-import logic.unit.pos.Pos2D
 import logic.unit.size.Scaling
 import logic.unit.size.Size2D
 
 fun main() {
-    J2DEventWindow(
+    EventWindow(
         Area2D(100, 100, 300, 300),
         Button(
             Immediate(

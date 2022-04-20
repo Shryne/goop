@@ -23,7 +23,7 @@ package graphic.j2d.shape;
 
 import graphic.j2d.event.mouse.J2DMouse;
 import graphic.j2d.event.mouse.J2DPressRelease;
-import graphic.j2d.shape.event.J2DEventRect;
+import graphic.j2d.shape.event.EventRect;
 import java.awt.Graphics;
 import java.util.Optional;
 import logic.functional.Action;
@@ -50,7 +50,7 @@ public class J2DButton implements J2DMouseShape {
      */
     public J2DButton(final Area area, Action action) {
         this(
-            J2DEventRect::new,
+            EventRect::new,
             new PosOverlap2D(area),
             new ButtonColor(),
             action

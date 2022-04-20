@@ -25,7 +25,7 @@ import graphic.j2d.event.mouse.J2DBaseMouse;
 import graphic.j2d.event.mouse.J2DMouse;
 import graphic.j2d.shape.J2DMouseShape;
 import graphic.j2d.window.J2DBaseWindow;
-import graphic.j2d.window.J2DWindow;
+import graphic.j2d.window.Window;
 import graphic.j2d.window.J2DWindowFeature;
 import java.util.Collections;
 import logic.unit.area.Area;
@@ -46,14 +46,14 @@ import org.cactoos.iterable.Joined;
  * the features can change its state.</p>
  * @since 13.0.0
  */
-public class J2DEventWindow extends J2DWindow {
+public class EventWindow extends Window {
     /**
      * Ctor.
      * @param area The area of the window.
      * @param shapes The mouse event shapes that are drawn on the window.
      * @checkstyle ParameterNumberCheck (2 lines)
      */
-    public J2DEventWindow(
+    public EventWindow(
         final Area area,
         final J2DMouseShape... shapes
     ) {
@@ -70,7 +70,7 @@ public class J2DEventWindow extends J2DWindow {
      * @param shapes The mouse event shapes that are drawn on the window.
      * @checkstyle ParameterNumberCheck (2 lines)
      */
-    public J2DEventWindow(
+    public EventWindow(
         final Area area,
         final Iterable<J2DMouseShape> shapes
     ) {
@@ -89,7 +89,7 @@ public class J2DEventWindow extends J2DWindow {
      * @param shapes The mouse event shapes that are drawn on the window.
      * @checkstyle ParameterNumberCheck (2 lines)
      */
-    public J2DEventWindow(
+    public EventWindow(
         final String title,
         final Area area,
         final J2DMouseShape... shapes
@@ -110,7 +110,7 @@ public class J2DEventWindow extends J2DWindow {
      * @param shapes The mouse event shapes that are drawn on the window.
      * @checkstyle ParameterNumberCheck (2 lines)
      */
-    public J2DEventWindow(
+    public EventWindow(
         final String title,
         final Area area,
         final Iterable<J2DWindowFeature> features,

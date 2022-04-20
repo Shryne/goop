@@ -18,91 +18,58 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.shape
 
-package graphic.j2d.shape;
-
-import graphic.j2d.event.J2DMouseTarget;
-import graphic.j2d.event.mouse.J2DMouse;
-import java.awt.Graphics;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import logic.graphic.color.Color;
-import logic.unit.area.Area;
+import graphic.j2d.event.J2DMouseTarget
+import graphic.j2d.event.mouse.J2DMouse
+import logic.graphic.color.Color
+import logic.unit.area.Area
+import logic.unit.area.applyOn
+import java.awt.Graphics
+import java.util.*
+import java.util.List
+import java.util.function.Consumer
+import kotlin.collections.Collection
 
 /**
- * A j2d circle.
- * @since 19.6
+ * A circle.
+ *
+ * @param area The area of the circle.
+ * @param color The color of the circle.
+ * @param events The events of the circle.
  */
-public class J2DOval implements J2DMouseShape {
-    /**
-     * The area of the circle.
-     */
-    private final Area area;
-
-    /**
-     * The color of the circle.
-     */
-    private final Color color;
-
-    /**
-     * The events of the circle.
-     */
-    private final Collection<J2DMouseTarget> events;
-
+open class Oval(
+    private val area: Area,
+    private val color: Color,
+    private val events: Collection<J2DMouseTarget>
+) : J2DMouseShape {
     /**
      * The successor of this shape.
      */
-    private final Optional<J2DMouseShape> successor;
+    private val successor: Optional<J2DMouseShape> = Optional.of(this)
 
     /**
-     * Ctor.
      * @param area The area of the circle.
      * @param color The color of the circle.
      * @param events The events of the circle.
      */
-    public J2DOval(
-        final Area area,
-        final Color color,
-        final J2DMouseTarget... events
-    ) {
-        this(area, color, List.of(events));
+    constructor(area: Area, color: Color, vararg events: J2DMouseTarget) :
+        this(area, color, listOf<J2DMouseTarget>(*events))
+
+    override fun registerFor(source: J2DMouse) {
+        events.forEach(Consumer { it.registerFor(source) })
     }
 
-    /**
-     * Ctor.
-     * @param area The area of the circle.
-     * @param color The color of the circle.
-     * @param events The events of the circle.
-     */
-    public J2DOval(
-        final Area area,
-        final Color color,
-        final Collection<J2DMouseTarget> events
-    ) {
-        this.area = area;
-        this.color = color;
-        this.events = events;
-        this.successor = Optional.of(this);
+    override fun draw(graphics: Graphics): Optional<J2DMouseShape> {
+        color.applyOn { r, g, b, a ->
+            graphics.color = java.awt.Color(r, g, b, a)
+        }
+        area.applyOn { x, y, w, h -> graphics.fillOval(x, y, w, h) }
+        return successor
     }
 
-    @Override
-    public final void registerFor(final J2DMouse source) {
-        this.events.forEach(it -> it.registerFor(source));
-    }
-
-    @Override
-    public final Optional<J2DMouseShape> draw(final Graphics graphics) {
-        this.color.applyOn(
-            (r, g, b, a) -> graphics.setColor(new java.awt.Color(r, g, b, a))
-        );
-        this.area.applyOn(graphics::fillOval);
-        return this.successor;
-    }
-
-    @Override
-    public final void register(final Redrawable redrawable) {
-        this.area.register(redrawable);
-        this.color.register(redrawable);
+    override fun register(redrawable: Redrawable) {
+        area.register(redrawable)
+        color.register(redrawable)
     }
 }

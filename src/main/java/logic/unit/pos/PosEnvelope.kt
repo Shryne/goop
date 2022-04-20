@@ -44,6 +44,6 @@ abstract class PosEnvelope(private val pos: Value<Pos>) : Pos {
     }
 
     override fun hashCode() = pos.content().hashCode()
-    override fun equals(obj: Any?) = (pos.content() == obj)
+    override fun equals(other: Any?) = (pos.content() == other)
     override fun toString() = pos.content().toString()
 }

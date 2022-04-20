@@ -28,20 +28,22 @@ import java.awt.Graphics
 import java.awt.Polygon
 import java.util.*
 
+typealias J2DPolygon = java.awt.Polygon
+
 /**
  * A polygon.
  *
  * @param color The color of the circle.
  * @param positions The positions of this polygon's edges.
  */
-open class J2DPolygon(
+open class Polygon(
     private val color: Color,
     positions: List<Pos>
 ) : J2DMouseShape {
     /**
      * The positions of this polygon's edges.
      */
-    private val positions: Polygon = positions.run {
+    private val positions: J2DPolygon = positions.run {
         val x = IntArray(positions.size)
         val y = IntArray(positions.size)
         for (i in positions.indices) {

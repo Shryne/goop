@@ -22,22 +22,26 @@
 package sample
 
 import graphic.j2d.shape.J2DGrid
-import graphic.j2d.shape.J2DMouseShape
-import graphic.j2d.shape.J2DRect
-import graphic.j2d.shape.event.J2DEventRect
-import graphic.j2d.window.J2DWindow
-import graphic.j2d.window.event.J2DEventWindow
+import graphic.j2d.shape.event.EventRect
+import graphic.j2d.window.event.EventWindow
 import logic.unit.area.Area2D
 import logic.unit.area.PosOverlap2D
-import logic.unit.size.Size2D
 
 fun main() {
-    J2DEventWindow(
+    EventWindow(
         Area2D(500, 500),
         J2DGrid(
             listOf(
-                listOf(J2DEventRect(PosOverlap2D(Area2D(100, 100)))),
-                listOf(J2DEventRect(PosOverlap2D(Area2D(100, 100))))
+                listOf(
+                    EventRect(
+                        PosOverlap2D(Area2D(100, 100))
+                    )
+                ),
+                listOf(
+                    EventRect(
+                        PosOverlap2D(Area2D(100, 100))
+                    )
+                )
             ),
             1, 1
         )

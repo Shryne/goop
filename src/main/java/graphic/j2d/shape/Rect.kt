@@ -18,63 +18,42 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.shape
 
-package graphic.j2d.shape;
-
-import java.awt.Graphics;
-import java.util.Optional;
-import logic.graphic.color.Color;
-import logic.unit.area.Area;
+import logic.graphic.color.Color
+import logic.unit.area.Area
+import logic.unit.area.applyOn
+import java.awt.Graphics
+import java.util.*
 
 /**
  * A rectangle using java2d.
- * <p>This class doesn't change its own state. Whether it is immutable or not,
+ *
+ * This class doesn't change its own state. Whether it is immutable or not,
  * depends on the given constructor arguments. Additionally whether this
  * class is thread-safe or not, depends on the given graphics instance for
- * {@link this#draw(Graphics)}.</p>
- * @since 2.1.0
+ * [draw].
+ *
+ * @param area The area of this rect.
+ * @param color The color of this rect.
  */
-public class J2DRect implements J2DShape {
-    /**
-     * The area of this rect.
-     */
-    private final Area area;
-
-    /**
-     * The color of this rect.
-     */
-    private final Color color;
-
+open class Rect(private val area: Area, private val color: Color) :
+    J2DShape<J2DShape<*>> {
     /**
      * The next shape to be drawn.
      */
-    private final Optional<J2DShape> successor;
+    private val successor: Optional<J2DShape<*>> = Optional.of(this)
 
-    /**
-     * Ctor.
-     * @param area The area of this rect.
-     * @param color The color of this rect.
-     */
-    public J2DRect(final Area area, final Color color) {
-        this.area = area;
-        this.color = color;
-        this.successor = Optional.of(this);
+    override fun draw(graphics: Graphics): Optional<J2DShape<*>> {
+        color.applyOn { r, g, b, a ->
+            graphics.color = java.awt.Color(r, g, b, a)
+        }
+        area.applyOn { x, y, w, h -> graphics.fillRect(x, y, w, h) }
+        return successor
     }
 
-    @Override
-    public final Optional<J2DShape> draw(final Graphics graphics) {
-        this.color.applyOn(
-            (red, green, blue, alpha) -> graphics.setColor(
-                new java.awt.Color(red, green, blue, alpha)
-            )
-        );
-        this.area.applyOn(graphics::fillRect);
-        return this.successor;
-    }
-
-    @Override
-    public final void register(final Redrawable redrawable) {
-        this.area.register(redrawable);
-        this.color.register(redrawable);
+    override fun register(redrawable: Redrawable) {
+        area.register(redrawable)
+        color.register(redrawable)
     }
 }
