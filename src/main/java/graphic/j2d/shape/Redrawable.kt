@@ -18,21 +18,20 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.shape
 
-package graphic.j2d.shape;
-
-import java.util.function.BooleanSupplier;
+import java.util.function.BooleanSupplier
 
 /**
  * Someone who waits to be redrawn. This should happen when a position has been
  * changed.
- * @since 19
  */
-public interface Redrawable {
+fun interface Redrawable {
     /**
      * Redraws itself.
-     * @param condition The condition that must be fulfilled to stop the
-     *  drawing.
+     *
+     * @param condition ®The condition that must be fulfilled to stop the
+     * drawing.
      */
-    void redraw(BooleanSupplier condition);
+    fun redraw(condition: BooleanSupplier)
 }

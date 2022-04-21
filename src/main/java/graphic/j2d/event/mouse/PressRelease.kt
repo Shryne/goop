@@ -18,94 +18,59 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.event.mouse
 
-package graphic.j2d.event.mouse;
-
-import graphic.j2d.shape.ShapeTarget;
-import java.util.concurrent.atomic.AtomicBoolean;
-import logic.functional.Action;
-import logic.unit.PosOverlap;
+import graphic.j2d.shape.ShapeTarget
+import logic.functional.Action
+import logic.unit.PosOverlap
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * A combination of a press and a release. Note that a release may only happen
  * after the press on the same shape.
  * @see Press
  * @see Release
- * @since 18.6
+ *
+ * @param press The mouse press.
+ * @param release The mouse release.
  */
-public class PressRelease implements ShapeTarget {
+open class PressRelease private constructor(
+    private val press: ShapeTarget,
+    private val release: ShapeTarget
+) : ShapeTarget {
     /**
-     * The mouse press.
-     */
-    private final ShapeTarget press;
-
-    /**
-     * The mouse release.
-     */
-    private final ShapeTarget release;
-
-    /**
-     * Ctor.
      * @param press The action that shall be applied on press.
      * @param release The action that shall be applied on release.
      */
-    public PressRelease(
-        final Action press,
-        final Action release
-    ) {
-        this(
-            press,
-            new AtomicBoolean(false),
-            release
-        );
-    }
+    constructor(press: Action, release: Action) :
+        this(press, AtomicBoolean(false), release)
 
     /**
-     * Ctor.
      * @param press The action that shall be applied on press.
      * @param release The action that shall be applied on release.
      */
-    private PressRelease(
-        final Action press,
-        final AtomicBoolean pressed,
-        final Action release
+    private constructor(
+        press: Action,
+        pressed: AtomicBoolean,
+        release: Action
+    ) : this(
+        Press(
+            Action {
+                press.run()
+                pressed.set(true)
+            }
+        ),
+        Release {
+            if (pressed.get()) {
+                release.run()
+                pressed.set(false)
+            }
+        }
     ) {
-        this(
-            new Press(
-                () -> {
-                    press.run();
-                    pressed.set(true);
-                }
-            ),
-            new Release(
-                () -> {
-                    if (pressed.get()) {
-                        release.run();
-                        pressed.set(false);
-                    }
-                }
-            )
-        );
     }
 
-    /**
-     * Ctor.
-     * @param press The mouse press.
-     * @param release The mouse release.
-     */
-    private PressRelease(
-        final ShapeTarget press, final ShapeTarget release
-    ) {
-        this.press = press;
-        this.release = release;
-    }
-
-    @Override
-    public final void registerFor(
-        final J2DMouse source,
-        final PosOverlap overlap
-    ) {
-        this.press.registerFor(source, overlap);
-        this.release.registerFor(source, overlap);
+    override fun registerFor(source: J2DMouse, overlap: PosOverlap) {
+        press.registerFor(source, overlap)
+        release.registerFor(source, overlap)
     }
 }

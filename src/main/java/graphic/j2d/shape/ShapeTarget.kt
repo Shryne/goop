@@ -26,7 +26,7 @@ import logic.unit.PosOverlap
 /**
  * The target for the shape events.
  */
-interface ShapeTarget {
+fun interface ShapeTarget {
     /**
      * The target registers itself for the event (if he wants to).
      *

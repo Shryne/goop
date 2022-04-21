@@ -18,20 +18,19 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.event
 
-package graphic.j2d.event;
-
-import graphic.j2d.event.mouse.J2DMouse;
+import graphic.j2d.event.mouse.J2DMouse
 
 /**
  * The observer of a certain event.
- * @since 12.4.0
  */
-public interface J2DMouseTarget {
+fun interface J2DMouseTarget {
     /**
      * Can register itself for an event source. Whether the object actually
      * registers itself depends on whether it needs an event.
+     *
      * @param source The source of the event.
      */
-    void registerFor(J2DMouse source);
+    fun registerFor(source: J2DMouse)
 }

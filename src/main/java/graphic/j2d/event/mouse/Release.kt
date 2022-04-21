@@ -18,56 +18,33 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.event.mouse
 
-package graphic.j2d.event.mouse;
-
-import graphic.j2d.shape.ShapeTarget;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import logic.functional.Action;
-import logic.unit.PosOverlap;
-import logic.unit.pos.Pos2D;
+import graphic.j2d.shape.ShapeTarget
+import logic.functional.Action
+import logic.unit.PosOverlap
+import logic.unit.pos.Pos2D
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
+import java.awt.event.MouseListener
 
 /**
  * A mouse button release bound on a component to apply some action on
  * activation.
- * <p>This class is immutable, but does mutate the state of the mouse.</p>
- * @since 13.1.2
+ * This class is immutable, but does mutate the state of the mouse.
+ *
+ * @param action The action to be applied when the mouse release occurred.
  */
-public class Release implements ShapeTarget {
-    /**
-     * The action to be applied when the release occurs.
-     */
-    private final Action action;
-
-    /**
-     * Ctor.
-     * @param action The action to be applied when the mouse release occurred.
-     */
-    public Release(final Action action) {
-        this.action = action;
-    }
-
-    @Override
-    public final void registerFor(
-        final J2DMouse source,
-        final PosOverlap overlap
-    ) {
+open class Release(private val action: Action) : ShapeTarget {
+    override fun registerFor(source: J2DMouse, overlap: PosOverlap) {
         source.register(
-            (MouseListener) new MouseAdapter() {
-                @Override
-                public void mouseReleased(final MouseEvent event) {
-                    if (overlap.contains(
-                        new Pos2D(
-                            event.getX(),
-                            event.getY()
-                        )
-                    )) {
-                        Release.this.action.run();
+            object : MouseAdapter() {
+                override fun mouseReleased(event: MouseEvent) {
+                    if (overlap.contains(Pos2D(event.x, event.y))) {
+                        action.run()
                     }
                 }
-            }
-        );
+            } as MouseListener
+        )
     }
 }
