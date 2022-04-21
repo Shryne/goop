@@ -32,16 +32,16 @@ import java.util.Optional;
  * An ordered collection of shapes.
  * @since 18.2
  */
-public class J2DMouseShapes implements J2DMouseShape {
+public class MouseShapes implements MouseShape {
     /**
      * The shapes of this collection.
      */
-    private Collection<J2DMouseShape> shapes;
+    private Collection<MouseShape> shapes;
 
     /**
      * The successor of this collection of shapes.
      */
-    private final Optional<J2DMouseShape> successor;
+    private final Optional<MouseShape> successor;
 
     /**
      * Redrawable to redraw.
@@ -52,7 +52,7 @@ public class J2DMouseShapes implements J2DMouseShape {
      * Ctor.
      * @param shapes The shapes of this collection.
      */
-    public J2DMouseShapes(final J2DMouseShape... shapes) {
+    public MouseShapes(final MouseShape... shapes) {
         this(List.of(shapes));
     }
 
@@ -60,7 +60,7 @@ public class J2DMouseShapes implements J2DMouseShape {
      * Ctor.
      * @param shapes The shapes of this collection.
      */
-    public J2DMouseShapes(final Collection<J2DMouseShape> shapes) {
+    public MouseShapes(final Collection<MouseShape> shapes) {
         this.shapes = shapes;
         this.successor = Optional.of(this);
     }
@@ -71,12 +71,12 @@ public class J2DMouseShapes implements J2DMouseShape {
     }
 
     @Override
-    public final Optional<J2DMouseShape> draw(final Graphics graphics) {
-        final List<J2DMouseShape> next = new ArrayList<>(this.shapes.size());
+    public final Optional<MouseShape> draw(final Graphics graphics) {
+        final List<MouseShape> next = new ArrayList<>(this.shapes.size());
         this.shapes.forEach(
             shape -> shape.draw(graphics).ifPresent(next::add)
         );
-        final Optional<J2DMouseShape> result;
+        final Optional<MouseShape> result;
         if (next.isEmpty()) {
             result = Optional.empty();
         } else {
@@ -92,7 +92,7 @@ public class J2DMouseShapes implements J2DMouseShape {
         this.redrawable = redrawable;
     }
 
-    public final void add(final J2DMouseShape shape) {
+    public final void add(final MouseShape shape) {
         this.shapes.add(shape);
         shape.register(this.redrawable);
         this.redrawable.redraw(() -> false);

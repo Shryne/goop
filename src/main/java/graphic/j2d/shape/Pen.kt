@@ -18,22 +18,21 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.shape
 
-package graphic.j2d.shape;
-
-import logic.graphic.color.Color;
+import logic.graphic.color.Color
 
 /**
  * Creates instances of Shapes.
- * @since 18.6
  */
-public interface J2DPen<T> {
+fun interface Pen<T> {
     /**
      * Returns a shape.
+     *
      * @param area The area of the shape.
      * @param color The color of the shape.
      * @param targets The event targets of the shape.
      * @return The shape with the given properties.
      */
-    J2DMouseShape shape(T area, Color color, J2DShapeTarget... targets);
+    fun shape(area: T, color: Color, vararg targets: ShapeTarget): MouseShape
 }

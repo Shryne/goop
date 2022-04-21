@@ -26,15 +26,15 @@ import java.awt.Graphics;
 import java.util.Optional;
 
 /**
- * A fake for {@link J2DMouseShape}.
+ * A fake for {@link MouseShape}.
  * @since 18.2
  */
 @SuppressWarnings("PMD.OnlyOneConstructorShouldDoInitialization")
-public class J2DMouseShapeFake implements J2DMouseShape {
+public class MouseShapeFake implements MouseShape {
     /**
      * The successor of this shape.
      */
-    private final Optional<J2DMouseShape> successor;
+    private final Optional<MouseShape> successor;
 
     /**
      * Whether {@link #draw(Graphics)} was called.
@@ -49,7 +49,7 @@ public class J2DMouseShapeFake implements J2DMouseShape {
     /**
      * Ctor. Creates the object with itself as the successor.
      */
-    public J2DMouseShapeFake() {
+    public MouseShapeFake() {
         this.successor = Optional.of(this);
         this.drawn = false;
         this.registered = false;
@@ -59,7 +59,7 @@ public class J2DMouseShapeFake implements J2DMouseShape {
      * Ctor.
      * @param successor The successor for {@link #draw(Graphics)}.
      */
-    public J2DMouseShapeFake(final Optional<J2DMouseShape> successor) {
+    public MouseShapeFake(final Optional<MouseShape> successor) {
         this.successor = successor;
         this.drawn = false;
         this.registered = false;
@@ -71,7 +71,7 @@ public class J2DMouseShapeFake implements J2DMouseShape {
     }
 
     @Override
-    public final Optional<J2DMouseShape> draw(final Graphics graphics) {
+    public final Optional<MouseShape> draw(final Graphics graphics) {
         this.drawn = true;
         return this.successor;
     }

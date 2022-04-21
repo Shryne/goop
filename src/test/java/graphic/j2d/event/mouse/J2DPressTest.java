@@ -32,7 +32,7 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Tests for {@link J2DPress}.
+ * Tests for {@link Press}.
  * @since 13.1.2
  */
 public class J2DPressTest {
@@ -55,7 +55,7 @@ public class J2DPressTest {
         final var robot = new Robot();
         final var frame = new JFrame();
         frame.setSize(width, height);
-        new J2DPress(
+        new Press(
             () -> pressed.set(true)
         ).registerFor(
             new J2DBaseMouse(frame),

@@ -25,8 +25,8 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * A successor of a {@link J2DMouseShape}.
+ * A successor of a {@link MouseShape}.
  * @since 19.7
  */
 public interface J2DSuccessor
-    extends Function<Optional<J2DMouseShape>, Optional<J2DMouseShape>> { }
+    extends Function<Optional<MouseShape>, Optional<MouseShape>> { }

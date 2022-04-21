@@ -18,28 +18,20 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.shape
 
-package graphic.j2d.shape;
-
-import logic.functional.Action;
-import logic.unit.area.Area;
+import logic.functional.Action
+import logic.unit.area.Area
 
 /**
  * A button with a text.
- * @since 19.5
+ *
+ * @param text The text of the button.
+ * @param area The area of the button.
+ * @param action The action of the button.
  */
-public class J2DTextButton extends Labeled {
-    /**
-     * Ctor.
-     * @param text The text of the button.
-     * @param area The area of the button.
-     * @param action The action of the button.
-     */
-    public J2DTextButton(final String text, final Area area, Action action) {
-        super(
-            text,
-            area,
-            (ignored, color, event) -> new J2DButton(area, action)
-        );
-    }
-}
+open class TextButton(text: String, area: Area, action: Action) : Labeled(
+    text,
+    area,
+    Pen { _, _, _ -> Button(area, action) }
+)

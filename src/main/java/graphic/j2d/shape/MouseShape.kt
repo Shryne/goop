@@ -18,14 +18,11 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.shape
 
-package graphic.j2d.shape;
-
-import graphic.j2d.event.J2DMouseTarget;
+import graphic.j2d.event.J2DMouseTarget
 
 /**
  * A shape that can register itself for a certain event.
- * @since 12.4.0
  */
-public interface J2DMouseShape extends J2DShape<J2DMouseShape>,
-    J2DMouseTarget { }
+interface MouseShape : J2DShape<MouseShape>, J2DMouseTarget

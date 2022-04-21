@@ -22,7 +22,7 @@
 package graphic.j2d.window.event;
 
 import graphic.j2d.J2DContainerInsets;
-import graphic.j2d.event.mouse.J2DClick;
+import graphic.j2d.event.mouse.Click;
 import graphic.j2d.shape.event.EventRect;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
@@ -76,7 +76,7 @@ public class J2DEventWindowTest {
             List.of(
                 new EventRect(
                     new PosOverlap2D(width, height),
-                    new J2DClick(() -> clicked.set(true))
+                    new Click(() -> clicked.set(true))
                 )
             )
         ).show();
@@ -129,7 +129,7 @@ public class J2DEventWindowTest {
             List.of(
                 new EventRect(
                     new PosOverlap2D(width, height),
-                    new J2DClick(() -> clicked.set(true))
+                    new Click(() -> clicked.set(true))
                 )
             )
         ).show();

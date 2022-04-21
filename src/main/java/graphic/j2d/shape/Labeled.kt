@@ -34,20 +34,20 @@ import java.util.*
  * @param text The text for the shape.
  */
 open class Labeled private constructor(
-    private val shape: J2DMouseShape,
-    private val text: J2DMouseShape
-) : J2DMouseShape {
+    private val shape: MouseShape,
+    private val text: MouseShape
+) : MouseShape {
     /**
      * Instance of this to return this as the successor.
      */
-    private val self: Optional<J2DMouseShape> = Optional.of(this)
+    private val self: Optional<MouseShape> = Optional.of(this)
 
     /**
      * @param text The text to be add.
      * @param area The area of the shape.
      * @param pen The pen to create the shape.
      */
-    constructor(text: String, area: Area, pen: J2DPen<Area>) : this(
+    constructor(text: String, area: Area, pen: Pen<Area>) : this(
         pen.shape(area, RGBA(200, 150, 150, 255)),
         Text(text, area)
     )
@@ -58,14 +58,14 @@ open class Labeled private constructor(
      * @param color The color of the shape.
      * @param pen The pen to create the shape.
      */
-    constructor(text: String, area: Area, color: Color, pen: J2DPen<Area>) :
+    constructor(text: String, area: Area, color: Color, pen: Pen<Area>) :
         this(pen.shape(area, color), Text(text, area))
 
     override fun registerFor(source: J2DMouse) {
         shape.registerFor(source)
     }
 
-    override fun draw(graphics: Graphics): Optional<J2DMouseShape> {
+    override fun draw(graphics: Graphics): Optional<MouseShape> {
         shape.draw(graphics)
         text.draw(graphics)
         return self

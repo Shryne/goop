@@ -39,15 +39,15 @@ open class Line constructor(
     private val first: Pos,
     private val second: Pos,
     private val color: Color = Black()
-) : J2DMouseShape {
+) : MouseShape {
     /**
      * The successor of this shape.
      */
-    private val successor: Optional<J2DMouseShape> = Optional.of(this)
+    private val successor: Optional<MouseShape> = Optional.of(this)
 
     override fun registerFor(source: J2DMouse) {}
 
-    override fun draw(graphics: Graphics): Optional<J2DMouseShape> {
+    override fun draw(graphics: Graphics): Optional<MouseShape> {
         color.applyOn { r, g, b, a ->
             graphics.color = java.awt.Color(r, g, b, a)
         }

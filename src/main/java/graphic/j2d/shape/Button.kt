@@ -18,118 +18,73 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.shape
 
-package graphic.j2d.shape;
-
-import graphic.j2d.event.mouse.J2DMouse;
-import graphic.j2d.event.mouse.J2DPressRelease;
-import graphic.j2d.shape.event.EventRect;
-import java.awt.Graphics;
-import java.util.Optional;
-import logic.functional.Action;
-import logic.graphic.color.ButtonColor;
-import logic.graphic.color.DualColor;
-import logic.unit.PosOverlap;
-import logic.unit.area.Area;
-import logic.unit.area.PosOverlap2D;
+import graphic.j2d.event.mouse.J2DMouse
+import graphic.j2d.event.mouse.PressRelease
+import graphic.j2d.shape.event.EventRect
+import logic.functional.Action
+import logic.graphic.color.ButtonColor
+import logic.graphic.color.DualColor
+import logic.unit.area.Area
+import logic.unit.area.PosOverlap2D
+import java.awt.Graphics
+import java.util.*
 
 /**
  * A pressable shape.
- * @since 18.6
+ *
+ * @param shape The shape of the button.
  */
-public class J2DButton implements J2DMouseShape {
-    /**
-     * The shape of the button.
-     */
-    private final J2DMouseShape shape;
+open class Button private constructor(
+    private val shape: MouseShape
+) : MouseShape {
+    override fun registerFor(source: J2DMouse) {
+        shape.registerFor(source)
+    }
 
-    /**
-     * Ctor. Creates a rectangular button.
-     * @param area The area of the button.
-     * @param action The action to be applied when the button is released.
-     */
-    public J2DButton(final Area area, Action action) {
-        this(
-            EventRect::new,
-            new PosOverlap2D(area),
-            new ButtonColor(),
+    override fun draw(graphics: Graphics): Optional<MouseShape> {
+        return shape.draw(graphics)
+    }
+
+    override fun register(redrawable: Redrawable) {
+        shape.register(redrawable)
+    }
+
+    companion object {
+        /**
+         * @param pen The pen to create the shape of the button.
+         * @param overlap The area of the button.
+         * @param color The colors of the button.
+         * @param action The action to be applied when the button is released.
+         */
+        operator fun <T> invoke(
+            pen: Pen<T>,
+            overlap: T,
+            color: DualColor,
+            action: Action
+        ) = Button(
+            pen.shape(
+                overlap,
+                color,
+                PressRelease(
+                    { color.swap() }
+                ) {
+                    action.run()
+                    color.swap()
+                }
+            )
+        )
+
+        /**
+         * @param area The area of the button.
+         * @param action The action to be applied when the button is released.
+         */
+        operator fun invoke(area: Area, action: Action) = Button(
+            { _, color, targets -> EventRect(area, color, *targets) },
+            PosOverlap2D(area),
+            ButtonColor(),
             action
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param pen The pen to create the shape of the button.
-     * @param overlap The area of the button.
-     * @param color The colors of the button.
-     * @param action The action to be applied when the button is released.
-     */
-    public <T extends PosOverlap> J2DButton(
-        final J2DPen<T> pen,
-        final T overlap,
-        final DualColor color,
-        final Action action
-    ) {
-        this(
-            pen.shape(
-                overlap,
-                color,
-                new J2DPressRelease(
-                    color::swap,
-                    () -> {
-                        action.run();
-                        color.swap();
-                    }
-                )
-            )
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param pen The pen to create the shape of the button.
-     * @param overlap The area of the button.
-     * @param color The colors of the button.
-     * @param action The action to be applied when the button is released.
-     */
-    public <T extends PosOverlap> J2DButton(
-        final J2DPen<T> pen,
-        final T overlap,
-        final DualColor color,
-        final Action action,
-        final J2DSuccessor successor
-    ) {
-        this(
-            pen.shape(
-                overlap,
-                color,
-                new J2DPressRelease(
-                    color::swap,
-                    () -> {
-                        action.run();
-                        color.swap();
-                    }
-                )
-            )
-        );
-    }
-
-    private J2DButton(final J2DMouseShape shape) {
-        this.shape = shape;
-    }
-
-    @Override
-    public final void registerFor(final J2DMouse source) {
-        this.shape.registerFor(source);
-    }
-
-    @Override
-    public final Optional<J2DMouseShape> draw(final Graphics graphics) {
-        return this.shape.draw(graphics);
-    }
-
-    @Override
-    public final void register(final Redrawable redrawable) {
-        this.shape.register(redrawable);
+        )
     }
 }

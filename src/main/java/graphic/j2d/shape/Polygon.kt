@@ -39,7 +39,7 @@ typealias J2DPolygon = java.awt.Polygon
 open class Polygon(
     private val color: Color,
     positions: List<Pos>
-) : J2DMouseShape {
+) : MouseShape {
     /**
      * The positions of this polygon's edges.
      */
@@ -58,7 +58,7 @@ open class Polygon(
     /**
      * The successor of this shape.
      */
-    private val successor: Optional<J2DMouseShape> = Optional.of(this)
+    private val successor: Optional<MouseShape> = Optional.of(this)
 
     /**
      * @param color The color of the circle.
@@ -71,7 +71,7 @@ open class Polygon(
 
     override fun registerFor(source: J2DMouse) {}
 
-    override fun draw(graphics: Graphics): Optional<J2DMouseShape> {
+    override fun draw(graphics: Graphics): Optional<MouseShape> {
         color.applyOn { r: Int, g: Int, b: Int, a: Int ->
             graphics.color = java.awt.Color(
                 r, g, b, a

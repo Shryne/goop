@@ -21,8 +21,8 @@
 
 package graphic.j2d;
 
-import graphic.j2d.shape.J2DMouseShapeFake;
-import graphic.j2d.shape.J2DMouseShapes;
+import graphic.j2d.shape.MouseShapeFake;
+import graphic.j2d.shape.MouseShapes;
 import java.awt.Graphics;
 import java.util.Arrays;
 import java.util.Optional;
@@ -31,30 +31,30 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Tests for {@link J2DMouseShapes}.
+ * Tests for {@link MouseShapes}.
  * @since 18.2
  */
-public final class J2DMouseShapesTest {
+public final class MouseShapesTest {
     /**
-     * {@link J2DMouseShapes#draw(Graphics)} must return an empty optional if
+     * {@link MouseShapes#draw(Graphics)} must return an empty optional if
      * there are no shapes left.
      */
     @Test
     public void emptyToEmptyDraw() {
         MatcherAssert.assertThat(
-            new J2DMouseShapes().draw(null),
+            new MouseShapes().draw(null),
             Matchers.equalTo(Optional.empty())
         );
     }
 
     /**
-     * {@link J2DMouseShapes#draw(Graphics)} with one element must draw one
+     * {@link MouseShapes#draw(Graphics)} with one element must draw one
      * element and keep that element.
      */
     @Test
     public void oneToOneDraw() {
-        final var shape = new J2DMouseShapeFake();
-        final var shapes = new J2DMouseShapes(shape);
+        final var shape = new MouseShapeFake();
+        final var shapes = new MouseShapes(shape);
         shapes.draw(null);
         MatcherAssert.assertThat(shape.wasDrawn(), Matchers.is(true));
         shape.clean();
@@ -63,23 +63,23 @@ public final class J2DMouseShapesTest {
     }
 
     /**
-     * {@link J2DMouseShapes#draw(Graphics)} with multiple elements must return
+     * {@link MouseShapes#draw(Graphics)} with multiple elements must return
      * draw multiple elements and keep them.
      */
     @Test
     public void multipleToMultipleDraw() {
-        final var fakes = new J2DMouseShapeFake[]{
-            new J2DMouseShapeFake(),
-            new J2DMouseShapeFake(),
-            new J2DMouseShapeFake(),
-            new J2DMouseShapeFake(),
+        final var fakes = new MouseShapeFake[]{
+            new MouseShapeFake(),
+            new MouseShapeFake(),
+            new MouseShapeFake(),
+            new MouseShapeFake(),
         };
-        final var shapes = new J2DMouseShapes(fakes);
+        final var shapes = new MouseShapes(fakes);
         shapes.draw(null);
         Arrays.stream(fakes).forEach(
             it -> MatcherAssert.assertThat(it.wasDrawn(), Matchers.is(true))
         );
-        Arrays.stream(fakes).forEach(J2DMouseShapeFake::clean);
+        Arrays.stream(fakes).forEach(MouseShapeFake::clean);
         shapes.draw(null);
         Arrays.stream(fakes).forEach(
             it -> MatcherAssert.assertThat(it.wasDrawn(), Matchers.is(true))
@@ -87,19 +87,19 @@ public final class J2DMouseShapesTest {
     }
 
     /**
-     * {@link J2DMouseShapes#draw(Graphics)} with one element that returns two
+     * {@link MouseShapes#draw(Graphics)} with one element that returns two
      * must take the two elements.
      */
     @Test
     public void oneToTwoDraw() {
-        final var second = new J2DMouseShapeFake();
-        final var third = new J2DMouseShapeFake();
-        final var first = new J2DMouseShapeFake(
+        final var second = new MouseShapeFake();
+        final var third = new MouseShapeFake();
+        final var first = new MouseShapeFake(
             Optional.of(
-                new J2DMouseShapes(second, third)
+                new MouseShapes(second, third)
             )
         );
-        final var shapes = new J2DMouseShapes(first);
+        final var shapes = new MouseShapes(first);
         shapes.draw(null);
         MatcherAssert.assertThat(first.wasDrawn(), Matchers.is(true));
         MatcherAssert.assertThat(second.wasDrawn(), Matchers.is(false));
@@ -112,14 +112,14 @@ public final class J2DMouseShapesTest {
     }
 
     /**
-     * {@link J2DMouseShapes#draw(Graphics)} with one element that returns an
+     * {@link MouseShapes#draw(Graphics)} with one element that returns an
      * empty optional must be unregistered. The return of the collection must
      * be an empty optional.
      */
     @Test
     public void oneToZeroDraw() {
-        final var first = new J2DMouseShapeFake(Optional.empty());
-        final var shapes = new J2DMouseShapes(first);
+        final var first = new MouseShapeFake(Optional.empty());
+        final var shapes = new MouseShapes(first);
         MatcherAssert.assertThat(
             shapes.draw(null),
             Matchers.equalTo(Optional.empty())
@@ -134,24 +134,24 @@ public final class J2DMouseShapesTest {
     }
 
     /**
-     * {@link J2DMouseShapes#draw(Graphics)} with multiple elements that are
+     * {@link MouseShapes#draw(Graphics)} with multiple elements that are
      * returning empty optionals must be unregistered.
      */
     @Test
     public void multipleToLessDraw() {
-        final var first = new J2DMouseShapeFake();
-        final var second = new J2DMouseShapeFake(Optional.empty());
-        final var third = new J2DMouseShapeFake();
-        final var fourth = new J2DMouseShapeFake(Optional.empty());
-        final var fakes = new J2DMouseShapeFake[]{
+        final var first = new MouseShapeFake();
+        final var second = new MouseShapeFake(Optional.empty());
+        final var third = new MouseShapeFake();
+        final var fourth = new MouseShapeFake(Optional.empty());
+        final var fakes = new MouseShapeFake[]{
             first, second, third, fourth,
         };
-        final var shapes = new J2DMouseShapes(fakes);
+        final var shapes = new MouseShapes(fakes);
         shapes.draw(null);
         Arrays.stream(fakes).forEach(
             it -> MatcherAssert.assertThat(it.wasDrawn(), Matchers.is(true))
         );
-        Arrays.stream(fakes).forEach(J2DMouseShapeFake::clean);
+        Arrays.stream(fakes).forEach(MouseShapeFake::clean);
         shapes.draw(null);
         MatcherAssert.assertThat(first.wasDrawn(), Matchers.is(true));
         MatcherAssert.assertThat(second.wasDrawn(), Matchers.is(false));

@@ -20,7 +20,7 @@
  */
 package sample
 
-import graphic.j2d.event.mouse.J2DPress
+import graphic.j2d.event.mouse.Press
 import graphic.j2d.shape.*
 import graphic.j2d.shape.event.EventRect
 import graphic.j2d.window.event.EventWindow
@@ -33,7 +33,6 @@ import logic.unit.pos.Pos
 import logic.unit.pos.Pos2D
 import logic.unit.size.Size
 import logic.unit.size.Size2D
-import java.util.List
 import java.util.concurrent.atomic.AtomicReference
 
 /**
@@ -50,7 +49,7 @@ object Forms {
         val creation = AtomicReference(
             Creation.DOT
         )
-        val shapes = J2DMouseShapes()
+        val shapes = MouseShapes()
         val positions: MutableList<Pos> = ArrayList()
         EventWindow(
             Area2D(800, 800),
@@ -98,22 +97,15 @@ object Forms {
                 5
             ) { shapes.clear() },
             EventRect(
-                PosOverlap2D(
-                    Area2D(0, buttonH + margin * 2, 800, 800)
-                ),
+                PosOverlap2D(Area2D(0, buttonH + margin * 2, 800, 800)),
                 RGBA(240, 240, 240, 255),
-                List.of(
-                    J2DPress { pos: Pos ->
-                        shapes.add(J2DDot(pos))
+                listOf(
+                    Press { pos ->
+                        shapes.add(Dot(pos))
                         when (creation.get()) {
                             Creation.DOT -> {}
                             Creation.LINE -> if (positions.size == 1) {
-                                shapes.add(
-                                    Line(
-                                        positions[0],
-                                        pos
-                                    )
-                                )
+                                shapes.add(Line(positions[0], pos))
                                 positions.clear()
                             } else {
                                 positions.add(pos)
@@ -123,12 +115,9 @@ object Forms {
                                     EventRect(
                                         PosOverlap2D(
                                             positions[0],
-                                            positions[0].result { fx: Int, fy: Int ->
-                                                pos.result { sx: Int, sy: Int ->
-                                                    Size2D(
-                                                        sx - fx,
-                                                        sy - fy
-                                                    )
+                                            positions[0].result { fx, fy ->
+                                                pos.result { sx, sy ->
+                                                    Size2D(sx - fx, sy - fy)
                                                 }
                                             }
                                         )
@@ -178,10 +167,8 @@ object Forms {
         ).show()
     }
 
-    private fun button(
-        text: String, num: Int, action: Action
-    ): J2DMouseShape {
-        return J2DTextButton(
+    private fun button(text: String, num: Int, action: Action): MouseShape {
+        return TextButton(
             text,
             Area2D(
                 Pos2D(margin * (num + 1) + buttonW * num, margin),

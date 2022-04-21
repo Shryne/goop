@@ -21,8 +21,8 @@
 package sample
 
 import graphic.j2d.event.mouse.J2DMouse
-import graphic.j2d.shape.J2DMouseShape
-import graphic.j2d.shape.J2DShapeTarget
+import graphic.j2d.shape.MouseShape
+import graphic.j2d.shape.ShapeTarget
 import graphic.j2d.shape.Redrawable
 import logic.graphic.color.Black
 import logic.graphic.color.Color
@@ -45,17 +45,17 @@ import kotlin.collections.Collection
 open class Circle(
     private val area: PosOverlap,
     private val color: Color = Black(),
-    private val targets: Collection<J2DShapeTarget> = emptyList()
-) : J2DMouseShape {
+    private val targets: Collection<ShapeTarget> = emptyList()
+) : MouseShape {
     /**
      * @param area The area of the circle.
      * @param color The color of the circle.
      * @param targets The targets that shall receive events that may happen to them.
      */
-    constructor(area: Area, color: Color, vararg targets: J2DShapeTarget) :
-        this(PosOverlap2D(area), color, listOf<J2DShapeTarget>(*targets))
+    constructor(area: Area, color: Color, vararg targets: ShapeTarget) :
+        this(PosOverlap2D(area), color, listOf<ShapeTarget>(*targets))
 
-    override fun draw(graphics: Graphics): Optional<J2DMouseShape> {
+    override fun draw(graphics: Graphics): Optional<MouseShape> {
         color.applyOn { r, g, b, a ->
             graphics.color = java.awt.Color(r, g, b, a)
         }

@@ -32,7 +32,7 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Tests for {@link J2DRelease}.
+ * Tests for {@link Release}.
  * @since 13.1.2
  */
 public class J2DReleaseTest {
@@ -55,7 +55,7 @@ public class J2DReleaseTest {
         final var robot = new Robot();
         final var frame = new JFrame();
         frame.setSize(width, height);
-        new J2DRelease(
+        new Release(
             () -> released.set(true)
         ).registerFor(
             new J2DBaseMouse(frame),

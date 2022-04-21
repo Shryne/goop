@@ -20,7 +20,7 @@
  */
 package sample
 
-import graphic.j2d.event.mouse.J2DPressRelease
+import graphic.j2d.event.mouse.PressRelease
 import logic.functional.Action
 import logic.graphic.color.ButtonColor
 import logic.graphic.color.DualColor
@@ -43,7 +43,7 @@ open class Button private constructor(
 ) : Circle(
     area,
     color,
-    J2DPressRelease({ color.swap() }) {
+    PressRelease({ color.swap() }) {
         color.swap()
         action.run()
     }

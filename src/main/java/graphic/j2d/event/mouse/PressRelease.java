@@ -21,7 +21,7 @@
 
 package graphic.j2d.event.mouse;
 
-import graphic.j2d.shape.J2DShapeTarget;
+import graphic.j2d.shape.ShapeTarget;
 import java.util.concurrent.atomic.AtomicBoolean;
 import logic.functional.Action;
 import logic.unit.PosOverlap;
@@ -29,27 +29,27 @@ import logic.unit.PosOverlap;
 /**
  * A combination of a press and a release. Note that a release may only happen
  * after the press on the same shape.
- * @see J2DPress
- * @see J2DRelease
+ * @see Press
+ * @see Release
  * @since 18.6
  */
-public class J2DPressRelease implements J2DShapeTarget {
+public class PressRelease implements ShapeTarget {
     /**
      * The mouse press.
      */
-    private final J2DShapeTarget press;
+    private final ShapeTarget press;
 
     /**
      * The mouse release.
      */
-    private final J2DShapeTarget release;
+    private final ShapeTarget release;
 
     /**
      * Ctor.
      * @param press The action that shall be applied on press.
      * @param release The action that shall be applied on release.
      */
-    public J2DPressRelease(
+    public PressRelease(
         final Action press,
         final Action release
     ) {
@@ -65,19 +65,19 @@ public class J2DPressRelease implements J2DShapeTarget {
      * @param press The action that shall be applied on press.
      * @param release The action that shall be applied on release.
      */
-    private J2DPressRelease(
+    private PressRelease(
         final Action press,
         final AtomicBoolean pressed,
         final Action release
     ) {
         this(
-            new J2DPress(
+            new Press(
                 () -> {
                     press.run();
                     pressed.set(true);
                 }
             ),
-            new J2DRelease(
+            new Release(
                 () -> {
                     if (pressed.get()) {
                         release.run();
@@ -93,8 +93,8 @@ public class J2DPressRelease implements J2DShapeTarget {
      * @param press The mouse press.
      * @param release The mouse release.
      */
-    private J2DPressRelease(
-        final J2DShapeTarget press, final J2DShapeTarget release
+    private PressRelease(
+        final ShapeTarget press, final ShapeTarget release
     ) {
         this.press = press;
         this.release = release;

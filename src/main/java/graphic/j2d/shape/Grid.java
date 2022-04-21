@@ -30,11 +30,11 @@ import java.util.Optional;
  * A grid.
  * @since 18.3
  */
-public class J2DGrid implements J2DMouseShape {
+public class Grid implements MouseShape {
     /**
      * The shapes that are on the grid.
      */
-    private final List<List<J2DMouseShape>> shapes;
+    private final List<List<MouseShape>> shapes;
 
     /**
      * The number of rows.
@@ -52,8 +52,8 @@ public class J2DGrid implements J2DMouseShape {
      * @param rows The number of rows.
      * @param columns The number of columns.
      */
-    public J2DGrid(
-        final List<List<J2DMouseShape>> shapes,
+    public Grid(
+        final List<List<MouseShape>> shapes,
         final int rows,
         final int columns
     ) {
@@ -68,7 +68,7 @@ public class J2DGrid implements J2DMouseShape {
     }
 
     @Override
-    public final Optional<J2DMouseShape> draw(final Graphics graphics) {
+    public final Optional<MouseShape> draw(final Graphics graphics) {
         throw new UnsupportedOperationException("#draw()");
     }
 

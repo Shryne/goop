@@ -21,32 +21,46 @@
 
 package graphic.j2d.event.mouse;
 
-import graphic.j2d.shape.J2DShapeTarget;
+import graphic.j2d.shape.ShapeTarget;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.function.Consumer;
 import logic.functional.Action;
 import logic.unit.PosOverlap;
+import logic.unit.pos.Pos;
 import logic.unit.pos.Pos2D;
 
 /**
- * A mouse button release bound on a component to apply some action on
- * activation.
+ * A mouse press bound on a component to apply some action on activation.
  * <p>This class is immutable, but does mutate the state of the mouse.</p>
  * @since 13.1.2
  */
-public class J2DRelease implements J2DShapeTarget {
+public class Press implements ShapeTarget {
     /**
-     * The action to be applied when the release occurs.
+     * The target action to be applied with the x and y coordinates of the
+     * press.
      */
-    private final Action action;
+    private final Consumer<Pos> target;
 
     /**
      * Ctor.
-     * @param action The action to be applied when the mouse release occurred.
+     * @param action The action to be applied when the press occurs.
      */
-    public J2DRelease(final Action action) {
-        this.action = action;
+    public Press(final Action action) {
+        this(
+            // @checkstyle ParameterName (1 line)
+            pos -> action.run()
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param target The target with the action, who gets the x and y
+     *  coordinates of the press.
+     */
+    public Press(final Consumer<Pos> target) {
+        this.target = target;
     }
 
     @Override
@@ -57,14 +71,10 @@ public class J2DRelease implements J2DShapeTarget {
         source.register(
             (MouseListener) new MouseAdapter() {
                 @Override
-                public void mouseReleased(final MouseEvent event) {
-                    if (overlap.contains(
-                        new Pos2D(
-                            event.getX(),
-                            event.getY()
-                        )
-                    )) {
-                        J2DRelease.this.action.run();
+                public void mousePressed(final MouseEvent event) {
+                    final var pos = new Pos2D(event.getX(), event.getY());
+                    if (overlap.contains(pos)) {
+                        Press.this.target.accept(pos);
                     }
                 }
             }

@@ -27,7 +27,6 @@ import logic.unit.area.Area
 import logic.unit.area.applyOn
 import java.awt.Graphics
 import java.util.*
-import java.util.List
 import java.util.function.Consumer
 import kotlin.collections.Collection
 
@@ -42,11 +41,11 @@ open class Oval(
     private val area: Area,
     private val color: Color,
     private val events: Collection<J2DMouseTarget>
-) : J2DMouseShape {
+) : MouseShape {
     /**
      * The successor of this shape.
      */
-    private val successor: Optional<J2DMouseShape> = Optional.of(this)
+    private val successor: Optional<MouseShape> = Optional.of(this)
 
     /**
      * @param area The area of the circle.
@@ -60,7 +59,7 @@ open class Oval(
         events.forEach(Consumer { it.registerFor(source) })
     }
 
-    override fun draw(graphics: Graphics): Optional<J2DMouseShape> {
+    override fun draw(graphics: Graphics): Optional<MouseShape> {
         color.applyOn { r, g, b, a ->
             graphics.color = java.awt.Color(r, g, b, a)
         }

@@ -45,7 +45,7 @@ class Text constructor(
     private val text: String,
     private val area: Area,
     private val color: Color = Black()
-) : J2DMouseShape {
+) : MouseShape {
     /**
      * The font of the text.
      */
@@ -59,7 +59,7 @@ class Text constructor(
     /**
      * The successor of this text.
      */
-    private val successor: Optional<J2DMouseShape> = Optional.of(this)
+    private val successor: Optional<MouseShape> = Optional.of(this)
 
     /**
      * Creates a black text.
@@ -90,7 +90,7 @@ class Text constructor(
 
     override fun registerFor(source: J2DMouse) {}
 
-    override fun draw(graphics: Graphics): Optional<J2DMouseShape> {
+    override fun draw(graphics: Graphics): Optional<MouseShape> {
         color.applyOn { r: Int, g: Int, b: Int, a: Int ->
             graphics.color = java.awt.Color(r, g, b, a)
         }

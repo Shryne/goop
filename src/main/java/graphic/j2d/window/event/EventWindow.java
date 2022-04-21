@@ -23,7 +23,7 @@ package graphic.j2d.window.event;
 
 import graphic.j2d.event.mouse.J2DBaseMouse;
 import graphic.j2d.event.mouse.J2DMouse;
-import graphic.j2d.shape.J2DMouseShape;
+import graphic.j2d.shape.MouseShape;
 import graphic.j2d.window.J2DBaseWindow;
 import graphic.j2d.window.Window;
 import graphic.j2d.window.J2DWindowFeature;
@@ -39,7 +39,7 @@ import org.cactoos.iterable.Joined;
  *     <li>sets the title</li>
  *     <li>sets the default close operation (end application on close)</li>
  * </ul>
- * Additionally, it uses {@link J2DMouseShape} instead of
+ * Additionally, it uses {@link MouseShape} instead of
  * {@link graphic.j2d.shape.J2DShape}.
  * <p>This class mutates its state when {@link J2DBaseWindow#show()} is called.
  * Since show isn't synchronized, this class isn't thread-safe. Additionally,
@@ -55,7 +55,7 @@ public class EventWindow extends Window {
      */
     public EventWindow(
         final Area area,
-        final J2DMouseShape... shapes
+        final MouseShape... shapes
     ) {
         this(
             "",
@@ -72,7 +72,7 @@ public class EventWindow extends Window {
      */
     public EventWindow(
         final Area area,
-        final Iterable<J2DMouseShape> shapes
+        final Iterable<MouseShape> shapes
     ) {
         this(
             "",
@@ -92,7 +92,7 @@ public class EventWindow extends Window {
     public EventWindow(
         final String title,
         final Area area,
-        final J2DMouseShape... shapes
+        final MouseShape... shapes
     ) {
         this(
             title,
@@ -114,7 +114,7 @@ public class EventWindow extends Window {
         final String title,
         final Area area,
         final Iterable<J2DWindowFeature> features,
-        final Iterable<J2DMouseShape> shapes
+        final Iterable<MouseShape> shapes
     ) {
         super(
             title,

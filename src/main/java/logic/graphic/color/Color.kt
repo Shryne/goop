@@ -29,6 +29,7 @@ import logic.functional.QuadConsumer
 interface Color : Changeable {
     /**
      * Gives the given consumer the red, green, blue and alpha values.
+     *
      * @param target Target that gets the rgba values.
      */
     fun applyOn(target: QuadConsumer<Int, Int, Int, Int>)

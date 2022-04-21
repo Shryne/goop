@@ -21,8 +21,8 @@
 package graphic.j2d.shape.event
 
 import graphic.j2d.event.mouse.J2DMouse
-import graphic.j2d.shape.J2DMouseShape
-import graphic.j2d.shape.J2DShapeTarget
+import graphic.j2d.shape.MouseShape
+import graphic.j2d.shape.ShapeTarget
 import graphic.j2d.shape.J2DSuccessor
 import graphic.j2d.shape.Redrawable
 import logic.graphic.color.Black
@@ -53,18 +53,18 @@ open class EventRect(
     private val area: PosOverlap,
     private val color: Color,
     private val successor: J2DSuccessor,
-    private val targets: List<J2DShapeTarget>
-) : J2DMouseShape {
+    private val targets: List<ShapeTarget>
+) : MouseShape {
     /**
      * Self to success.
      */
-    private val self: Optional<J2DMouseShape> = Optional.of(this)
+    private val self: Optional<MouseShape> = Optional.of(this)
 
     /**
      * @param area The area of this rect.
      * @param targets The targets for the mouse events.
      */
-    constructor(area: PosOverlap, vararg targets: J2DShapeTarget) :
+    constructor(area: PosOverlap, vararg targets: ShapeTarget) :
         this(area, listOf(*targets))
 
     /**
@@ -72,7 +72,7 @@ open class EventRect(
      * @param color The color of this rect.
      * @param targets The targets for the mouse events.
      */
-    constructor(area: Area, color: Color, vararg targets: J2DShapeTarget) :
+    constructor(area: Area, color: Color, vararg targets: ShapeTarget) :
         this(PosOverlap2D(area), color, listOf(*targets)
     )
 
@@ -84,14 +84,14 @@ open class EventRect(
     constructor(
         area: PosOverlap,
         color: Color,
-        vararg targets: J2DShapeTarget
+        vararg targets: ShapeTarget
     ) : this(area, color, listOf(*targets))
 
     /**
      * @param area The area of this rect.
      * @param targets The targets for the mouse events.
      */
-    constructor(area: PosOverlap, targets: List<J2DShapeTarget>) :
+    constructor(area: PosOverlap, targets: List<ShapeTarget>) :
         this(area, Black(), targets)
 
     /**
@@ -103,10 +103,10 @@ open class EventRect(
     constructor(
         area: PosOverlap,
         color: Color = Black(),
-        targets: List<J2DShapeTarget> = emptyList()
+        targets: List<ShapeTarget> = emptyList()
     ) : this(area, color, J2DSuccessor { it }, targets)
 
-    override fun draw(graphics: Graphics): Optional<J2DMouseShape> {
+    override fun draw(graphics: Graphics): Optional<MouseShape> {
         color.applyOn { r, g, b, a ->
             graphics.color = java.awt.Color(r, g, b, a)
         }

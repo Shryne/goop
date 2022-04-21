@@ -34,13 +34,13 @@ import logic.unit.size.Size2D;
  * A small oval.
  * @since 19.8
  */
-public class J2DDot extends Oval {
+public class Dot extends Oval {
     /**
      * Ctor. Creates a black dot.
      * @param pos The pos of the dot.
      * @param events The events of the dot.
      */
-    public J2DDot(
+    public Dot(
         final Pos pos,
         final J2DMouseTarget... events
     ) {
@@ -53,7 +53,7 @@ public class J2DDot extends Oval {
      * @param color The color of the dot.
      * @param events The events of the dot.
      */
-    public J2DDot(
+    public Dot(
         final Pos pos,
         final Color color,
         final J2DMouseTarget... events
@@ -67,7 +67,7 @@ public class J2DDot extends Oval {
      * @param color The color of the dot.
      * @param events The events of the dot.
      */
-    public J2DDot(
+    public Dot(
         final Pos pos,
         final Color color,
         final Collection<J2DMouseTarget> events

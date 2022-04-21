@@ -21,7 +21,7 @@
 
 package sample
 
-import graphic.j2d.shape.J2DGrid
+import graphic.j2d.shape.Grid
 import graphic.j2d.shape.event.EventRect
 import graphic.j2d.window.event.EventWindow
 import logic.unit.area.Area2D
@@ -30,7 +30,7 @@ import logic.unit.area.PosOverlap2D
 fun main() {
     EventWindow(
         Area2D(500, 500),
-        J2DGrid(
+        Grid(
             listOf(
                 listOf(
                     EventRect(
