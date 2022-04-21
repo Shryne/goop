@@ -18,56 +18,45 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+
 package graphic.j2d.shape
 
-import graphic.j2d.event.J2DMouseTarget
-import graphic.j2d.event.mouse.J2DMouse
-import logic.graphic.color.Black
 import logic.graphic.color.Color
 import logic.unit.area.Area
 import logic.unit.area.applyOn
 import java.awt.Graphics
 import java.util.*
-import java.util.function.Consumer
-import kotlin.collections.Collection
 
 /**
- * A circle.
+ * A rectangle with round corners.
  *
- * @param area The area of the circle.
- * @param color The color of the circle.
- * @param events The events of the circle.
+ * This class doesn't change its own state. Whether it is immutable or not,
+ * depends on the given constructor arguments. Additionally, whether this
+ * class is thread-safe or not, depends on the given graphics instance for
+ * [draw].
+ *
+ * @param area The area of this rect.
+ * @param color The color of this rect.
  */
-open class Oval(
+open class RoundRect(
     private val area: Area,
     private val color: Color,
-    private val events: Collection<J2DMouseTarget>
-) : MouseShape {
+    private val arcW: Int,
+    private val arcH: Int,
+) :
+    Shape<Shape<*>> {
     /**
-     * The successor of this shape.
+     * The next shape to be drawn.
      */
-    private val successor: Optional<MouseShape> = Optional.of(this)
+    private val successor: Optional<Shape<*>> = Optional.of(this)
 
-    /**
-     * @param area The area of the circle.
-     * @param color The color of the circle. The default is [Black].
-     * @param events The events of the circle.
-     */
-    constructor(
-        area: Area,
-        color: Color = Black(),
-        vararg events: J2DMouseTarget
-    ) : this(area, color, listOf<J2DMouseTarget>(*events))
-
-    override fun registerFor(source: J2DMouse) {
-        events.forEach(Consumer { it.registerFor(source) })
-    }
-
-    override fun draw(graphics: Graphics): Optional<MouseShape> {
+    override fun draw(graphics: Graphics): Optional<Shape<*>> {
         color.applyOn { r, g, b, a ->
             graphics.color = java.awt.Color(r, g, b, a)
         }
-        area.applyOn { x, y, w, h -> graphics.fillOval(x, y, w, h) }
+        area.applyOn { x, y, w, h ->
+            graphics.fillRoundRect(x, y, w, h, arcW, arcH)
+        }
         return successor
     }
 

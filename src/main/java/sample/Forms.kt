@@ -37,148 +37,116 @@ import java.util.concurrent.atomic.AtomicReference
 
 /**
  * A form editor.
- * @since 19.11
  */
-object Forms {
-    private const val margin = 10
-    private const val buttonW = 100
-    private const val buttonH = 35
-    private val buttonSize: Size = Size2D(buttonW, buttonH)
-    @JvmStatic
-    fun main(args: Array<String>) {
-        val creation = AtomicReference(
-            Creation.DOT
-        )
-        val shapes = MouseShapes()
-        val positions: MutableList<Pos> = ArrayList()
-        EventWindow(
-            Area2D(800, 800),
-            EventRect(
-                Area2D(0, 0, 800, buttonH + margin * 2),
-                RGBA(230, 230, 230, 255)
-            ),
-            button(
-                "Point",
-                0
-            ) {
-                positions.clear()
-                creation.set(Creation.DOT)
-            },
-            button(
-                "Line",
-                1
-            ) {
-                positions.clear()
-                creation.set(Creation.LINE)
-            },
-            button(
-                "Rect",
-                2
-            ) {
-                positions.clear()
-                creation.set(Creation.RECT)
-            },
-            button(
-                "OVAL",
-                3
-            ) {
-                positions.clear()
-                creation.set(Creation.OVAL)
-            },
-            button(
-                "Polygon",
-                4
-            ) {
-                positions.clear()
-                creation.set(Creation.POLYGON)
-            },
-            button(
-                "Clear",
-                5
-            ) { shapes.clear() },
-            EventRect(
-                PosOverlap2D(Area2D(0, buttonH + margin * 2, 800, 800)),
-                RGBA(240, 240, 240, 255),
-                listOf(
-                    Press { pos ->
-                        shapes.add(Dot(pos))
-                        when (creation.get()) {
-                            Creation.DOT -> {}
-                            Creation.LINE -> if (positions.size == 1) {
-                                shapes.add(Line(positions[0], pos))
-                                positions.clear()
-                            } else {
-                                positions.add(pos)
-                            }
-                            Creation.RECT -> if (positions.size == 1) {
-                                shapes.add(
-                                    EventRect(
-                                        PosOverlap2D(
-                                            positions[0],
-                                            positions[0].result { fx, fy ->
-                                                pos.result { sx, sy ->
-                                                    Size2D(sx - fx, sy - fy)
-                                                }
+private const val margin = 10
+private const val buttonW = 100
+private const val buttonH = 35
+private val buttonSize: Size = Size2D(buttonW, buttonH)
+
+fun main() {
+    val creation = AtomicReference(Creation.DOT)
+    val shapes = MouseShapes()
+    val positions: MutableList<Pos> = ArrayList()
+    EventWindow(
+        Area2D(800, 800),
+        EventRect(
+            Area2D(0, 0, 800, buttonH + margin * 2),
+            RGBA(230, 230, 230, 255)
+        ),
+        button("Point", 0) {
+            positions.clear()
+            creation.set(Creation.DOT)
+        },
+        button("Line", 1) {
+            positions.clear()
+            creation.set(Creation.LINE)
+        },
+        button("Rect", 2) {
+            positions.clear()
+            creation.set(Creation.RECT)
+        },
+        button("OVAL", 3) {
+            positions.clear()
+            creation.set(Creation.OVAL)
+        },
+        button("Polygon", 4) {
+            positions.clear()
+            creation.set(Creation.POLYGON)
+        },
+        button("Clear", 5) { shapes.clear() },
+        EventRect(
+            PosOverlap2D(Area2D(0, buttonH + margin * 2, 800, 800)),
+            RGBA(240, 240, 240, 255),
+            listOf(
+                Press { pos ->
+                    shapes.add(Dot(pos))
+                    when (creation.get()) {
+                        Creation.DOT -> {}
+                        Creation.LINE -> if (positions.size == 1) {
+                            shapes.add(Line(positions[0], pos))
+                            positions.clear()
+                        } else {
+                            positions.add(pos)
+                        }
+                        Creation.RECT -> if (positions.size == 1) {
+                            shapes.add(
+                                EventRect(
+                                    PosOverlap2D(
+                                        positions[0],
+                                        positions[0].result { fx, fy ->
+                                            pos.result { sx, sy ->
+                                                Size2D(sx - fx, sy - fy)
                                             }
-                                        )
+                                        }
                                     )
                                 )
-                                positions.clear()
-                            } else {
-                                positions.add(pos)
-                            }
-                            Creation.OVAL -> if (positions.size == 1) {
-                                shapes.add(
-                                    Oval(
-                                        Area2D(
-                                            positions[0],
-                                            positions[0].result { fx: Int, fy: Int ->
-                                                pos.result { sx: Int, sy: Int ->
-                                                    Size2D(
-                                                        sx - fx,
-                                                        sy - fy
-                                                    )
-                                                }
+                            )
+                            positions.clear()
+                        } else {
+                            positions.add(pos)
+                        }
+                        Creation.OVAL -> if (positions.size == 1) {
+                            shapes.add(
+                                Oval(
+                                    Area2D(
+                                        positions[0],
+                                        positions[0].result { fx, fy ->
+                                            pos.result { sx, sy ->
+                                                Size2D(sx - fx, sy - fy)
                                             }
-                                        ),
-                                        Black()
+                                        }
                                     )
                                 )
-                                positions.clear()
-                            } else {
-                                positions.add(pos)
-                            }
-                            Creation.POLYGON -> if (positions.size == 4) {
-                                shapes.add(
-                                    Polygon(
-                                        Black(),
-                                        positions
-                                    )
-                                )
-                                positions.clear()
-                            } else {
-                                positions.add(pos)
-                            }
+                            )
+                            positions.clear()
+                        } else {
+                            positions.add(pos)
+                        }
+                        Creation.POLYGON -> if (positions.size == 4) {
+                            shapes.add(Polygon(positions = positions))
+                            positions.clear()
+                        } else {
+                            positions.add(pos)
                         }
                     }
-                )
-            ),
-            shapes
-        ).show()
-    }
+                }
+            )
+        ),
+        shapes
+    ).show()
+}
 
-    private fun button(text: String, num: Int, action: Action): MouseShape {
-        return TextButton(
-            text,
-            Area2D(
-                Pos2D(margin * (num + 1) + buttonW * num, margin),
-                buttonSize
-            ),
-            action
-        )
-    }
+private fun button(text: String, num: Int, action: Action): MouseShape {
+    return TextButton(
+        text,
+        Area2D(
+            Pos2D(margin * (num + 1) + buttonW * num, margin),
+            buttonSize
+        ),
+        action
+    )
+}
 
-    private enum class Creation {
-        DOT, LINE, RECT, OVAL, POLYGON
-    }
+private enum class Creation {
+    DOT, LINE, RECT, OVAL, POLYGON
 }

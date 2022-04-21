@@ -27,10 +27,10 @@ import java.awt.Graphics
 import java.util.*
 
 /**
- * A rectangle using java2d.
+ * A rectangle.
  *
  * This class doesn't change its own state. Whether it is immutable or not,
- * depends on the given constructor arguments. Additionally whether this
+ * depends on the given constructor arguments. Additionally, whether this
  * class is thread-safe or not, depends on the given graphics instance for
  * [draw].
  *

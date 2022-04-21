@@ -21,6 +21,7 @@
 package graphic.j2d.shape
 
 import graphic.j2d.event.mouse.J2DMouse
+import logic.graphic.color.Black
 import logic.graphic.color.Color
 import logic.unit.pos.Pos
 import logic.unit.pos.applyOn
@@ -33,11 +34,11 @@ typealias J2DPolygon = java.awt.Polygon
 /**
  * A polygon.
  *
- * @param color The color of the circle.
+ * @param color The color of the circle. The default is [Black].
  * @param positions The positions of this polygon's edges.
  */
 open class Polygon(
-    private val color: Color,
+    private val color: Color = Black(),
     positions: List<Pos>
 ) : MouseShape {
     /**
