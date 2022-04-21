@@ -20,7 +20,7 @@
  */
 package graphic.j2d.window
 
-import graphic.j2d.shape.J2DShape
+import graphic.j2d.shape.Shape
 import logic.unit.area.Area
 import logic.unit.area.Area2D
 import org.cactoos.iterable.Joined
@@ -45,7 +45,7 @@ open class Window(
     title: String,
     area: Area,
     features: Iterable<J2DWindowFeature>,
-    shapes: Iterable<J2DShape<*>>
+    shapes: Iterable<Shape<*>>
 ) : J2DBaseWindow(
     area,
     Joined(
@@ -67,7 +67,7 @@ open class Window(
     constructor(
         width: Int,
         height: Int,
-        vararg shapes: J2DShape<*>
+        vararg shapes: Shape<*>
     ) : this("", Area2D(width, height), listOf(*shapes))
 
     /**
@@ -79,7 +79,7 @@ open class Window(
     constructor(
         title: String = "",
         area: Area,
-        shapes: Iterable<J2DShape<*>>,
+        shapes: Iterable<Shape<*>>,
         vararg features: J2DWindowFeature
     ) : this(title, area, listOf(*features), shapes)
 }

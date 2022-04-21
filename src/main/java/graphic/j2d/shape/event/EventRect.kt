@@ -23,7 +23,7 @@ package graphic.j2d.shape.event
 import graphic.j2d.event.mouse.J2DMouse
 import graphic.j2d.shape.MouseShape
 import graphic.j2d.shape.ShapeTarget
-import graphic.j2d.shape.J2DSuccessor
+import graphic.j2d.shape.Successor
 import graphic.j2d.shape.Redrawable
 import logic.graphic.color.Black
 import logic.graphic.color.Color
@@ -52,7 +52,7 @@ import java.util.function.Consumer
 open class EventRect(
     private val area: PosOverlap,
     private val color: Color,
-    private val successor: J2DSuccessor,
+    private val successor: Successor,
     private val targets: List<ShapeTarget>
 ) : MouseShape {
     /**
@@ -104,7 +104,7 @@ open class EventRect(
         area: PosOverlap,
         color: Color = Black(),
         targets: List<ShapeTarget> = emptyList()
-    ) : this(area, color, J2DSuccessor { it }, targets)
+    ) : this(area, color, Successor { it }, targets)
 
     override fun draw(graphics: Graphics): Optional<MouseShape> {
         color.applyOn { r, g, b, a ->

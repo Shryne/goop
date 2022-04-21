@@ -18,58 +18,31 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.shape
 
-package graphic.j2d.shape;
-
-import graphic.j2d.event.mouse.J2DMouse;
-import java.awt.Graphics;
-import java.util.List;
-import java.util.Optional;
+import graphic.j2d.event.mouse.J2DMouse
+import java.awt.Graphics
+import java.util.*
+import java.util.function.Consumer
 
 /**
  * A grid.
- * @since 18.3
+ *
+ * @param shapes The shapes on the grid.
+ * @param rows The number of rows.
+ * @param columns The number of columns.
  */
-public class Grid implements MouseShape {
-    /**
-     * The shapes that are on the grid.
-     */
-    private final List<List<MouseShape>> shapes;
-
-    /**
-     * The number of rows.
-     */
-    private final int rows;
-
-    /**
-     * The number of columns.
-     */
-    private final int columns;
-
-    /**
-     * Ctor.
-     * @param shapes The shapes on the grid.
-     * @param rows The number of rows.
-     * @param columns The number of columns.
-     */
-    public Grid(
-        final List<List<MouseShape>> shapes,
-        final int rows,
-        final int columns
-    ) {
-        this.shapes = shapes;
-        this.rows = rows;
-        this.columns = columns;
+open class Grid(
+    private val shapes: List<List<MouseShape>>,
+    private val rows: Int,
+    private val columns: Int
+) : MouseShape {
+    override fun registerFor(source: J2DMouse) {
+        throw UnsupportedOperationException("#registerFor()")
     }
 
-    @Override
-    public final void registerFor(final J2DMouse source) {
-        throw new UnsupportedOperationException("#registerFor()");
-    }
-
-    @Override
-    public final Optional<MouseShape> draw(final Graphics graphics) {
-        throw new UnsupportedOperationException("#draw()");
+    override fun draw(graphics: Graphics): Optional<MouseShape> {
+        throw UnsupportedOperationException("#draw()")
     }
 
     /*
@@ -86,13 +59,11 @@ public class Grid implements MouseShape {
             }
         }
     }*/
-
-    @Override
-    public final void register(final Redrawable redrawable) {
-        this.shapes.forEach(it -> it
-            .forEach(
-                shape -> shape.register(redrawable)
-            )
-        );
+    override fun register(redrawable: Redrawable) {
+        shapes.forEach(
+            Consumer {
+                it.forEach(Consumer { shape -> shape.register(redrawable) })
+            }
+        )
     }
 }

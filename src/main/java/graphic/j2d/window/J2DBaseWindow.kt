@@ -20,7 +20,7 @@
  */
 package graphic.j2d.window
 
-import graphic.j2d.shape.J2DShape
+import graphic.j2d.shape.Shape
 import logic.functional.Lazy
 import logic.functional.Value
 import logic.graphic.window.Showable
@@ -61,7 +61,7 @@ open class J2DBaseWindow private constructor(
      * @param area The area of this window.
      * @param shapes The shapes that are on this window.
      */
-    constructor(area: Area, shapes: Iterable<J2DShape<*>>) :
+    constructor(area: Area, shapes: Iterable<Shape<*>>) :
         this(area, emptyList<J2DWindowFeature>(), shapes)
 
     /**
@@ -72,7 +72,7 @@ open class J2DBaseWindow private constructor(
     constructor(
         area: Area,
         features: Iterable<J2DWindowFeature>,
-        shapes: Iterable<J2DShape<*>>
+        shapes: Iterable<Shape<*>>
     ) : this(
         Lazy<JFrame> {
             val frame = JFrame()
@@ -81,7 +81,7 @@ open class J2DBaseWindow private constructor(
                     graphics: Graphics
                 ) {
                     super.paintComponent(graphics)
-                    shapes.forEach { shape: J2DShape<*>? ->
+                    shapes.forEach { shape: Shape<*>? ->
                         shape!!.draw(
                             graphics
                         )

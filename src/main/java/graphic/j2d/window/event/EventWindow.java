@@ -40,7 +40,7 @@ import org.cactoos.iterable.Joined;
  *     <li>sets the default close operation (end application on close)</li>
  * </ul>
  * Additionally, it uses {@link MouseShape} instead of
- * {@link graphic.j2d.shape.J2DShape}.
+ * {@link graphic.j2d.shape.Shape}.
  * <p>This class mutates its state when {@link J2DBaseWindow#show()} is called.
  * Since show isn't synchronized, this class isn't thread-safe. Additionally,
  * the features can change its state.</p>

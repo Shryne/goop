@@ -18,88 +18,75 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.shape
 
-package graphic.j2d.shape;
-
-import graphic.j2d.event.mouse.J2DMouse;
-import java.awt.Graphics;
-import java.util.Optional;
+import graphic.j2d.event.mouse.J2DMouse
+import java.awt.Graphics
+import java.util.*
 
 /**
- * A fake for {@link MouseShape}.
- * @since 18.2
+ * A fake for [MouseShape].
  */
-@SuppressWarnings("PMD.OnlyOneConstructorShouldDoInitialization")
-public class MouseShapeFake implements MouseShape {
+open class MouseShapeFake : MouseShape {
     /**
      * The successor of this shape.
      */
-    private final Optional<MouseShape> successor;
+    private val successor: Optional<MouseShape>
 
     /**
-     * Whether {@link #draw(Graphics)} was called.
+     * Whether [draw] was called.
      */
-    private boolean drawn;
+    private var drawn: Boolean = false
 
     /**
-     * Whether {@link #registerFor(J2DMouse)} was called.
+     * Whether [registerFor] was called.
      */
-    private boolean registered;
+    private var registered: Boolean = false
 
     /**
-     * Ctor. Creates the object with itself as the successor.
+     * Creates the object with itself as the successor.
      */
-    public MouseShapeFake() {
-        this.successor = Optional.of(this);
-        this.drawn = false;
-        this.registered = false;
+    constructor() {
+        successor = Optional.of(this)
     }
 
     /**
-     * Ctor.
-     * @param successor The successor for {@link #draw(Graphics)}.
+     * @param successor The successor for [draw].
      */
-    public MouseShapeFake(final Optional<MouseShape> successor) {
-        this.successor = successor;
-        this.drawn = false;
-        this.registered = false;
+    constructor(successor: Optional<MouseShape>) {
+        this.successor = successor
     }
 
-    @Override
-    public final void registerFor(final J2DMouse source) {
-        this.registered = true;
+    override fun registerFor(source: J2DMouse) {
+        registered = true
     }
 
-    @Override
-    public final Optional<MouseShape> draw(final Graphics graphics) {
-        this.drawn = true;
-        return this.successor;
+    override fun draw(graphics: Graphics): Optional<MouseShape> {
+        drawn = true
+        return successor
     }
 
-    @Override
-    public final void register(final Redrawable redrawable) { }
+    override fun register(redrawable: Redrawable) {}
 
     /**
-     * Whether it was drawn.
      * @return Whether it was drawn.
      */
-    public final boolean wasDrawn() {
-        return this.drawn;
+    fun wasDrawn(): Boolean {
+        return drawn
     }
 
     /**
-     * Whether it was registered.
-     * @return Whether it was registered.
+     * @return Whether it has been registered.
      */
-    public final boolean wasRegistered() {
-        return this.registered;
+    fun hasBeenRegistered(): Boolean {
+        return registered
     }
 
     /**
      * Resets the flags.
      */
-    public final void clean() {
-        this.drawn = false;
-        this.registered = false;
+    fun clean() {
+        drawn = false
+        registered = false
     }
 }

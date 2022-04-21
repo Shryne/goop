@@ -18,25 +18,23 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.shape
 
-package graphic.j2d.shape;
-
-import java.awt.Graphics;
-import java.util.Optional;
-import logic.Changeable;
+import logic.Changeable
+import java.awt.Graphics
+import java.util.*
 
 /**
- * A shape that is using java2d to draw itself.
- * @param <T> The type of the successor of this shape.
- * @since 2.1.0
+ * A shape that draws itself.
  */
-public interface J2DShape<T> extends Changeable {
+interface Shape<T> : Changeable {
     /**
      * Draws the shape and returns the next shape to take the place of this
      * shape. This is used to register and unregister shapes from the
      * parent/window.
+     *
      * @param graphics The Graphics object to draw the shape.
      * @return The successor of this shape.
      */
-    Optional<T> draw(Graphics graphics);
+    fun draw(graphics: Graphics): Optional<T>
 }

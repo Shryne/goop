@@ -25,4 +25,4 @@ import graphic.j2d.event.J2DMouseTarget
 /**
  * A shape that can register itself for a certain event.
  */
-interface MouseShape : J2DShape<MouseShape>, J2DMouseTarget
+interface MouseShape : Shape<MouseShape>, J2DMouseTarget

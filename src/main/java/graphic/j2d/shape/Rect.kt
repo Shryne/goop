@@ -38,13 +38,13 @@ import java.util.*
  * @param color The color of this rect.
  */
 open class Rect(private val area: Area, private val color: Color) :
-    J2DShape<J2DShape<*>> {
+    Shape<Shape<*>> {
     /**
      * The next shape to be drawn.
      */
-    private val successor: Optional<J2DShape<*>> = Optional.of(this)
+    private val successor: Optional<Shape<*>> = Optional.of(this)
 
-    override fun draw(graphics: Graphics): Optional<J2DShape<*>> {
+    override fun draw(graphics: Graphics): Optional<Shape<*>> {
         color.applyOn { r, g, b, a ->
             graphics.color = java.awt.Color(r, g, b, a)
         }

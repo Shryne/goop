@@ -18,15 +18,12 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.shape
 
-package graphic.j2d.shape;
-
-import java.util.Optional;
-import java.util.function.Function;
+import java.util.*
+import java.util.function.Function
 
 /**
- * A successor of a {@link MouseShape}.
- * @since 19.7
+ * A successor of a [MouseShape].
  */
-public interface J2DSuccessor
-    extends Function<Optional<MouseShape>, Optional<MouseShape>> { }
+fun interface Successor : Function<Optional<MouseShape>, Optional<MouseShape>>

@@ -18,60 +18,41 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.shape
 
-package graphic.j2d.shape;
-
-import graphic.j2d.event.J2DMouseTarget;
-import java.util.Collection;
-import java.util.List;
-import logic.graphic.color.Black;
-import logic.graphic.color.Color;
-import logic.unit.area.Area2D;
-import logic.unit.pos.Pos;
-import logic.unit.size.Size2D;
+import graphic.j2d.event.J2DMouseTarget
+import logic.graphic.color.Black
+import logic.graphic.color.Color
+import logic.unit.area.Area2D
+import logic.unit.pos.Pos
+import logic.unit.size.Size2D
+import java.util.List
 
 /**
  * A small oval.
- * @since 19.8
+ *
+ * @param pos The pos of the dot.
+ * @param color The color of the dot.
+ * @param events The events of the dot.
  */
-public class Dot extends Oval {
+open class Dot(
+    pos: Pos,
+    color: Color,
+    events: Collection<J2DMouseTarget>
+) : Oval(Area2D(pos, Size2D(5, 5)), color, events) {
     /**
-     * Ctor. Creates a black dot.
+     * Creates a black dot.
      * @param pos The pos of the dot.
      * @param events The events of the dot.
      */
-    public Dot(
-        final Pos pos,
-        final J2DMouseTarget... events
-    ) {
-        this(pos, new Black(), List.of(events));
-    }
+    constructor(pos: Pos, vararg events: J2DMouseTarget) :
+        this(pos, Black(), listOf(*events))
 
     /**
-     * Ctor.
      * @param pos The pos of the dot.
      * @param color The color of the dot.
      * @param events The events of the dot.
      */
-    public Dot(
-        final Pos pos,
-        final Color color,
-        final J2DMouseTarget... events
-    ) {
-        this(pos, color, List.of(events));
-    }
-
-    /**
-     * Ctor.
-     * @param pos The pos of the dot.
-     * @param color The color of the dot.
-     * @param events The events of the dot.
-     */
-    public Dot(
-        final Pos pos,
-        final Color color,
-        final Collection<J2DMouseTarget> events
-    ) {
-        super(new Area2D(pos, new Size2D(5, 5)), color, events);
-    }
+    constructor(pos: Pos, color: Color, vararg events: J2DMouseTarget) :
+        this(pos, color, listOf(*events))
 }
