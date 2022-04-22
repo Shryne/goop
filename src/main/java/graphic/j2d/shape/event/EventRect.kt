@@ -43,8 +43,8 @@ import java.util.function.Consumer
  * class is thread-safe or not, depends on the given graphics instance for
  * [draw].
  *
- * @param area The area of this rect. It needs to be a PosOverlap area to check whether
- * a mouse event occurred on itself.
+ * @param area The area of this rect. It needs to be a PosOverlap area to check
+ * whether a mouse event occurred on itself.
  * @param color The color of this rect.
  * @param successor The next shape to be drawn.
  * @param targets The targets for the mouse events.
