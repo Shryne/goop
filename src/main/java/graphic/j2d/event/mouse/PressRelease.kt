@@ -69,7 +69,7 @@ open class PressRelease private constructor(
     ) {
     }
 
-    override fun registerFor(source: J2DMouse, overlap: PosOverlap) {
+    override fun registerFor(source: Mouse, overlap: PosOverlap) {
         press.registerFor(source, overlap)
         release.registerFor(source, overlap)
     }

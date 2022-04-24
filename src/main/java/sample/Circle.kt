@@ -20,7 +20,7 @@
  */
 package sample
 
-import graphic.j2d.event.mouse.J2DMouse
+import graphic.j2d.event.mouse.Mouse
 import graphic.j2d.shape.MouseShape
 import graphic.j2d.shape.ShapeTarget
 import graphic.j2d.shape.Redrawable
@@ -63,7 +63,7 @@ open class Circle(
         return Optional.of(this)
     }
 
-    override fun registerFor(source: J2DMouse) {
+    override fun registerFor(source: Mouse) {
         targets.forEach(
             Consumer { target -> target.registerFor(source, area) }
         )

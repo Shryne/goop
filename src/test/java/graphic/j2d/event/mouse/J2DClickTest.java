@@ -58,7 +58,7 @@ public class J2DClickTest {
         new Click(
             () -> clicked.set(true)
         ).registerFor(
-            new J2DBaseMouse(frame),
+            new BaseMouse(frame),
             new PosOverlap2D(width, height)
         );
         frame.setVisible(true);

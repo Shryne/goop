@@ -18,66 +18,41 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.event.mouse
 
-package graphic.j2d.event.mouse;
-
-import graphic.j2d.shape.ShapeTarget;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.function.Consumer;
-import logic.functional.Action;
-import logic.unit.PosOverlap;
-import logic.unit.pos.Pos;
-import logic.unit.pos.Pos2D;
+import graphic.j2d.shape.ShapeTarget
+import logic.functional.Action
+import logic.unit.PosOverlap
+import logic.unit.pos.Pos
+import logic.unit.pos.Pos2D
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
+import java.awt.event.MouseListener
+import java.util.function.Consumer
 
 /**
  * A mouse press bound on a component to apply some action on activation.
- * <p>This class is immutable, but does mutate the state of the mouse.</p>
- * @since 13.1.2
+ * This class is immutable, but does mutate the state of the mouse.
+ *
+ * @param target The target with the action, who gets the x and y
+ * coordinates of the press.
  */
-public class Press implements ShapeTarget {
+class Press(private val target: Consumer<Pos>) : ShapeTarget {
     /**
-     * The target action to be applied with the x and y coordinates of the
-     * press.
-     */
-    private final Consumer<Pos> target;
-
-    /**
-     * Ctor.
      * @param action The action to be applied when the press occurs.
      */
-    public Press(final Action action) {
-        this(
-            // @checkstyle ParameterName (1 line)
-            pos -> action.run()
-        );
-    }
+    constructor(action: Action) : this(Consumer<Pos> { action.run() })
 
-    /**
-     * Ctor.
-     * @param target The target with the action, who gets the x and y
-     *  coordinates of the press.
-     */
-    public Press(final Consumer<Pos> target) {
-        this.target = target;
-    }
-
-    @Override
-    public final void registerFor(
-        final J2DMouse source,
-        final PosOverlap overlap
-    ) {
+    override fun registerFor(source: Mouse, overlap: PosOverlap) {
         source.register(
-            (MouseListener) new MouseAdapter() {
-                @Override
-                public void mousePressed(final MouseEvent event) {
-                    final var pos = new Pos2D(event.getX(), event.getY());
-                    if (overlap.contains(pos)) {
-                        Press.this.target.accept(pos);
+            object : MouseAdapter() {
+                override fun mousePressed(event: MouseEvent) {
+                    val pos = Pos2D(event.x, event.y)
+                    if (pos in overlap) {
+                        target.accept(pos)
                     }
                 }
-            }
-        );
+            } as MouseListener
+        )
     }
 }

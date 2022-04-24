@@ -20,7 +20,7 @@
  */
 package graphic.j2d.shape
 
-import graphic.j2d.event.mouse.J2DMouse
+import graphic.j2d.event.mouse.Mouse
 import java.awt.Graphics
 import java.util.*
 import java.util.function.Consumer
@@ -37,7 +37,7 @@ open class Grid(
     private val rows: Int,
     private val columns: Int
 ) : MouseShape {
-    override fun registerFor(source: J2DMouse) {
+    override fun registerFor(source: Mouse) {
         throw UnsupportedOperationException("#registerFor()")
     }
 

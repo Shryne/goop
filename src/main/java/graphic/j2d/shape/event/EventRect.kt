@@ -20,7 +20,7 @@
  */
 package graphic.j2d.shape.event
 
-import graphic.j2d.event.mouse.J2DMouse
+import graphic.j2d.event.mouse.Mouse
 import graphic.j2d.shape.MouseShape
 import graphic.j2d.shape.ShapeTarget
 import graphic.j2d.shape.Successor
@@ -114,7 +114,7 @@ open class EventRect(
         return successor.apply(self)
     }
 
-    override fun registerFor(source: J2DMouse) {
+    override fun registerFor(source: Mouse) {
         targets.forEach(Consumer { it.registerFor(source, area) })
     }
 

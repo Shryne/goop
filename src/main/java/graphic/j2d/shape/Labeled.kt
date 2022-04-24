@@ -20,7 +20,7 @@
  */
 package graphic.j2d.shape
 
-import graphic.j2d.event.mouse.J2DMouse
+import graphic.j2d.event.mouse.Mouse
 import logic.graphic.color.Color
 import logic.graphic.color.RGBA
 import logic.unit.area.Area
@@ -61,7 +61,7 @@ open class Labeled private constructor(
     constructor(text: String, area: Area, color: Color, pen: Pen<Area>) :
         this(pen.shape(area, color), Text(text, area))
 
-    override fun registerFor(source: J2DMouse) {
+    override fun registerFor(source: Mouse) {
         shape.registerFor(source)
     }
 

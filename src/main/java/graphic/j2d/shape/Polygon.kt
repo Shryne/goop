@@ -20,7 +20,7 @@
  */
 package graphic.j2d.shape
 
-import graphic.j2d.event.mouse.J2DMouse
+import graphic.j2d.event.mouse.Mouse
 import logic.graphic.color.Black
 import logic.graphic.color.Color
 import logic.unit.pos.Pos
@@ -70,7 +70,7 @@ open class Polygon(
         listOf<Pos>(*positions)
     )
 
-    override fun registerFor(source: J2DMouse) {}
+    override fun registerFor(source: Mouse) {}
 
     override fun draw(graphics: Graphics): Optional<MouseShape> {
         color.applyOn { r: Int, g: Int, b: Int, a: Int ->

@@ -20,7 +20,7 @@
  */
 package graphic.j2d.event
 
-import graphic.j2d.event.mouse.J2DMouse
+import graphic.j2d.event.mouse.Mouse
 
 /**
  * The observer of a certain event.
@@ -32,5 +32,5 @@ fun interface J2DMouseTarget {
      *
      * @param source The source of the event.
      */
-    fun registerFor(source: J2DMouse)
+    fun registerFor(source: Mouse)
 }

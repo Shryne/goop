@@ -58,7 +58,7 @@ public class J2DPressTest {
         new Press(
             () -> pressed.set(true)
         ).registerFor(
-            new J2DBaseMouse(frame),
+            new BaseMouse(frame),
             new PosOverlap2D(width, height)
         );
         frame.setVisible(true);

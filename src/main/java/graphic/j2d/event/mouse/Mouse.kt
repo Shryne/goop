@@ -18,12 +18,11 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.event.mouse
 
-package graphic.j2d.event.mouse;
-
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseWheelListener;
+import java.awt.event.MouseListener
+import java.awt.event.MouseMotionListener
+import java.awt.event.MouseWheelListener
 
 /*
 The alternative to this would be to pass the actual JFrame to the classes,
@@ -35,26 +34,25 @@ empty MouseListener and the Window would add them all to the JFrame. Using the
 J2DMouse, I can omit the empty MouseListeners
 */
 /**
- * Serves as a layer between a {@link java.awt.Component} and the concrete
+ * Serves as a layer between a [java.awt.Component] and the concrete
  * event classes.
- * @since 12.2.0
  */
-public interface J2DMouse {
+interface Mouse {
     /**
      * Registers a MouseListener.
      * @param target The MouseListener who will get the events.
      */
-    void register(MouseListener target);
+    fun register(target: MouseListener)
 
     /**
      * Registers a MouseMotionListener.
      * @param target The MouseMotionListener who will get the events.
      */
-    void register(MouseMotionListener target);
+    fun register(target: MouseMotionListener)
 
     /**
      * Registers a MouseWheelListener.
      * @param target The MouseWheelListener who will get the events.
      */
-    void register(MouseWheelListener target);
+    fun register(target: MouseWheelListener)
 }

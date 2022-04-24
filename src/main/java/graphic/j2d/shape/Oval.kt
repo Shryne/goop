@@ -21,7 +21,7 @@
 package graphic.j2d.shape
 
 import graphic.j2d.event.J2DMouseTarget
-import graphic.j2d.event.mouse.J2DMouse
+import graphic.j2d.event.mouse.Mouse
 import logic.graphic.color.Black
 import logic.graphic.color.Color
 import logic.unit.area.Area
@@ -59,7 +59,7 @@ open class Oval(
         vararg events: J2DMouseTarget
     ) : this(area, color, listOf<J2DMouseTarget>(*events))
 
-    override fun registerFor(source: J2DMouse) {
+    override fun registerFor(source: Mouse) {
         events.forEach(Consumer { it.registerFor(source) })
     }
 

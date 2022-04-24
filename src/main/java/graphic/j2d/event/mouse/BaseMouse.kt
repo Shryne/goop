@@ -18,46 +18,30 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.event.mouse
 
-package graphic.j2d.event.mouse;
-
-import java.awt.Component;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseWheelListener;
+import java.awt.Component
+import java.awt.event.MouseListener
+import java.awt.event.MouseMotionListener
+import java.awt.event.MouseWheelListener
 
 /**
  * Just registers and delegates the events to the event classes.
- * <p>This class is mutable and not thread-safe, because it mutates the state
- * of the given JFrame..</p>
- * @since 12.2.0
+ * This class is mutable and not thread-safe, because it mutates the state
+ * of the given JFrame.
+ *
+ * @param component The component to register the events for.
  */
-public class J2DBaseMouse implements J2DMouse {
-    /**
-     * The component who will get the listeners.
-     */
-    private final Component component;
-
-    /**
-     * Ctor.
-     * @param component The component to register the events for.
-     */
-    public J2DBaseMouse(final Component component) {
-        this.component = component;
+class BaseMouse(private val component: Component) : Mouse {
+    override fun register(target: MouseListener) {
+        component.addMouseListener(target)
     }
 
-    @Override
-    public final void register(final MouseListener target) {
-        this.component.addMouseListener(target);
+    override fun register(target: MouseMotionListener) {
+        component.addMouseMotionListener(target)
     }
 
-    @Override
-    public final void register(final MouseMotionListener target) {
-        this.component.addMouseMotionListener(target);
-    }
-
-    @Override
-    public final void register(final MouseWheelListener target) {
-        this.component.addMouseWheelListener(target);
+    override fun register(target: MouseWheelListener) {
+        component.addMouseWheelListener(target)
     }
 }

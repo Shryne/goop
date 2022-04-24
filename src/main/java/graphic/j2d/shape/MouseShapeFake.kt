@@ -20,7 +20,7 @@
  */
 package graphic.j2d.shape
 
-import graphic.j2d.event.mouse.J2DMouse
+import graphic.j2d.event.mouse.Mouse
 import java.awt.Graphics
 import java.util.*
 
@@ -57,7 +57,7 @@ open class MouseShapeFake : MouseShape {
         this.successor = successor
     }
 
-    override fun registerFor(source: J2DMouse) {
+    override fun registerFor(source: Mouse) {
         registered = true
     }
 

@@ -21,8 +21,8 @@
 
 package graphic.j2d.window.event;
 
-import graphic.j2d.event.mouse.J2DBaseMouse;
-import graphic.j2d.event.mouse.J2DMouse;
+import graphic.j2d.event.mouse.BaseMouse;
+import graphic.j2d.event.mouse.Mouse;
 import graphic.j2d.shape.MouseShape;
 import graphic.j2d.window.J2DBaseWindow;
 import graphic.j2d.window.Window;
@@ -122,7 +122,7 @@ public class EventWindow extends Window {
             new Joined<>(
                 new IterableOf<>(
                     frame -> {
-                        final J2DMouse mouse = new J2DBaseMouse(
+                        final Mouse mouse = new BaseMouse(
                             frame.getContentPane()
                         );
                         shapes.forEach(it -> {

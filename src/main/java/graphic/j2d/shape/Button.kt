@@ -20,7 +20,7 @@
  */
 package graphic.j2d.shape
 
-import graphic.j2d.event.mouse.J2DMouse
+import graphic.j2d.event.mouse.Mouse
 import graphic.j2d.event.mouse.PressRelease
 import graphic.j2d.shape.event.EventRect
 import logic.functional.Action
@@ -39,7 +39,7 @@ import java.util.*
 open class Button private constructor(
     private val shape: MouseShape
 ) : MouseShape {
-    override fun registerFor(source: J2DMouse) {
+    override fun registerFor(source: Mouse) {
         shape.registerFor(source)
     }
 

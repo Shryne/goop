@@ -20,14 +20,11 @@
  */
 package graphic.j2d.shape
 
-import graphic.j2d.event.mouse.J2DMouse
+import graphic.j2d.event.mouse.Mouse
 import java.awt.Graphics
 import java.util.*
-import java.util.List
 import java.util.function.Consumer
-import kotlin.collections.ArrayList
 import kotlin.collections.MutableCollection
-import kotlin.collections.MutableList
 
 /**
  * An ordered collection of shapes.
@@ -52,7 +49,7 @@ class MouseShapes(
      */
     constructor(vararg shapes: MouseShape) : this(mutableListOf(*shapes))
 
-    override fun registerFor(source: J2DMouse) {
+    override fun registerFor(source: Mouse) {
         shapes.forEach(Consumer { it.registerFor(source) })
     }
 

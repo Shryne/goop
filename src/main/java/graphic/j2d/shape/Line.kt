@@ -20,7 +20,7 @@
  */
 package graphic.j2d.shape
 
-import graphic.j2d.event.mouse.J2DMouse
+import graphic.j2d.event.mouse.Mouse
 import logic.graphic.color.Black
 import logic.graphic.color.Color
 import logic.unit.pos.Pos
@@ -45,7 +45,7 @@ open class Line constructor(
      */
     private val successor: Optional<MouseShape> = Optional.of(this)
 
-    override fun registerFor(source: J2DMouse) {}
+    override fun registerFor(source: Mouse) {}
 
     override fun draw(graphics: Graphics): Optional<MouseShape> {
         color.applyOn { r, g, b, a ->
