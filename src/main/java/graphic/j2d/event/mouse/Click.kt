@@ -38,7 +38,7 @@ import java.util.function.Consumer
  *
  * @param action The action that gets the coordinates of the click.
  */
-class Click(private val action: Consumer<Pos>) : ShapeTarget {
+open class Click(private val action: Consumer<Pos>) : ShapeTarget {
     /**
      * @param action The action to be applied when the click occurs.
      */

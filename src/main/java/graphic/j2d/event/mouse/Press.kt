@@ -37,7 +37,7 @@ import java.util.function.Consumer
  * @param target The target with the action, who gets the x and y
  * coordinates of the press.
  */
-class Press(private val target: Consumer<Pos>) : ShapeTarget {
+open class Press(private val target: Consumer<Pos>) : ShapeTarget {
     /**
      * @param action The action to be applied when the press occurs.
      */

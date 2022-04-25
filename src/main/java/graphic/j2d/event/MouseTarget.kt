@@ -25,7 +25,7 @@ import graphic.j2d.event.mouse.Mouse
 /**
  * The observer of a certain event.
  */
-fun interface J2DMouseTarget {
+fun interface MouseTarget {
     /**
      * Can register itself for an event source. Whether the object actually
      * registers itself depends on whether it needs an event.

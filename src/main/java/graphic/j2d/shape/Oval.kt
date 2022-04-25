@@ -20,7 +20,7 @@
  */
 package graphic.j2d.shape
 
-import graphic.j2d.event.J2DMouseTarget
+import graphic.j2d.event.MouseTarget
 import graphic.j2d.event.mouse.Mouse
 import logic.graphic.color.Black
 import logic.graphic.color.Color
@@ -41,7 +41,7 @@ import kotlin.collections.Collection
 open class Oval(
     private val area: Area,
     private val color: Color,
-    private val events: Collection<J2DMouseTarget>
+    private val events: Collection<MouseTarget>
 ) : MouseShape {
     /**
      * The successor of this shape.
@@ -56,8 +56,8 @@ open class Oval(
     constructor(
         area: Area,
         color: Color = Black(),
-        vararg events: J2DMouseTarget
-    ) : this(area, color, listOf<J2DMouseTarget>(*events))
+        vararg events: MouseTarget
+    ) : this(area, color, listOf<MouseTarget>(*events))
 
     override fun registerFor(source: Mouse) {
         events.forEach(Consumer { it.registerFor(source) })

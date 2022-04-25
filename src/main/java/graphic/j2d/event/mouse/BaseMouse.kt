@@ -32,7 +32,7 @@ import java.awt.event.MouseWheelListener
  *
  * @param component The component to register the events for.
  */
-class BaseMouse(private val component: Component) : Mouse {
+open class BaseMouse(private val component: Component) : Mouse {
     override fun register(target: MouseListener) {
         component.addMouseListener(target)
     }

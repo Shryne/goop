@@ -41,7 +41,7 @@ import java.util.*
  * @param area The maximum area of the text.
  * @param color The color of the text. The default is [Black].
  */
-class Text constructor(
+open class Text constructor(
     private val text: String,
     private val area: Area,
     private val color: Color = Black()
