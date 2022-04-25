@@ -18,18 +18,16 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-
-package logic.time;
+package logic.time
 
 /**
- * A simple clock that offers the time in milli seconds. See
- * {@link SystemClock}.
- * @since 9.2.2
+ * A simple clock that offers the time in milliseconds. See [SystemClock].
  */
-public interface Clock {
+interface Clock {
     /**
-     * Returns the system time in milli seconds.
+     * Returns the system time in milliseconds.
+     *
      * @return The system time.
      */
-    long millis();
+    fun millis(): Long
 }

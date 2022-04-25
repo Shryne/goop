@@ -18,23 +18,22 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-
-package logic.time;
+package logic.time
 
 /**
  * Defines an elapsing unit.
- * @since 8.3.0
  */
-public interface Elapsable {
+interface Elapsable {
     /**
      * Returns the amount of time that shall elapse as a percentage value. The
      * value spans from 0.0 to 1.0.
+     *
      * @return The time to elapse.
      */
-    double elapsedPercent();
+    fun elapsedPercent(): Double
 
     /**
      * Starts the elapsing.
      */
-    void start();
+    fun start()
 }

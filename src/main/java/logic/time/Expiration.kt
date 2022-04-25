@@ -18,83 +18,60 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.time
 
-package logic.time;
+import kotlin.math.min
 
 /**
- * Defines a watch that expires after a certain time. Calling {@link #start()}
- * will restart the elapsing. If {@link #start} hasn't been called,
- * {@link #elapsedPercent()} will return 0.0 every time.
- * <p>This class is mutable and not thread-safe, because {@link #start()}
- * mutates its state.</p>
- * @since 8.3.0
+ * Defines a watch that expires after a certain time. Calling [start]
+ * will restart the elapsing. If [start] hasn't been called,
+ * [elapsedPercent] will return 0.0 every time.
+ * This class is mutable and not thread-safe, because [start]
+ * mutates its state.
+ *
+ * @param clock The clock to retrieve the time from.
+ * @param toElapse The amount of time needed to elapse.
  */
-public class Expiration implements Elapsable {
-    /**
-     * The upper bound of the percentage that will be returned by
-     * {@link #elapsedPercent()}.
-     */
-    private static final double MAX_PERCENT = 1.0;
-
-    /**
-     * The clock to retrieve the time from.
-     */
-    private final Clock clock;
-
-    /**
-     * The amount of time needed to elapse.
-     * @checkstyle MemberName (2 lines)
-     */
-    private final long toElapse;
-
+open class Expiration(
+    private val clock: Clock,
+    private val toElapse: Long
+) : Elapsable {
     /**
      * The beginning of the start measurement.
      */
-    private long beginning;
+    private var beginning = 0L
 
     /**
-     * This variable is true when {@link #start()} has been called at least once
+     * This variable is true when [start] has been called at least once
      * and it then stays true forever.
      */
-    private boolean started;
+    private var started = false
 
     /**
-     * Ctor.
      * @param toElapse The amount of time needed to elapse.
-     * @checkstyle ParameterName (2 lines)
      */
-    public Expiration(final long toElapse) {
-        this(new SystemClock(), toElapse);
-    }
+    constructor(toElapse: Long) : this(SystemClock(), toElapse)
 
-    /**
-     * Ctor.
-     * @param clock The clock to retrieve the time from.
-     * @param toElapse The amount of time needed to elapse.
-     * @checkstyle ParameterName (2 lines)
-     */
-    public Expiration(final Clock clock, final long toElapse) {
-        this.clock = clock;
-        this.toElapse = toElapse;
-        this.beginning = 0L;
-        this.started = false;
-    }
-
-    @Override
-    public final double elapsedPercent() {
-        double elapsed = 0.0;
-        if (this.started) {
-            elapsed = Math.min(
-                (double) (this.clock.millis() - this.beginning)
-                    / (double) this.toElapse, Expiration.MAX_PERCENT
-            );
+    override fun elapsedPercent(): Double =
+        if (started) {
+            min(
+                (clock.millis() - beginning).toDouble() / toElapse.toDouble(),
+                MAX_PERCENT
+            )
+        } else {
+            0.0
         }
-        return elapsed;
+
+    override fun start() {
+        started = true
+        beginning = clock.millis()
     }
 
-    @Override
-    public final void start() {
-        this.started = true;
-        this.beginning = this.clock.millis();
+    companion object {
+        /**
+         * The upper bound of the percentage that will be returned by
+         * [elapsedPercent].
+         */
+        private const val MAX_PERCENT = 1.0
     }
 }

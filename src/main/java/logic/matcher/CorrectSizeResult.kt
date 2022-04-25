@@ -18,68 +18,32 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package logic.matcher
 
-package logic.matcher;
-
-import java.util.function.BiFunction;
-import logic.unit.size.Size;
-import org.hamcrest.Description;
-import org.hamcrest.TypeSafeDiagnosingMatcher;
+import logic.unit.size.Size
+import org.hamcrest.Description
+import org.hamcrest.TypeSafeDiagnosingMatcher
 
 /**
- * A matcher for {@link Size#result(BiFunction)}.
- * <p>The class by itself is immutable, but mutates the incoming description
- * object which is mutable.</p>
- * @since 15.1.0
+ * A matcher for [Size.result].
+ * The class by itself is immutable, but mutates the incoming description
+ * object which is mutable.
+ *
+ * @param w The width to expect from the [Size.result] method.
+ * @param h The height to expect from the [Size.result] method.
  */
-public class CorrectSizeResult extends TypeSafeDiagnosingMatcher<Size> {
-    /**
-     * The expected width.
-     */
-    private final Integer width;
-
-    /**
-     * The expected height.
-     */
-    private final Integer height;
-
-    /**
-     * Ctor.
-     * @param width The width to expect from the
-     *  {@link Size#result(BiFunction)} method.
-     * @param height The height to expect from the
-     *  {@link Size#result(BiFunction)} method.
-     */
-    public CorrectSizeResult(final Integer width, final Integer height) {
-        super();
-        this.width = width;
-        this.height = height;
+open class CorrectSizeResult(
+    private val w: Int,
+    private val h: Int
+) : TypeSafeDiagnosingMatcher<Size>() {
+    override fun describeTo(description: Description) {
+        description.appendText("Expected width = $w and height = $h")
     }
 
-    @Override
-    public final void describeTo(final Description description) {
-        description.appendText(
-            String.format(
-                "Expected width = %d and height = %d",
-                this.width,
-                this.height
-            )
-        );
-    }
-
-    @Override
-    protected final boolean matchesSafely(
-        final Size size, final Description description
-    ) {
-        return size.result(
-            // @checkstyle ParameterNameCheck (1 line)
-            (resWidth, resHeight) -> {
-                description.appendText(
-                    String.format("width: %d, height: %d", resWidth, resHeight)
-                );
-                return this.width.equals(resWidth)
-                    && this.height.equals(resHeight);
-            }
-        );
+    override fun matchesSafely(size: Size, description: Description): Boolean {
+        return size.result { resW, resH ->
+            description.appendText("width: $resW, height: $resH")
+            w == resW && h == resH
+        }
     }
 }
