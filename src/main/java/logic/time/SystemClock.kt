@@ -18,19 +18,14 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-
-package logic.time;
+package logic.time
 
 /**
- * A clock that takes its time from {@link System#currentTimeMillis()}. The
+ * A clock that takes its time from [System.currentTimeMillis]. The
  * advantage of this class is that one can use its interface as a dependency
  * and swap the implementation for the tests or other purposes.
- * <p>This class is immutable and thread-safe.</p>
- * @since 9.2.2
+ * This class is immutable and thread-safe.
  */
-public class SystemClock implements Clock {
-    @Override
-    public final long millis() {
-        return System.currentTimeMillis();
-    }
+open class SystemClock : Clock {
+    override fun millis(): Long = System.currentTimeMillis()
 }
