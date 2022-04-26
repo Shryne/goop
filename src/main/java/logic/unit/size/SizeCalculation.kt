@@ -45,11 +45,10 @@ open class SizeCalculation(
     private val operation: IntBinaryOperator
 ) : Size {
     override fun <R> result(target: BiFunction<Int, Int, R>): R {
-        // @checkstyle MethodBodyComments (1 line)
         return first.result { firstW: Int, firstH: Int ->
             second.result { secondW, secondH ->
                 target.apply(
-                    operation.applyAsInt(firstW, secondH),
+                    operation.applyAsInt(firstW, secondW),
                     operation.applyAsInt(firstH, secondH)
                 )
             }

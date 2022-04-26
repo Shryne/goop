@@ -36,9 +36,9 @@ import kotlin.math.roundToInt
  * @param watch The watch used to get the scaling progress.
  */
 open class Scaling private constructor(
-    size: Value<Size>,
+    size: Size,
     private val watch: Elapsable
-) : SizeEnvelope(size), AnimatedSize {
+) : Size by size, AnimatedSize {
     /**
      * The redrawable to notify about the change.
      */
@@ -58,14 +58,12 @@ open class Scaling private constructor(
      * @param watch The watch used to get the scaling progress.
      */
     constructor(origin: Size, ending: Size, watch: Elapsable) : this(
-        Lazy<Size> {
-            Sum(
-                origin,
-                ScalarSizeCalculation(Diff(ending, origin)) {
-                    (it * watch.elapsedPercent()).roundToInt()
-                }
-            )
-        },
+        Sum(
+            origin,
+            ScalarSizeCalculation(Diff(ending, origin)) {
+                (it * watch.elapsedPercent()).roundToInt()
+            }
+        ),
         watch
     )
 

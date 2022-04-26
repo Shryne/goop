@@ -18,53 +18,42 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+package graphic.j2d.window.information
 
-package graphic.j2d.window.information;
-
-import graphic.j2d.shape.Redrawable;
-import graphic.j2d.window.Window;
-import javax.swing.JFrame;
-import logic.functional.Lazy;
-import logic.unit.size.Size2D;
-import logic.unit.size.SizeEnvelope;
+import graphic.j2d.shape.Redrawable
+import logic.functional.Lazy
+import logic.unit.size.Size
+import logic.unit.size.Size2D
+import logic.unit.size.SizeEnvelope
+import javax.swing.JFrame
 
 /**
  * The size of a java 2d window bar. This class is intended to be used like
  * this:
- * <pre>
- *     {@code new J2DWindow(
- *          // ...
- *          new ListOf<J2DWindowFeatures>(
- *              jframe -> new BarSize(jframe).applyOn {
- *                  (width, height) -> // The action to be applied
- *              }
- *          );
- *     );}
- * </pre>
- * In this case, the action will be applied when {@link Window#show()} is
- * called.
- * <p>This class is immutable and thread-safe.</p>
- * @since 13.0.1
+ * ```
+ * `Window(
+ * // ...
+ *      listOf(
+ *          BarSize(it).applyOn {
+ *              (w, h) -> // The action to be applied
+ *          }
+ *      )
+ * );
+ * ```
+ * In this case, the action will be applied when
+ * [graphic.j2d.window.Window.show] is called.
+ * This class is immutable and thread-safe.
+ *
+ * @param frame The frame to get the bar size from.
  */
-public class BarSize extends SizeEnvelope {
-    /**
-     * Ctor.
-     * @param frame The frame to get the bar size from.
-     */
-    public BarSize(final JFrame frame) {
-        super(
-            new Lazy<>(
-                () -> {
-                    final var insets = frame.getInsets();
-                    return new Size2D(
-                        frame.getWidth(),
-                        insets.top
-                    );
-                }
-            )
-        );
-    }
+class BarSize(frame: JFrame) : Size2D(
+    {}, {}
+        /*
+    Lazy {
 
-    @Override
-    public final void register(final Redrawable redrawable) { }
-}
+        Size2D(
+            frame.width,
+            insets.top
+        )
+    }*/
+)

@@ -40,20 +40,12 @@ chance that a user might use the class name as a parameter type
  */
 open class Size2D(private val w: Int = 0, private val h: Int = 0) : Size {
     /**
-     * @param width The width for the size.
-     * @param height The height for the size.
+     * @param target The target that shall get the width and height.
      */
     override fun <R> result(target: BiFunction<Int, Int, R>): R {
         return target.apply(w, h)
     }
 
     override fun register(redrawable: Redrawable) {}
-
-    override fun toString(): String {
-        return StringBuilder("Size")
-            .append("(width=").append(w)
-            .append(", height=").append(h)
-            .append(')')
-            .toString()
-    }
+    override fun toString() = "Size(w=$w, h=$h)"
 }
