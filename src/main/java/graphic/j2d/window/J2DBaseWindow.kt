@@ -21,8 +21,6 @@
 package graphic.j2d.window
 
 import graphic.j2d.shape.Shape
-import logic.functional.Lazy
-import logic.functional.Value
 import logic.graphic.window.Showable
 import logic.unit.area.Area
 import logic.unit.area.applyOn
@@ -55,8 +53,9 @@ direct getter to the state
  * JFrame will probably be lazily constructed.
  */
 open class J2DBaseWindow private constructor(
-    private val window: Value<JFrame>
+    private val window: Lazy<JFrame>
 ) : Showable {
+
     /**
      * @param area The area of this window.
      * @param shapes The shapes that are on this window.
@@ -74,7 +73,7 @@ open class J2DBaseWindow private constructor(
         features: Iterable<J2DWindowFeature>,
         shapes: Iterable<Shape<*>>
     ) : this(
-        Lazy<JFrame> {
+        lazy {
             val frame = JFrame()
             val panel: JPanel = object : JPanel() {
                 override fun paintComponent(
@@ -92,14 +91,13 @@ open class J2DBaseWindow private constructor(
                 pos.applyOn(frame::setLocation)
                 size.result { width, height ->
                     panel.preferredSize = Dimension(width, height)
-                    null
                 }
             }
             frame.add(panel)
             frame.pack()
             frame.isVisible = true
-            features.forEach(Consumer { it: J2DWindowFeature -> it.accept(frame) })
-            val timer = Timer(25) { e: ActionEvent? -> frame.repaint() }
+            features.forEach { it.accept(frame) }
+            val timer = Timer(25) { frame.repaint() }
             timer.isRepeats = true
             timer.start()
             frame
@@ -107,6 +105,6 @@ open class J2DBaseWindow private constructor(
     )
 
     override fun show() {
-        window.content()
+        window.value
     }
 }

@@ -20,11 +20,7 @@
  */
 package graphic.j2d.window.information
 
-import graphic.j2d.shape.Redrawable
-import logic.functional.Lazy
-import logic.unit.size.Size
 import logic.unit.size.Size2D
-import logic.unit.size.SizeEnvelope
 import javax.swing.JFrame
 
 /**

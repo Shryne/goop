@@ -23,7 +23,7 @@ package logic.functional;
 
 /**
  * An interface for all classes that represent a value, but are needed to
- * calculate it later, different or to cache it. Example: {@link Lazy}.
+ * calculate it later, different or to cache it.
  * @param <T> The type of the value.
  * @since 3.2.0
  */

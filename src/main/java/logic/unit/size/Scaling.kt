@@ -22,8 +22,6 @@ package logic.unit.size
 
 import com.google.common.math.DoubleMath
 import graphic.j2d.shape.Redrawable
-import logic.functional.Lazy
-import logic.functional.Value
 import logic.time.Elapsable
 import logic.time.Expiration
 import kotlin.math.roundToInt
