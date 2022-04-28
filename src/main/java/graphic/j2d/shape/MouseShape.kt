@@ -20,9 +20,9 @@
  */
 package graphic.j2d.shape
 
-import graphic.j2d.event.MouseTarget
+import graphic.j2d.event.Event
 
 /**
  * A shape that can register itself for a certain event.
  */
-interface MouseShape : Shape<MouseShape>, MouseTarget
+interface MouseShape : Shape<MouseShape>, Event

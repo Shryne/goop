@@ -114,10 +114,6 @@ open class EventRect(
         return successor.apply(self)
     }
 
-    override fun registerFor(source: Mouse) {
-        targets.forEach(Consumer { it.registerFor(source, area) })
-    }
-
     override fun register(redrawable: Redrawable) {
         area.register(redrawable)
         color.register(redrawable)

@@ -20,7 +20,7 @@
  */
 package graphic.j2d.shape
 
-import graphic.j2d.event.MouseTarget
+import graphic.j2d.event.Event
 import logic.graphic.color.Black
 import logic.graphic.color.Color
 import logic.unit.area.Area2D
@@ -37,14 +37,14 @@ import logic.unit.size.Size2D
 open class Dot(
     pos: Pos,
     color: Color,
-    events: Collection<MouseTarget>
+    events: Collection<Event>
 ) : Oval(Area2D(pos, Size2D(5, 5)), color, events) {
     /**
      * Creates a black dot.
      * @param pos The pos of the dot.
      * @param events The events of the dot.
      */
-    constructor(pos: Pos, vararg events: MouseTarget) :
+    constructor(pos: Pos, vararg events: Event) :
         this(pos, Black(), listOf(*events))
 
     /**
@@ -52,6 +52,6 @@ open class Dot(
      * @param color The color of the dot.
      * @param events The events of the dot.
      */
-    constructor(pos: Pos, color: Color, vararg events: MouseTarget) :
+    constructor(pos: Pos, color: Color, vararg events: Event) :
         this(pos, color, listOf(*events))
 }

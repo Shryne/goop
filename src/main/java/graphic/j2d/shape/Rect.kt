@@ -20,6 +20,7 @@
  */
 package graphic.j2d.shape
 
+import graphic.j2d.event.mouse.Mouse
 import logic.graphic.color.Color
 import logic.unit.area.Area
 import logic.unit.area.applyOn
@@ -50,6 +51,10 @@ open class Rect(private val area: Area, private val color: Color) :
         }
         area.applyOn { x, y, w, h -> graphics.fillRect(x, y, w, h) }
         return successor
+    }
+
+    override fun registerFor(source: Mouse) {
+        targets.forEach(Consumer { it.registerFor(source, area) })
     }
 
     override fun register(redrawable: Redrawable) {

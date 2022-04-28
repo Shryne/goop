@@ -22,15 +22,19 @@ package graphic.j2d.event
 
 import graphic.j2d.event.mouse.Mouse
 
+
 /**
- * The observer of a certain event.
+ * An event based on a mouse or a keyboard for a shape.
  */
-fun interface MouseTarget {
+fun interface Event {
     /**
-     * Can register itself for an event source. Whether the object actually
-     * registers itself depends on whether it needs an event.
-     *
-     * @param source The source of the event.
+     * Registers itself for the necessary raw event from the mouse. "Raw" means
+     * that the event is global. For example the user may click on the window
+     * and then all the events that registered themselves get the click event.
+     * Now it's up to the events to check whether it belongs to the shape.
+     * @param mouse The mouse to get the raw event from.
+     * @param overlap The overlap needed to detect whether the mouse hit the
+     * shape.
      */
-    fun registerFor(source: Mouse)
+    fun registerFor(mouse: Mouse, overlap: Overlap)
 }
