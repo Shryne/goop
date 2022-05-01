@@ -22,7 +22,7 @@ package graphic.j2d.event.mouse
 
 import graphic.j2d.shape.ShapeTarget
 import logic.functional.Action
-import logic.unit.PosOverlap
+import logic.unit.Overlap
 import logic.unit.pos.Pos2D
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
@@ -36,7 +36,7 @@ import java.awt.event.MouseListener
  * @param action The action to be applied when the mouse release occurred.
  */
 open class Release(private val action: Action) : ShapeTarget {
-    override fun registerFor(source: Mouse, overlap: PosOverlap) {
+    override fun registerFor(source: Mouse, overlap: Overlap) {
         source.register(
             object : MouseAdapter() {
                 override fun mouseReleased(event: MouseEvent) {

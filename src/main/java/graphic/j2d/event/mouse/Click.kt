@@ -22,7 +22,7 @@ package graphic.j2d.event.mouse
 
 import graphic.j2d.shape.ShapeTarget
 import logic.functional.Action
-import logic.unit.PosOverlap
+import logic.unit.Overlap
 import logic.unit.pos.Pos
 import logic.unit.pos.Pos2D
 import java.awt.event.MouseAdapter
@@ -44,7 +44,7 @@ open class Click(private val action: Consumer<Pos>) : ShapeTarget {
      */
     constructor(action: Action) : this(Consumer<Pos> { action.run() })
 
-    override fun registerFor(source: Mouse, overlap: PosOverlap) {
+    override fun registerFor(source: Mouse, overlap: Overlap) {
         source.register(
             object : MouseAdapter() {
                 override fun mouseClicked(event: MouseEvent) {

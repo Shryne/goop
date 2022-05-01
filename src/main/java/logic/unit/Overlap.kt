@@ -25,7 +25,7 @@ import logic.unit.pos.Pos
 /**
  * Can determine whether a given position is inside itself.
  */
-interface PosOverlap {
+interface Overlap {
     /**
      * Tells whether the given pos is inside itself. Example:
      * ```

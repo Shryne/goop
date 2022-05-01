@@ -21,7 +21,7 @@
 package graphic.j2d.shape
 
 import graphic.j2d.event.mouse.Mouse
-import logic.unit.PosOverlap
+import logic.unit.Overlap
 
 /**
  * The target for the shape events.
@@ -34,5 +34,5 @@ fun interface ShapeTarget {
      * @param overlap The object to check whether the event occurred on the
      * shape.
      */
-    fun registerFor(source: Mouse, overlap: PosOverlap)
+    fun registerFor(source: Mouse, overlap: Overlap)
 }

@@ -20,9 +20,9 @@
  */
 package logic.unit.area
 
-import logic.unit.PosOverlap
+import logic.unit.Overlap
 
 /**
  * An area that knows than a given pos overlaps with it.
  */
-interface PosOverlap : PosOverlap, Area
+interface PosOverlap : Overlap, Area

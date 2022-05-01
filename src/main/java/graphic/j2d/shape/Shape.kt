@@ -20,14 +20,15 @@
  */
 package graphic.j2d.shape
 
+import graphic.j2d.event.mouse.Mouse
 import logic.Changeable
 import java.awt.Graphics
-import java.util.*
+
 
 /**
  * A shape that draws itself.
  */
-interface Shape<T> : Changeable {
+interface Shape : Changeable {
     /**
      * Draws the shape and returns the next shape to take the place of this
      * shape. This is used to register and unregister shapes from the
@@ -36,5 +37,11 @@ interface Shape<T> : Changeable {
      * @param graphics The Graphics object to draw the shape.
      * @return The successor of this shape.
      */
-    fun draw(graphics: Graphics): Optional<T>
+    fun draw(graphics: Graphics): Shape?
+
+    /**
+     * Registers itself on the mouse. This is necessary for shapes with events.
+     * @param mouse The mouse to register on.
+     */
+    fun registerFor(mouse: Mouse)
 }

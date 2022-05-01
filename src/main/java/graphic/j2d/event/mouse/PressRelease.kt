@@ -22,7 +22,7 @@ package graphic.j2d.event.mouse
 
 import graphic.j2d.shape.ShapeTarget
 import logic.functional.Action
-import logic.unit.PosOverlap
+import logic.unit.Overlap
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
@@ -69,7 +69,7 @@ open class PressRelease private constructor(
     ) {
     }
 
-    override fun registerFor(source: Mouse, overlap: PosOverlap) {
+    override fun registerFor(source: Mouse, overlap: Overlap) {
         press.registerFor(source, overlap)
         release.registerFor(source, overlap)
     }
