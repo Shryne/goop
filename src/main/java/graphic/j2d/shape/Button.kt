@@ -22,7 +22,6 @@ package graphic.j2d.shape
 
 import graphic.j2d.event.mouse.Mouse
 import graphic.j2d.event.mouse.PressRelease
-import graphic.j2d.shape.event.EventRect
 import logic.functional.Action
 import logic.graphic.color.ButtonColor
 import logic.graphic.color.DualColor
@@ -37,13 +36,13 @@ import java.util.*
  * @param shape The shape of the button.
  */
 open class Button private constructor(
-    private val shape: MouseShape
-) : MouseShape {
+    private val shape: Shape
+) : Shape {
     override fun registerFor(source: Mouse) {
         shape.registerFor(source)
     }
 
-    override fun draw(graphics: Graphics): Optional<MouseShape> {
+    override fun draw(graphics: Graphics): Shape? {
         return shape.draw(graphics)
     }
 
@@ -81,7 +80,7 @@ open class Button private constructor(
          * @param action The action to be applied when the button is released.
          */
         operator fun invoke(area: Area, action: Action) = Button(
-            { _, color, targets -> EventRect(area, color, *targets) },
+            { _, color, targets -> Rect(area, color, *targets) },
             PosOverlap2D(area),
             ButtonColor(),
             action
